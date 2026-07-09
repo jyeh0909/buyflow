@@ -1001,18 +1001,38 @@ function renderCustomerOrders(){
       <td>${total}</td>
       <td>${doneCount}/${total} 已完成流程</td>
       <td>${statusPill}</td>
+      <td>
+        <button class="btn small secondary" data-action="open-detail" data-id="${o.id}">查看</button>
+        <button class="btn small" data-action="edit-order" data-id="${o.id}">修改</button>
+      </td>
     </tr>`;
   }).join('');
   document.getElementById('customerOrdersContent').innerHTML = `
   <div class="card"><h2>訂單管理</h2>
-   <div class="note">這裡只放真正有客人的訂單。可看到每位客人的多個商品、哪些已到台灣、哪些可分批出貨。</div>
+   <div class="note">這裡可以查看與修改客人訂單。如果客人後來更改商品、地址、size、顏色、金額或流向，請按「修改」。</div>
    ${custOrders.length===0? `<div class="empty-state">目前沒有客人訂單</div>` :
-   `<table class="table"><tr><th>訂單</th><th>客人</th><th>商品數</th><th>處理狀態</th><th>是否可寄客人</th></tr>${rows}</table>`}
+   `<table class="table"><tr><th>訂單</th><th>客人</th><th>商品數</th><th>處理狀態</th><th>是否可寄客人</th><th>動作</th></tr>${rows}</table>`}
   </div>`;
+  document.querySelectorAll('[data-action="open-detail"]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      detailSelectedId = e.currentTarget.dataset.id;
+      detailEditing = false;
+      show('detail');
+    });
+  });
+  document.querySelectorAll('[data-action="edit-order"]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      detailSelectedId = e.currentTarget.dataset.id;
+      detailEditing = true;
+      show('detail');
+    });
+  });
 }
 
 // ====== 訂單明細 ======
 let detailSelectedId = '';
+let detailEditing = false;
+
 function flowStepsHTML(item, order){
   const isReturn = item.isReturn;
   const toTw = needsTwFlow(item, order);
@@ -1025,10 +1045,22 @@ function flowStepsHTML(item, order){
    <div class="step"><b>退貨</b><span>${isReturn ? (esc(item.returnDate)||'待退貨') : '-'}</span></div>
   </div>`;
 }
+
+function editOptions(arr, selected){
+  const exists = arr.includes(selected);
+  const base = arr.map(x=>`<option value="${escAttr(x)}" ${selected===x?'selected':''}>${esc(x)}</option>`).join('');
+  const custom = selected && !exists ? `<option value="${escAttr(selected)}" selected>${esc(selected)}</option>` : '';
+  return `<option value="">（不指定）</option>${custom}${base}`;
+}
+
 function renderDetail(){
   if(!detailSelectedId && orders.length) detailSelectedId = orders[0].id;
   const order = findOrder(detailSelectedId);
   const options = orders.map(o=>`<option value="${escAttr(o.id)}" ${o.id===detailSelectedId?'selected':''}>${esc(o.id)} － ${o.orderType==='return'?'退貨商品':esc(o.customerName)}</option>`).join('');
+  if(detailEditing && order){
+    renderEditOrder(order, options);
+    return;
+  }
   let body = '';
   if(order){
     const custBox = order.orderType==='customer' ? `<div class="customerbox"><b>${esc(order.customerName)}</b><br>台灣收件人：${esc(order.twRecipient)||'—'}｜電話：${esc(order.twPhone)||'—'}｜地址：${esc(order.twAddress)||'—'}</div>` : `<div class="customerbox"><b>退貨商品訂單</b></div>`;
@@ -1053,11 +1085,16 @@ function renderDetail(){
   document.getElementById('detailContent').innerHTML = `
   <div class="card">
    <h2>訂單明細</h2>
-   <div class="toolbar"><select id="detailOrderSelect" style="max-width:420px">${options}</select></div>
+   <div class="toolbar">
+    <select id="detailOrderSelect" style="max-width:420px">${options}</select>
+    ${order? `<button class="btn" id="editCurrentOrderBtn">修改這張訂單</button>` : ''}
+   </div>
   </div>
   ${body}`;
   const sel = document.getElementById('detailOrderSelect');
-  if(sel) sel.addEventListener('change', e=>{ detailSelectedId = e.target.value; renderDetail(); hydrateImages(); });
+  if(sel) sel.addEventListener('change', e=>{ detailSelectedId = e.target.value; detailEditing=false; renderDetail(); hydrateImages(); });
+  const editBtn = document.getElementById('editCurrentOrderBtn');
+  if(editBtn) editBtn.addEventListener('click', ()=>{ detailEditing=true; renderDetail(); hydrateImages(); });
   document.querySelectorAll('[data-action="detail-toggle-return"]').forEach(btn=>{
     btn.addEventListener('click', async e=>{
       const id = e.currentTarget.dataset.id;
@@ -1065,6 +1102,174 @@ function renderDetail(){
       if(found){ found.item.isReturn = !found.item.isReturn; await saveOrders(); renderDetail(); hydrateImages(); }
     });
   });
+  hydrateImages();
+}
+
+function editItemCardHTML(item, order){
+  const isNew = !item;
+  const id = item && item.id ? item.id : uidItem();
+  const it = Object.assign({
+    id, itemName:'', brand:'', site:'', itemUrl:'', size:'', color:'', qty:'1', flow:'', priceTWD:'', priceUSD:'',
+    directRecipient:'', directAddress:'', directGroup:'', isReturn:false, hasImage:false,
+    purchasedDate:'', usReceivedDate:'', usShippedDate:'', twReceivedDate:'', customerShippedDate:'', returnDate:''
+  }, item || {});
+  const returnMode = order.orderType==='return' || it.isReturn;
+  return `<div class="itemcard edit-item" data-itemid="${escAttr(id)}">
+    <div class="itemhead">
+      <div><h3>商品 ${esc(it.id)}</h3><span class="badge">${isNew?'新增商品':'可修改'}</span></div>
+      <button class="btn red small" data-action="remove-edit-item" type="button">刪除商品</button>
+    </div>
+    <div class="formgrid">
+      <div class="field"><label>商品圖片</label>${thumbHTML(it)}<label class="upload-btn" style="margin-top:8px">更換圖片<input type="file" accept="image/*" style="display:none" onchange="previewNewItemImage(this,'${escAttr(id)}')"></label></div>
+      <div class="field"><label>商品名稱</label><input class="input" data-field="itemName" value="${escAttr(it.itemName)}"></div>
+      <div class="field"><label>品牌</label><select data-field="brand">${editOptions(BRANDS,it.brand)}</select></div>
+      <div class="field"><label>訂購網站</label><select data-field="site">${editOptions(SITES,it.site)}</select></div>
+      <div class="field"><label>商品網址</label><input class="input" data-field="itemUrl" value="${escAttr(it.itemUrl)}"></div>
+      <div class="field"><label>Size</label><input class="input" data-field="size" value="${escAttr(it.size)}"></div>
+      <div class="field"><label>顏色</label><input class="input" data-field="color" value="${escAttr(it.color)}"></div>
+      <div class="field"><label>數量</label><input class="input" data-field="qty" type="number" value="${escAttr(it.qty||1)}"></div>
+      <div class="field normalOnly"><label>流向</label><select data-field="flow" onchange="toggleFlowDirect(this)"><option value="">（請選擇）</option>${opts(FLOWS,it.flow)}</select></div>
+      <div class="field normalOnly"><label>台幣：客訂金額</label><input class="input" data-field="priceTWD" value="${escAttr(it.priceTWD)}"></div>
+      <div class="field normalOnly"><label>美金：買貨金額</label><input class="input" data-field="priceUSD" value="${escAttr(it.priceUSD)}"></div>
+      <div class="field normalOnly"><label>是否退貨</label><select data-field="isReturn" onchange="toggleEditReturnFields(this)"><option value="false" ${!it.isReturn?'selected':''}>否</option><option value="true" ${it.isReturn?'selected':''}>是</option></select></div>
+    </div>
+    <div class="directbox" style="display:${it.flow==='直郵'?'block':'none'}"><b>直郵資訊</b><div class="formgrid" style="margin-top:10px">
+      <div class="field"><label>直郵收件人</label><input class="input" data-field="directRecipient" value="${escAttr(it.directRecipient)}"></div>
+      <div class="field"><label>直郵地址</label><input class="input" data-field="directAddress" value="${escAttr(it.directAddress)}"></div>
+      <div class="field"><label>直郵分組</label><input class="input" data-field="directGroup" value="${escAttr(it.directGroup)}"></div>
+    </div></div>
+    <div class="formgrid" style="margin-top:12px">
+      <div class="field"><label>購買日期</label><input class="input" data-field="purchasedDate" type="date" value="${escAttr(it.purchasedDate)}"></div>
+      <div class="field"><label>美國收貨日期</label><input class="input" data-field="usReceivedDate" type="date" value="${escAttr(it.usReceivedDate)}"></div>
+      <div class="field"><label>美國出貨日期</label><input class="input" data-field="usShippedDate" type="date" value="${escAttr(it.usShippedDate)}"></div>
+      <div class="field twOnly"><label>台灣收貨日期</label><input class="input" data-field="twReceivedDate" type="date" value="${escAttr(it.twReceivedDate)}"></div>
+      <div class="field twOnly"><label>台灣出貨給客人日期</label><input class="input" data-field="customerShippedDate" type="date" value="${escAttr(it.customerShippedDate)}"></div>
+      <div class="field returnOnly"><label>退貨日期</label><input class="input" data-field="returnDate" type="date" value="${escAttr(it.returnDate)}"></div>
+    </div>
+  </div>`;
+}
+
+function toggleEditReturnFields(sel){
+  const card = sel.closest('.edit-item');
+  if(!card) return;
+  const isRet = sel.value === 'true';
+  card.querySelectorAll('.normalOnly').forEach(el=>{ if(el.querySelector('[data-field="isReturn"]')) return; el.style.display = isRet ? 'none' : ''; });
+  card.querySelectorAll('.twOnly').forEach(el=>el.style.display = isRet ? 'none' : '');
+  card.querySelectorAll('.returnOnly').forEach(el=>el.style.display = isRet ? '' : 'none');
+}
+
+function renderEditOrder(order, options){
+  const isReturnOrder = order.orderType === 'return';
+  const custBox = isReturnOrder ? '' : `<div class="card" style="margin-top:16px"><h2>客人資料</h2>
+    <div class="formgrid">
+      <div class="field"><label>客人姓名</label><input class="input" id="editCustomerName" value="${escAttr(order.customerName)}"></div>
+      <div class="field"><label>電話</label><input class="input" id="editPhone" value="${escAttr(order.phone)}"></div>
+      <div class="field"><label>LINE ID</label><input class="input" id="editLineId" value="${escAttr(order.lineId)}"></div>
+      <div class="field"><label>台灣收件人</label><input class="input" id="editTwRecipient" value="${escAttr(order.twRecipient)}"></div>
+      <div class="field"><label>台灣電話</label><input class="input" id="editTwPhone" value="${escAttr(order.twPhone)}"></div>
+      <div class="field"><label>台灣地址</label><input class="input" id="editTwAddress" value="${escAttr(order.twAddress)}"></div>
+    </div></div>`;
+  document.getElementById('detailContent').innerHTML = `
+  <div class="card">
+    <h2>修改訂單</h2>
+    <div class="note">客人改資料或改商品時，在這裡修改後按「儲存修改」。商品若改成退貨，會自動出現在左邊「退貨」頁。</div>
+    <div class="toolbar">
+      <select id="detailOrderSelect" style="max-width:420px">${options}</select>
+      <button class="btn secondary" id="cancelEditOrderBtn">取消修改</button>
+      <button class="btn green" id="saveEditOrderBtn">儲存修改</button>
+    </div>
+  </div>
+  ${custBox}
+  <div class="card" style="margin-top:16px">
+    <h2>商品品項</h2>
+    <div id="editItemsWrap">${order.items.map(it=>editItemCardHTML(it,order)).join('')}</div>
+    <button class="btn" id="addEditItemBtn">＋ 新增商品</button>
+  </div>`;
+  const sel = document.getElementById('detailOrderSelect');
+  if(sel) sel.addEventListener('change', e=>{ detailSelectedId = e.target.value; detailEditing=false; renderDetail(); hydrateImages(); });
+  document.getElementById('cancelEditOrderBtn').addEventListener('click', ()=>{ detailEditing=false; renderDetail(); hydrateImages(); });
+  document.getElementById('saveEditOrderBtn').addEventListener('click', saveEditOrder);
+  document.getElementById('addEditItemBtn').addEventListener('click', ()=>{
+    const wrap = document.getElementById('editItemsWrap');
+    wrap.insertAdjacentHTML('beforeend', editItemCardHTML(null, order));
+    hydrateImages(wrap.lastElementChild);
+  });
+  document.querySelectorAll('[data-action="remove-edit-item"]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const card = e.currentTarget.closest('.edit-item');
+      const remaining = document.querySelectorAll('#editItemsWrap .edit-item').length;
+      if(remaining <= 1){ alert('至少要保留一個商品'); return; }
+      if(confirm('確定要刪除這個商品嗎？')) card.remove();
+    });
+  });
+  document.querySelectorAll('.edit-item [data-field="isReturn"]').forEach(sel=>toggleEditReturnFields(sel));
+  hydrateImages();
+}
+
+async function saveEditOrder(){
+  const order = findOrder(detailSelectedId);
+  if(!order) return;
+  if(order.orderType === 'customer'){
+    const name = (document.getElementById('editCustomerName')||{}).value || '';
+    if(!name.trim()){ alert('請填寫客人姓名'); return; }
+    order.customerName = name.trim();
+    order.phone = (document.getElementById('editPhone')||{}).value || '';
+    order.lineId = (document.getElementById('editLineId')||{}).value || '';
+    order.twRecipient = (document.getElementById('editTwRecipient')||{}).value || '';
+    order.twPhone = (document.getElementById('editTwPhone')||{}).value || '';
+    order.twAddress = (document.getElementById('editTwAddress')||{}).value || '';
+  }
+  const cards = document.querySelectorAll('#editItemsWrap .edit-item');
+  const newItems = [];
+  const uploadJobs = [];
+  cards.forEach(card=>{
+    const get = f => (card.querySelector(`[data-field="${f}"]`)||{}).value || '';
+    const itemName = get('itemName').trim();
+    if(!itemName) return;
+    const id = card.dataset.itemid || uidItem();
+    const isRet = order.orderType === 'return' || get('isReturn') === 'true';
+    const flow = isRet ? '' : get('flow');
+    const old = (order.items||[]).find(i=>i.id===id) || {};
+    const item = Object.assign({}, old, {
+      id,
+      itemName,
+      brand: get('brand'),
+      site: get('site'),
+      itemUrl: get('itemUrl'),
+      size: get('size'),
+      color: get('color'),
+      qty: get('qty') || '1',
+      flow,
+      priceTWD: isRet ? '' : get('priceTWD'),
+      priceUSD: isRet ? '' : get('priceUSD'),
+      directRecipient: flow==='直郵'?get('directRecipient'):'',
+      directAddress: flow==='直郵'?get('directAddress'):'',
+      directGroup: flow==='直郵'?get('directGroup'):'',
+      isReturn: isRet,
+      purchasedDate: get('purchasedDate'),
+      usReceivedDate: get('usReceivedDate'),
+      usShippedDate: get('usShippedDate'),
+      twReceivedDate: isRet || !TW_FLOWS.includes(flow) ? '' : get('twReceivedDate'),
+      customerShippedDate: isRet || !TW_FLOWS.includes(flow) ? '' : get('customerShippedDate'),
+      returnDate: isRet ? get('returnDate') : ''
+    });
+    if(pendingImageFiles[id]){
+      item.hasImage = true;
+      uploadJobs.push({itemId:id, file:pendingImageFiles[id]});
+    }
+    newItems.push(item);
+  });
+  if(newItems.length===0){ alert('至少要有一個商品名稱'); return; }
+  order.items = newItems;
+  await saveOrders();
+  for(const job of uploadJobs){
+    await uploadImageForItem(job.itemId, job.file);
+    delete pendingImageFiles[job.itemId];
+  }
+  if(uploadJobs.length) await saveOrders();
+  alert('訂單已更新');
+  detailEditing = false;
+  renderDetail();
   hydrateImages();
 }
 
