@@ -1,0 +1,2560 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BuyFlow v28 Fixed</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--text:#1f2937;--muted:#6b7280;--line:#e5e7eb;--brand:#2563eb;--green:#16a34a;--yellow:#ca8a04;--red:#dc2626;--purple:#7c3aed;--orange:#ea580c;--blue:#0284c7}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{display:flex;min-height:100vh}.side{width:260px;background:#111827;color:white;padding:22px 18px;position:sticky;top:0;height:100vh;overflow-y:auto}.logo{font-size:26px;font-weight:800;letter-spacing:.5px;margin-bottom:4px}.sub{color:#9ca3af;font-size:13px;margin-bottom:24px}.nav button{display:block;width:100%;text-align:left;border:0;background:transparent;color:#d1d5db;padding:12px 12px;border-radius:10px;margin:4px 0;font-size:15px;cursor:pointer}.nav button.active,.nav button:hover{background:#1f2937;color:#fff}.main{flex:1;padding:24px;max-width:1500px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;background:#eef2ff;color:#3730a3}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 24px rgba(15,23,42,.04)}.dashboard-link{cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;position:relative}.dashboard-link:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,23,42,.10);border-color:#bfdbfe}.dashboard-link:active{transform:translateY(-1px)}.dashboard-link:after{content:"點擊查看 →";position:absolute;right:16px;bottom:14px;font-size:11px;font-weight:800;color:var(--brand);opacity:.72}.metric{font-size:30px;font-weight:800;margin:10px 0 2px}.label{font-size:13px;color:var(--muted)}.section{display:none}.section.active{display:block}.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}.input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:white;font-size:14px;font-family:inherit}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:13px;color:#374151;font-weight:700}.formgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer;background:var(--brand);color:white}.btn.secondary{background:#f3f4f6;color:#111827;border:1px solid var(--line)}.btn.green{background:var(--green)}.btn.orange{background:var(--orange)}.btn.red{background:var(--red)}.btn.small{padding:7px 10px;font-size:12px}.btn:disabled{opacity:.45;cursor:not-allowed}.table{width:100%;border-collapse:collapse;margin-top:10px}.table th,.table td{padding:12px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:top}.table th{font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:.04em}.status{font-size:12px;font-weight:800;border-radius:999px;padding:4px 9px;display:inline-block}.s-wait{background:#fef3c7;color:#92400e}.s-buy{background:#dbeafe;color:#1e40af}.s-usa{background:#dcfce7;color:#166534}.s-ship{background:#ede9fe;color:#5b21b6}.s-tw{background:#cffafe;color:#155e75}.s-ready{background:#ffedd5;color:#9a3412}.s-done{background:#d1fae5;color:#065f46}.s-return{background:#fee2e2;color:#991b1b}.itemcard{border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0;background:#fff}.itemhead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px}.thumb{width:74px;height:74px;border-radius:14px;background:#f3f4f6;border:1px dashed #cbd5e1;display:flex;align-items:center;justify-content:center;color:#64748b;font-size:12px;text-align:center;overflow:hidden;flex:none}.thumb img{width:100%;height:100%;object-fit:cover}.thumb.thumb-lg{width:160px;height:160px;border-radius:16px}.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}.step{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fafafa}.step b{font-size:12px;display:block;margin-bottom:5px}.step span{font-size:12px;color:var(--muted)}.muted{color:var(--muted)}.note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;border-radius:14px;padding:12px;margin:10px 0}.warnbanner{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:14px;padding:12px;margin:0 0 16px;font-weight:700;font-size:13px}.splitbox{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.customerbox{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#374151}.directbox{display:none;background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:12px;margin-top:10px}.shipmentgroup{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:12px;background:#fff}.checkrow{display:flex;align-items:center;gap:10px;padding:8px;border-bottom:1px solid #f3f4f6}.checkrow:last-child{border-bottom:0}.mobilehint{display:none}
+.mobile-variant-info{display:block;margin-top:7px;font-size:13px;font-weight:800;color:#374151}.mobile-variant-info .variant-pill{display:inline-block;margin:2px 6px 2px 0;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3}
+.upload-btn{display:inline-block;font-size:12px;font-weight:700;color:var(--brand);background:#eef2ff;padding:8px 12px;border-radius:8px;cursor:pointer;text-align:center}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted);font-size:13.5px;border:1px dashed var(--line);border-radius:14px;background:#fff}.item-note{margin-top:7px;padding:7px 9px;border-radius:9px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:12px;line-height:1.4}.item-note b{font-weight:800}
+
+.image-modal{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:18px}
+.image-modal.open{display:flex}
+.image-modal-card{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.image-modal img{max-width:96vw;max-height:88vh;object-fit:contain;border-radius:14px;background:white;box-shadow:0 20px 70px rgba(0,0,0,.45)}
+.image-modal-close{position:fixed;top:14px;right:14px;width:44px;height:44px;border:0;border-radius:999px;background:white;color:#111827;font-size:26px;font-weight:900;cursor:pointer;line-height:1}
+.image-modal-title{position:fixed;left:72px;right:72px;bottom:16px;color:white;font-weight:800;text-shadow:0 2px 8px rgba(0,0,0,.6);font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.image-modal-nav{position:fixed;top:50%;transform:translateY(-50%);width:52px;height:64px;border:0;border-radius:14px;background:rgba(255,255,255,.92);color:#111827;font-size:36px;font-weight:900;cursor:pointer;z-index:10001;display:none;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.28)}.image-modal-nav.show{display:flex}.image-modal-prev{left:14px}.image-modal-next{right:14px}.image-modal-counter{position:fixed;top:18px;left:50%;transform:translateX(-50%);color:white;background:rgba(0,0,0,.45);padding:6px 12px;border-radius:999px;font-weight:800;font-size:14px;display:none}.image-modal-counter.show{display:block}
+.thumb.has-photo{cursor:zoom-in;position:relative}
+.thumb.has-photo:after{content:'🔍';position:absolute;right:5px;bottom:5px;background:rgba(17,24,39,.78);color:white;border-radius:999px;width:23px;height:23px;display:flex;align-items:center;justify-content:center;font-size:12px}
+
+.item-status-modal{display:none;position:fixed;inset:0;z-index:10000;background:rgba(15,23,42,.58);align-items:center;justify-content:center;padding:18px}
+.item-status-modal.open{display:flex}
+.item-status-card{width:min(720px,96vw);max-height:90vh;overflow:auto;background:white;border-radius:22px;border:1px solid var(--line);box-shadow:0 25px 80px rgba(15,23,42,.28);padding:22px}
+.item-status-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:14px}
+.item-status-close{border:0;background:#f3f4f6;border-radius:999px;width:38px;height:38px;font-size:22px;font-weight:900;cursor:pointer}
+.status-big{display:inline-block;border-radius:999px;padding:8px 12px;font-size:14px;font-weight:900;margin-top:6px}
+.status-timeline{display:grid;gap:10px;margin-top:14px}
+.status-step-row{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start}
+.status-dot{width:22px;height:22px;border-radius:999px;background:#e5e7eb;color:#6b7280;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;margin-top:2px}
+.status-dot.done{background:#16a34a;color:white}
+.status-step-box{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fafafa}
+.status-step-box b{display:block;font-size:13px;margin-bottom:4px}
+.status-step-box span{font-size:12px;color:var(--muted)}
+.item-click{cursor:pointer;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.item-click:hover{color:var(--brand)}
+
+@media(max-width:900px){.thumb{width:96px;height:96px}.checkrow .thumb{width:86px;height:86px}.thumb.has-photo:after{width:28px;height:28px;font-size:14px}.image-modal{padding:8px}.image-modal img{max-width:100vw;max-height:86vh;border-radius:10px}.image-modal-close{top:10px;right:10px;width:48px;height:48px;font-size:30px}.image-modal-title{font-size:14px;bottom:12px;left:58px;right:58px}.image-modal-nav{width:44px;height:56px;font-size:30px;border-radius:12px}.image-modal-prev{left:6px}.image-modal-next{right:6px}}
+
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eef2ff,#f8fafc);padding:20px}
+.login-card{width:100%;max-width:440px;background:white;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 20px 50px rgba(15,23,42,.10)}
+.login-card h1{margin:0 0 6px;font-size:32px}.login-card .sub2{color:var(--muted);margin-bottom:20px}.login-error{display:none;background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:12px;padding:10px;margin:12px 0;font-size:13px;font-weight:700}.userbar{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+#appRoot{display:none}
+@media(max-width:900px){.app{display:block}.side{width:auto;height:auto;position:relative}.grid,.formgrid,.splitbox,.flow{grid-template-columns:1fr}.main{padding:14px}.table{font-size:12px}.mobilehint{display:block}.side .nav{display:grid;grid-template-columns:repeat(2,1fr)}}
+
+.customer-shipment-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}.customer-shipment-head h3{margin:0 0 8px}.subsection-title{margin:16px 0 6px;font-size:14px}.waiting-row{opacity:.78;background:#fafafa}.shipping-choice{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:14px;background:#f8fafc;display:flex;justify-content:space-between;gap:16px;align-items:center}.shipping-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.shipping-actions .input{max-width:180px}.mobile-item-row{min-width:0}.mobile-item-info{min-width:0}
+@media(max-width:900px){body{font-size:15px}.top{align-items:flex-start;gap:10px}.top h1{font-size:24px;margin:0}.userbar{justify-content:flex-start}.card{padding:14px;border-radius:14px}.toolbar{display:grid;grid-template-columns:1fr;gap:10px}.toolbar>*{max-width:none!important;width:100%!important}.btn{min-height:46px;font-size:15px}.btn.small{min-height:40px;font-size:14px}.side{padding:14px}.side .nav{grid-template-columns:1fr 1fr;gap:6px}.side .nav button{padding:11px 8px;font-size:14px;margin:0}.customer-shipment-card{padding:12px}.customer-shipment-head{display:block}.checkrow.mobile-item-row{display:grid;grid-template-columns:28px 82px 1fr;gap:10px;align-items:center;padding:12px 4px}.checkrow.mobile-item-row>.status{grid-column:3;justify-self:start}.checkrow.mobile-item-row .thumb{width:82px;height:82px}.shipping-choice{display:block;padding:12px}.shipping-actions{display:grid;grid-template-columns:1fr;margin-top:12px}.shipping-actions .input,.shipping-actions .btn{max-width:none;width:100%}.customerbox{font-size:14px;line-height:1.6;overflow-wrap:anywhere}.table{display:block;overflow-x:auto;white-space:nowrap}.formgrid{gap:10px}.input,select,textarea{font-size:16px}.main{overflow-x:hidden}.shipmentgroup{overflow:hidden}}
+
+.shipment-history{margin-top:8px;padding:9px 10px;border:1px solid #d1fae5;background:#f0fdf4;border-radius:10px;font-size:12px}.shipment-history>b{display:block;color:#166534;margin-bottom:5px}.shipment-history-row{display:grid;grid-template-columns:70px minmax(100px,1fr) minmax(190px,auto);gap:8px;padding:6px 0;border-top:1px solid #dcfce7;align-items:center}.shipment-history-actions{display:flex;gap:5px;align-items:center;justify-content:flex-end;flex-wrap:wrap}.shipment-history-user{color:#64748b;font-size:11px}.shipment-history-row:first-of-type{border-top:0}.shipped-history-box{margin-top:14px;border:1px solid #bbf7d0;border-radius:14px;background:#f0fdf4;padding:10px}.shipped-history-box summary{cursor:pointer;font-weight:800;color:#166534;padding:4px}.shipped-record-row{background:white;border-radius:12px;margin-top:8px;border:1px solid #dcfce7}.shipment-section-title{margin:14px 0 6px}
+
+@media(max-width:900px){
+  .mobile-card-table{display:block!important;overflow:visible!important;white-space:normal!important;width:100%!important;border-collapse:separate!important}
+  .mobile-card-table tbody{display:block!important;width:100%!important}
+  .mobile-card-table tr{display:block!important;width:100%!important;margin:0 0 14px!important;padding:14px!important;border:1px solid var(--line)!important;border-radius:16px!important;background:#fff!important;box-shadow:0 5px 16px rgba(15,23,42,.06)!important}
+  .mobile-card-table tr:first-child{display:none!important}
+  .mobile-card-table td{display:block!important;width:100%!important;padding:7px 0!important;border:0!important;white-space:normal!important;overflow-wrap:anywhere!important;text-align:left!important}
+  .mobile-card-table td:first-child{padding-top:0!important}
+  .mobile-card-table .thumb{width:112px!important;height:112px!important;margin:0 auto 8px!important}
+  .mobile-card-table .qty-action{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;padding-top:8px!important}
+  .mobile-card-table .qty-action .input,.mobile-card-table .qty-action .btn,.mobile-card-table td>.input,.mobile-card-table td>.btn{width:100%!important;max-width:none!important;margin:0!important}
+  .mobile-card-table .status,.mobile-card-table .badge{white-space:normal!important}
+  .usship-mobile-table td:first-child{display:flex!important;align-items:center!important;gap:8px!important}
+  .usship-mobile-table td:first-child:after{content:'選擇這個商品';font-weight:700;color:var(--muted);font-size:13px}
+  .usship-mobile-table input[type=checkbox]{width:24px!important;height:24px!important}
+  .jenna-mobile-table td:nth-child(3),.usreceive-mobile-table td:nth-child(2),.usship-mobile-table td:nth-child(3),.twreceive-mobile-table td:nth-child(2),.returns-mobile-table td:nth-child(2){font-size:16px!important}
+  .jenna-mobile-table td:last-child,.usreceive-mobile-table td:last-child,.usship-mobile-table td:last-child,.twreceive-mobile-table td:last-child,.returns-mobile-table td:last-child{margin-top:8px!important;padding-top:12px!important;border-top:1px solid var(--line)!important}
+  .mobile-variant-info{display:block!important;margin-top:7px!important;font-size:14px!important;font-weight:800!important;color:#374151!important}
+  .mobile-variant-info .variant-pill{display:inline-block!important;margin:2px 6px 2px 0!important;padding:4px 8px!important;border-radius:999px!important;background:#eef2ff!important;color:#3730a3!important}
+}
+
+@media(max-width:900px){
+  #customerOrders .mobile-summary-table,
+  #payments .mobile-summary-table{display:block;overflow:visible;white-space:normal;width:100%;}
+  #customerOrders .mobile-summary-table tbody,
+  #payments .mobile-summary-table tbody{display:block;width:100%;}
+  #customerOrders .mobile-summary-table tr:first-child,
+  #payments .mobile-summary-table tr:first-child{display:none;}
+  #customerOrders .mobile-summary-table tr,
+  #payments .mobile-summary-table tr{display:block;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;box-shadow:0 5px 16px rgba(15,23,42,.05);}
+  #customerOrders .mobile-summary-table td,
+  #payments .mobile-summary-table td{display:grid;grid-template-columns:105px minmax(0,1fr);gap:10px;width:100%;padding:8px 0;border:0;border-bottom:1px solid #f1f5f9;white-space:normal;align-items:start;overflow-wrap:anywhere;}
+  #customerOrders .mobile-summary-table td:last-child,
+  #payments .mobile-summary-table td:last-child{border-bottom:0;padding-bottom:0;}
+  #customerOrders .mobile-summary-table td:before,
+  #payments .mobile-summary-table td:before{content:attr(data-label);font-size:12px;font-weight:800;color:var(--muted);line-height:1.45;}
+  #customerOrders .mobile-summary-table .mobile-actions,
+  #payments .mobile-summary-table .mobile-actions{display:grid;grid-template-columns:1fr;gap:8px;width:100%;}
+  #customerOrders .mobile-summary-table .mobile-actions .btn,
+  #payments .mobile-summary-table .mobile-actions .btn{width:100%;margin:0;}
+  #payments .mobile-summary-table .payment-entry{display:grid;grid-template-columns:1fr;gap:8px;width:100%;}
+  #payments .mobile-summary-table .payment-entry .input{max-width:none!important;width:100%!important;}
+}
+@media(max-width:430px){
+  #customerOrders .mobile-summary-table td,
+  #payments .mobile-summary-table td{grid-template-columns:92px minmax(0,1fr);}
+}
+.order-image-strip{display:grid;grid-template-columns:repeat(2,54px);grid-auto-rows:54px;gap:7px;min-width:115px;width:max-content}.order-image-strip .thumb{width:54px;height:54px;border-radius:10px}.order-image-more{display:flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:10px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:800}.order-image-empty{color:var(--muted);font-size:12px}.image-loading-text{font-size:20px;color:#94a3b8;font-weight:700}
+@media(max-width:900px){#customerOrders .order-image-strip{grid-template-columns:repeat(2,72px);grid-auto-rows:72px;gap:8px}#customerOrders .order-image-strip .thumb{width:72px;height:72px;margin:0!important}#customerOrders .order-image-more{width:72px;height:72px}}
+
+.mobile-autocomplete{position:relative;width:100%}
+.mobile-autocomplete-list{display:none;position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:10050;max-height:240px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;background:#fff;border:1px solid #cbd5e1;border-radius:10px;box-shadow:0 12px 30px rgba(15,23,42,.18)}
+.mobile-autocomplete-list.open{display:block}
+.mobile-autocomplete-option{display:block;width:100%;border:0;border-bottom:1px solid #f1f5f9;background:#fff;color:#111827;text-align:left;padding:12px 13px;font:inherit;cursor:pointer;touch-action:pan-y}
+.mobile-autocomplete-option:last-child{border-bottom:0}
+.mobile-autocomplete-option:active,.mobile-autocomplete-option:hover{background:#eff6ff}
+.mobile-autocomplete-empty{padding:12px 13px;color:#6b7280;font-size:13px}
+@media(max-width:700px){.mobile-autocomplete-list{position:fixed;left:12px;right:12px;top:auto;bottom:max(12px, env(safe-area-inset-bottom));max-height:min(45vh,360px);overflow-y:scroll;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;border-radius:16px;box-shadow:0 18px 50px rgba(15,23,42,.28)}.mobile-autocomplete-option{padding:15px 16px;font-size:16px;touch-action:pan-y}}
+
+</style>
+
+<style>
+/* v50: 台灣出貨給客人手機版排版修正 */
+@media(max-width:900px){
+  #jessica .checkrow.mobile-item-row{
+    display:grid;
+    grid-template-columns:88px minmax(0,1fr);
+    gap:12px;
+    align-items:start;
+    padding:14px 0;
+    white-space:normal;
+  }
+  #jessica .checkrow.mobile-item-row .thumb{
+    grid-column:1;
+    grid-row:1;
+    width:88px;
+    height:88px;
+    margin:0;
+  }
+  #jessica .checkrow.mobile-item-row .mobile-item-info{
+    grid-column:2;
+    grid-row:1;
+    min-width:0;
+    width:100%;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    line-height:1.5;
+  }
+  #jessica .checkrow.mobile-item-row .mobile-item-info b{
+    display:block;
+    margin-bottom:4px;
+    font-size:15px;
+  }
+  #jessica .checkrow.mobile-item-row .qty-action{
+    grid-column:1 / -1;
+    grid-row:2;
+    display:grid;
+    grid-template-columns:1fr 110px;
+    gap:10px;
+    align-items:center;
+    width:100%;
+    margin-top:2px;
+  }
+  #jessica .checkrow.mobile-item-row .qty-action .input{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0;
+  }
+  #jessica .checkrow.mobile-item-row > .status{
+    grid-column:1 / -1;
+    grid-row:2;
+    justify-self:start;
+    margin-top:2px;
+  }
+  #jessica .checkrow.mobile-item-row.shipped-record-row{
+    grid-template-columns:88px minmax(0,1fr);
+  }
+  #jessica .shipmentgroup{padding:12px;}
+  #jessica .shipping-choice{margin-top:12px;}
+}
+@media(max-width:430px){
+  #jessica .checkrow.mobile-item-row{grid-template-columns:76px minmax(0,1fr);gap:10px;}
+  #jessica .checkrow.mobile-item-row .thumb{width:76px;height:76px;}
+  #jessica .checkrow.mobile-item-row .qty-action{grid-template-columns:1fr 96px;}
+}
+</style>
+</head>
+<body>
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <h1>BuyFlow</h1>
+    <div class="sub2">請先登入後再查看代購資料</div>
+    <div class="field"><label>Email</label><input class="input" id="loginEmail" type="email" placeholder="you@example.com" autocomplete="email"></div>
+    <div class="field" style="margin-top:12px"><label>Password</label><input class="input" id="loginPassword" type="password" placeholder="Password" autocomplete="current-password"></div>
+    <div id="loginError" class="login-error"></div>
+    <button class="btn" style="width:100%;margin-top:14px" onclick="loginWithEmail()">登入</button>
+  </div>
+</div>
+<div id="appRoot">
+<div class="app">
+<aside class="side">
+ <div class="logo">BuyFlow</div><div class="sub">代購貨況追蹤</div>
+ <div class="nav">
+  <button class="active" onclick="show('dashboard',this)">🇺🇸 Jenna 美國代購</button>
+  <button onclick="show('neworder',this)">➕ 新增訂單</button>
+  <button onclick="show('customerOrders',this)">📦 訂單管理</button>
+  <button onclick="show('jenna',this)">🛒 待訂購商品</button>
+  <button onclick="show('jen',this)">🇺🇸 美國收貨</button>
+  <button onclick="show('usShip',this)">✈️ 美國出貨</button>
+  <button onclick="show('stock',this)">📦 囤貨</button>
+  <button onclick="show('returns',this)">↩️ 退貨</button>
+  <button onclick="show('taiwanReceive',this)">🇹🇼 台灣收貨</button>
+  <button onclick="show('jessica',this)">📮 台灣出貨給客人</button>
+  <button onclick="show('completedOrders',this)">✅ 完成訂單</button>
+  <button onclick="show('payments',this)">💰 收款管理</button>
+  <button onclick="show('backup',this)">🛡️ 備份/回收桶</button>
+  <button onclick="show('detail',this)">訂單明細</button>
+ </div>
+</aside>
+<main class="main">
+ <div class="top"><div><h1 id="title">Jenna 美國代購</h1><div class="muted" id="titleSub">從客人下單到寄達，三人共用的一份資料</div></div><div class="userbar"><span class="pill" id="userPill">未登入</span><span class="pill" id="connPill">連線中…</span><button class="btn secondary small" onclick="logout()">登出</button></div></div>
+ <div id="warnBannerWrap"></div>
+
+<section id="dashboard" class="section active"><div id="dashboardContent"></div></section>
+<section id="neworder" class="section"><div id="neworderContent"></div></section>
+<section id="customerOrders" class="section"><div id="customerOrdersContent"></div></section>
+<section id="jenna" class="section"><div id="jennaContent"></div></section>
+<section id="jen" class="section"><div id="jenContent"></div></section>
+<section id="usShip" class="section"><div id="usShipContent"></div></section>
+<section id="stock" class="section"><div id="stockContent"></div></section>
+<section id="returns" class="section"><div id="returnsContent"></div></section>
+<section id="taiwanReceive" class="section"><div id="taiwanReceiveContent"></div></section>
+<section id="jessica" class="section"><div id="jessicaContent"></div></section>
+<section id="completedOrders" class="section"><div id="completedOrdersContent"></div></section>
+<section id="payments" class="section"><div id="paymentsContent"></div></section>
+<section id="backup" class="section"><div id="backupContent"></div></section>
+<section id="detail" class="section"><div id="detailContent"></div></section>
+
+</main></div>
+</div>
+
+<div id="imageModal" class="image-modal" onclick="closeImageModal(event)">
+  <div class="image-modal-card">
+    <button class="image-modal-close" onclick="closeImageModal(event)" aria-label="關閉">×</button>
+    <button id="imageModalPrev" class="image-modal-nav image-modal-prev" onclick="showPreviousModalImage(event)" aria-label="上一張">‹</button>
+    <img id="imageModalImg" alt="商品大圖">
+    <button id="imageModalNext" class="image-modal-nav image-modal-next" onclick="showNextModalImage(event)" aria-label="下一張">›</button>
+    <div id="imageModalCounter" class="image-modal-counter"></div>
+    <div id="imageModalTitle" class="image-modal-title"></div>
+  </div>
+</div>
+<div id="itemStatusModal" class="item-status-modal" onclick="closeItemStatusModal(event)">
+  <div class="item-status-card" onclick="event.stopPropagation()">
+    <div class="item-status-head">
+      <div>
+        <h2 id="itemStatusTitle" style="margin:0">商品狀態</h2>
+        <div id="itemStatusSubtitle" class="muted" style="margin-top:4px"></div>
+        <div id="itemStatusBadge"></div>
+      </div>
+      <button class="item-status-close" onclick="closeItemStatusModal(event)">×</button>
+    </div>
+    <div id="itemStatusBody"></div>
+  </div>
+</div>
+<script>
+// BuyFlow v81: single autocomplete dropdown + case-insensitive de-duplication
+// ====== Firebase 設定（沿用你已建立好的專案） ======
+const firebaseConfig = {
+  apiKey: "AIzaSyCJxAWxAhOtkewFF0FEqu4UduELWDdAv2k",
+  authDomain: "jenna---usa-buy.firebaseapp.com",
+  projectId: "jenna---usa-buy",
+  storageBucket: "jenna---usa-buy.firebasestorage.app",
+  messagingSenderId: "786455761363",
+  appId: "1:786455761363:web:e9390a916083d2d0d55f26"
+};
+const CONFIG_IS_PLACEHOLDER = firebaseConfig.apiKey === "YOUR_API_KEY";
+let connectionError = '';
+const FS_BASE = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents`;
+const FS_KEY = firebaseConfig.apiKey;
+const dbReady = !CONFIG_IS_PLACEHOLDER;
+const AUTH_BASE = `https://identitytoolkit.googleapis.com/v1/accounts`;
+let currentUser = null;
+function authHeaders(){ return currentUser && currentUser.idToken ? { 'Authorization': 'Bearer ' + currentUser.idToken } : {}; }
+function getStoredUser(){ try { return JSON.parse(localStorage.getItem('buyflowUser') || 'null'); } catch(e){ return null; } }
+function setStoredUser(u){ if(u) localStorage.setItem('buyflowUser', JSON.stringify(u)); else localStorage.removeItem('buyflowUser'); }
+function showLoginError(msg){ const el=document.getElementById('loginError'); if(el){ el.style.display='block'; el.textContent=msg; } }
+async function loginWithEmail(){
+  const email=(document.getElementById('loginEmail')||{}).value || '';
+  const password=(document.getElementById('loginPassword')||{}).value || '';
+  if(!email || !password){ showLoginError('請輸入 Email 和 Password'); return; }
+  try{
+    const res = await fetch(`${AUTH_BASE}:signInWithPassword?key=${FS_KEY}`, {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ email, password, returnSecureToken:true })
+    });
+    if(!res.ok){ throw new Error('登入失敗，請確認 Email / Password 是否正確'); }
+    const data = await res.json();
+    currentUser = { email:data.email, idToken:data.idToken, refreshToken:data.refreshToken, expiresAt: Date.now() + (parseInt(data.expiresIn||'3600')*1000) };
+    setStoredUser(currentUser);
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('appRoot').style.display='block';
+    startListening();
+  }catch(e){ showLoginError(e.message || '登入失敗'); }
+}
+function logout(){
+  setStoredUser(null); currentUser=null; loaded=false; orders=[];
+  if(pollTimer) clearInterval(pollTimer);
+  document.getElementById('appRoot').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+  const err=document.getElementById('loginError'); if(err) err.style.display='none';
+}
+function initAuth(){
+  const u = getStoredUser();
+  if(u && u.idToken && (!u.expiresAt || u.expiresAt > Date.now()+60000)){
+    currentUser = u;
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('appRoot').style.display='block';
+    startListening();
+  }else{
+    setStoredUser(null);
+    document.getElementById('loginScreen').style.display='flex';
+    document.getElementById('appRoot').style.display='none';
+  }
+}
+
+async function fsGetDoc(collection, docId){
+  const res = await fetch(`${FS_BASE}/${collection}/${docId}?key=${FS_KEY}`, { headers: authHeaders() });
+  if(res.status === 404) return null;
+  if(!res.ok) throw new Error('資料庫讀取失敗（HTTP ' + res.status + '）');
+  const data = await res.json();
+  return data.fields || null;
+}
+async function fsSetDoc(collection, docId, fieldName, stringValue){
+  const res = await fetch(`${FS_BASE}/${collection}/${docId}?key=${FS_KEY}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
+    body: JSON.stringify({ fields: { [fieldName]: { stringValue } } })
+  });
+  if(!res.ok){
+    const errText = await res.text().catch(()=> '');
+    throw new Error('資料庫寫入失敗（HTTP ' + res.status + '）' + (errText ? '：' + errText.slice(0,200) : ''));
+  }
+  return true;
+}
+async function fsSetFieldsDoc(collection, docId, values){
+  const fields = {};
+  Object.keys(values || {}).forEach(key => {
+    fields[key] = { stringValue: String(values[key] == null ? '' : values[key]) };
+  });
+  const res = await fetch(`${FS_BASE}/${collection}/${docId}?key=${FS_KEY}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
+    body: JSON.stringify({ fields })
+  });
+  if(!res.ok){
+    const errText = await res.text().catch(()=> '');
+    throw new Error('資料庫寫入失敗（HTTP ' + res.status + '）' + (errText ? '：' + errText.slice(0,200) : ''));
+  }
+  return true;
+}
+
+async function fsDeleteDoc(collection, docId){
+  const res = await fetch(`${FS_BASE}/${collection}/${docId}?key=${FS_KEY}`, { method: 'DELETE', headers: authHeaders() });
+  return res.ok;
+}
+
+// ====== 資料 ======
+const SITES = ['Abercrombie & Fitch','Adidas','Aerie','Amazon','American Eagle','Ann Taylor','Athleta','Banana Republic','Belk','Best Buy',"Bloomingdale's",'Burlington','Burberry','Cartier','Chanel','Costco',"Dick's Sporting Goods","Dillard's",'DSW','Famous Footwear','Finish Line','Foot Locker','Forever 21','Gap','Gucci','H&M','Hermès','Hollister','HomeGoods',"J.Crew",'JCPenney',"Kohl's",'LOFT','Louis Vuitton',"Macy's",'Marshalls','Neiman Marcus','Nike','Nordstrom','Nordstrom Rack','Old Navy','Pandora','Pottery Barn','Prada','REI','Ross Dress for Less',"Saks Fifth Avenue","Sam's Club",'Sephora','Sierra','Target','Tiffany & Co.','TJ Maxx',"Trader Joe's",'Ulta Beauty','Urban Outfitters','Walmart','Zara'];
+const BRANDS = ["7 For All Mankind", "Abercrombie & Fitch", "Adidas", "Aerie", "AG Jeans", "Allbirds", "Alo Yoga", "American Eagle", "Anker", "Ann Taylor", "Anthropologie", "Apple", "Arc'teryx", "ASICS", "Athleta", "BabyBjörn", "Balenciaga", "Banana Republic", "Beats", "Belkin", "Benefit", "Beyond Yoga", "Birkenstock", "Bobbi Brown", "Bose", "Bottega Veneta", "Brooks", "Brooks Brothers", "Buckle", "Burberry", "Calvin Klein", "CamelBak", "Carhartt", "Carter's", "Cartier", "CB2", "CeraVe", "Cetaphil", "Chaco", "Champion", "Chanel", "Chicco", "Chico's", "Citizens of Humanity", "Clinique", "Cole Haan", "ColourPop", "Columbia", "Converse", "Crate & Barrel", "Crocs", "Cuisinart", "David Yurman", "Dickies", "Dior", "DKNY", "Donna Karan", "Dr. Martens", "Drunk Elephant", "Dyson", "e.l.f.", "Eddie Bauer", "Estée Lauder", "Express", "Fenty Beauty", "Fitbit", "Free People", "Gap", "Garmin", "Gerber", "Ghirardelli", "GoPro", "Graco", "Gucci", "Guess", "Hanna Andersson", "Hermès", "Hershey's", "Hoka", "Hollister", "Hudson Jeans", "Hydro Flask", "Instant Pot", "iRobot", "IT Cosmetics", "J.Crew", "Janie and Jack", "JBL", "Jelly Belly", "Johnston & Murphy", "Keen", "Keurig", "Kiehl's", "Kirkland Signature", "KitchenAid", "La Roche-Posay", "Lacoste", "Lee", "Levi's", "LOFT", "Logitech", "Louis Vuitton", "Lucky Brand", "Lululemon", "MAC", "Madewell", "Marc Jacobs", "Merrell", "Michael Kors", "Mother Denim", "Nautica", "Neutrogena", "New Balance", "Nike", "Ninja", "Nuna", "NYX", "Oakley", "Olay", "Old Navy", "ON", "OshKosh B'gosh", "Outdoor Research", "Paige", "Pandora", "Patagonia", "Paula's Choice", "Polo Ralph Lauren", "Pottery Barn", "Prada", "Ralph Lauren", "Rare Beauty", "Reese's", "Restoration Hardware (RH)", "Saint Laurent", "Sam Edelman", "SanDisk", "See's Candies", "Shark", "Skechers", "Smashbox", "Smith Optics", "Sol de Janeiro", "Sony", "Sperry", "Stanley", "Starbucks", "Steve Madden", "Sunday Riley", "Swarovski", "Talbots", "Tarte", "Teva", "The North Face", "Tiffany & Co.", "Timberland", "Tommy Hilfiger", "Too Faced", "Trader Joe's", "True Religion", "UGG", "Under Armour", "UPPAbaby", "Urban Decay", "Urban Outfitters", "Vans", "Vineyard Vines", "Vitamix", "Vuori", "West Elm", "White House Black Market", "Williams Sonoma", "Wrangler", "YETI"];
+const FLOWS = ['小沈','JLS','恬恬','婷婷','直郵'];
+const STOCK_FLOWS = ['小沈','JLS','Jen'];
+const TW_FLOWS = ['小沈','JLS','恬恬'];
+
+let orders = [];
+let deletedOrders = [];
+let activityLog = [];
+let loaded = false;
+let imageCache = {};
+let thumbnailCache = {};
+let pendingImageFiles = {};
+let isComposingSearch = false;
+let lastOrdersJson = '';
+
+function uidOrder(){ return 'ORD-' + Math.random().toString(36).slice(2,5).toUpperCase() + Date.now().toString().slice(-4); }
+function uidItem(){ return 'ITM-' + Math.random().toString(36).slice(2,6).toUpperCase() + Date.now().toString().slice(-3); }
+function todayStr(){
+function localDateTimeStr(){ return new Date().toLocaleString('zh-TW', {hour12:false}); }
+  // 固定依美國西岸日期，避免 UTC 造成晚上被算成隔天
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone:'America/Los_Angeles', year:'numeric', month:'2-digit', day:'2-digit'
+  }).formatToParts(new Date());
+  const map = Object.fromEntries(parts.map(p=>[p.type,p.value]));
+  return `${map.year}-${map.month}-${map.day}`;
+}
+
+function confirmDateAction(action, date, details=''){
+  const extra = details ? `
+${details}` : '';
+  return confirm(`⚠️ 請再次確認
+
+動作：${action}
+日期：${date || todayStr()}${extra}
+
+確定要繼續嗎？`);
+}
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escAttr(s){ return esc(s); }
+function opts(arr, selected){ return arr.map(x=>`<option value="${escAttr(x)}" ${selected===x?'selected':''}>${esc(x)}</option>`).join(''); }
+function autocompleteField(field, value, listId, placeholder, sourceName, source){
+  // v81: use only the custom autocomplete. Native <datalist> could open a second
+  // browser dropdown on phones, making every suggestion appear twice.
+  return `<div class="mobile-autocomplete" data-autocomplete-source="${escAttr(sourceName)}"><input class="input" data-field="${escAttr(field)}" value="${escAttr(value||'')}" placeholder="${escAttr(placeholder)}" autocomplete="off" autocapitalize="none" spellcheck="false"><div class="mobile-autocomplete-list" role="listbox"></div></div>`;
+}
+function siteSearchField(value, listId){
+  return autocompleteField('site', value, listId, '輸入網站名稱搜尋，例如 nord', 'sites', SITES);
+}
+function brandSearchField(value, listId){
+  return autocompleteField('brand', value, listId, '輸入品牌搜尋，例如 alo', 'brands', BRANDS);
+}
+function autocompleteSource(name){
+  const src = name==='brands' ? BRANDS : SITES;
+  // v81: case-insensitive de-duplication, preserving the first canonical spelling.
+  const seen = new Set();
+  return src.filter(x=>{ const k=String(x).trim().toLocaleLowerCase(); if(seen.has(k)) return false; seen.add(k); return true; });
+}
+function resolveAutocompleteValue(value, source){
+  source = [...new Map((source||[]).map(x=>[String(x).trim().toLocaleLowerCase(), x])).values()];
+  const raw=String(value||'').trim();
+  if(!raw) return {value:'', needsChoice:false};
+  const q=raw.toLocaleLowerCase();
+  const exact=source.find(x=>x.toLocaleLowerCase()===q);
+  if(exact) return {value:exact, needsChoice:false};
+  const matches=source.filter(x=>x.toLocaleLowerCase().startsWith(q) || x.toLocaleLowerCase().includes(q));
+  if(matches.length===1) return {value:matches[0], needsChoice:false};
+  return {value:raw, needsChoice:matches.length>0, matches};
+}
+function normalizeAutocompleteInput(input, showMessage=false){
+  const wrap=input && input.closest('.mobile-autocomplete');
+  if(!wrap) return true;
+  const source=autocompleteSource(wrap.dataset.autocompleteSource);
+  const result=resolveAutocompleteValue(input.value, source);
+  if(!result.needsChoice){
+    input.value=result.value;
+    return true;
+  }
+  if(showMessage){
+    alert(`「${input.value.trim()}」符合多個既有選項，請從下拉選單選擇正確的名稱，避免產生重複資料。`);
+    input.focus();
+    updateAutocomplete(input);
+  }
+  return false;
+}
+function closeAutocomplete(except){
+  document.querySelectorAll('.mobile-autocomplete-list.open').forEach(el=>{ if(el!==except){ el.classList.remove('open'); el.innerHTML=''; } });
+}
+function updateAutocomplete(input){
+  const wrap=input.closest('.mobile-autocomplete');
+  if(!wrap) return;
+  const list=wrap.querySelector('.mobile-autocomplete-list');
+  const source=autocompleteSource(wrap.dataset.autocompleteSource);
+  const q=(input.value||'').trim().toLocaleLowerCase();
+  let matches=source.filter(x=>!q || x.toLocaleLowerCase().startsWith(q));
+  if(q && matches.length<10){
+    const extra=source.filter(x=>x.toLocaleLowerCase().includes(q) && !matches.includes(x));
+    matches=matches.concat(extra);
+  }
+  matches=matches.slice(0,12);
+  list.innerHTML=matches.length ? matches.map(x=>`<button type="button" class="mobile-autocomplete-option" data-value="${escAttr(x)}">${esc(x)}</button>`).join('') : `<div class="mobile-autocomplete-empty">沒有符合的既有選項，可保留目前輸入內容</div>`;
+  closeAutocomplete(list);
+  list.classList.add('open');
+}
+document.addEventListener('input', e=>{
+  if(e.target.matches('.mobile-autocomplete input[data-field="brand"], .mobile-autocomplete input[data-field="site"]')) updateAutocomplete(e.target);
+});
+document.addEventListener('focusin', e=>{
+  if(e.target.matches('.mobile-autocomplete input[data-field="brand"], .mobile-autocomplete input[data-field="site"]')) updateAutocomplete(e.target);
+});
+document.addEventListener('focusout', e=>{
+  if(e.target.matches('.mobile-autocomplete input[data-field="brand"], .mobile-autocomplete input[data-field="site"]')){
+    setTimeout(()=>normalizeAutocompleteInput(e.target, false), 120);
+  }
+});
+// v79: On phones, do not select on pointerdown. That blocked finger scrolling.
+// Let native vertical scrolling happen; select only after a real click/tap.
+document.addEventListener('click', e=>{
+  const option=e.target.closest('.mobile-autocomplete-option');
+  if(option){
+    e.preventDefault();
+    e.stopPropagation();
+    const wrap=option.closest('.mobile-autocomplete');
+    const input=wrap.querySelector('input');
+    const list=wrap.querySelector('.mobile-autocomplete-list');
+    input.value=option.dataset.value||'';
+    input.dispatchEvent(new Event('change',{bubbles:true}));
+    // v82: after a desktop/mobile selection, fully dismiss the custom menu
+    // and move focus away from the text field so focusin cannot immediately reopen it.
+    list.classList.remove('open');
+    list.innerHTML='';
+    input.blur();
+    return;
+  }
+  if(!e.target.closest('.mobile-autocomplete')) closeAutocomplete();
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape' && e.target.closest('.mobile-autocomplete')) closeAutocomplete();
+});
+function fmtMoney(n){ n = parseFloat(n)||0; return n.toLocaleString('en-US'); }
+
+function needsTwFlow(item, order){
+  if(item.isReturn) return false;
+  if(order.orderType==='stock') return ['小沈','JLS'].includes(item.flow);
+  return order.orderType==='customer' && TW_FLOWS.includes(item.flow);
+}
+function readyForCustomerFlow(item, order){
+  if(item.isReturn) return false;
+  if(order.orderType==='stock') return !!item.stockBuyer && ['小沈','JLS'].includes(item.flow);
+  return order.orderType==='customer' && TW_FLOWS.includes(item.flow);
+}
+function displayCustomerName(item, order){ return order.orderType==='stock' ? (item.stockBuyer || '囤貨未售') : (order.customerName || '（未填客人姓名）'); }
+function stockHomeFlow(item){ return item.stockOriginalFlow || item.flow || ''; }
+function isJenStock(item, order){ return order.orderType==='stock' && stockHomeFlow(item)==='Jen'; }
+
+function endsAfterUSShip(item, order){
+  return order.orderType==='customer' && !item.isReturn && ['直郵','婷婷'].includes(item.flow);
+}
+function findItem(itemId){
+  for(const o of orders){
+    const it = o.items.find(i=>i.id===itemId);
+    if(it) return {item:it, order:o};
+  }
+  return null;
+}
+function findOrder(id){ return orders.find(o=>o.id===id); }
+function allPairs(){
+  const pairs = [];
+  orders.forEach(o=>o.items.forEach(it=>pairs.push({item:it, order:o})));
+  return pairs;
+}
+
+
+function splitReturnItemsIntoSeparateOrders(preferredDetailId){
+  // 只要客人訂單中的某個商品被標記為退貨，就把該商品拆成獨立退貨訂單。
+  // 這樣原本客人的訂單只保留正常商品；退貨商品會走自己的退貨流程。
+  let changed = false;
+  const newReturnOrders = [];
+
+  orders.forEach(order => {
+    if(order.orderType !== 'customer' || !Array.isArray(order.items)) return;
+    const keepItems = [];
+    order.items.forEach(item => {
+      if(item && item.isReturn){
+        changed = true;
+        const returnItem = Object.assign({}, item, {
+          isReturn: true,
+          purchasedDate: item.purchasedDate || order.createdAt || todayStr(),
+          returnSourceOrderId: item.returnSourceOrderId || order.id,
+          returnSourceCustomerName: item.returnSourceCustomerName || order.customerName || '',
+          flow: '',
+          priceTWD: '',
+          priceUSD: '',
+          twReceivedDate: '',
+          customerShippedDate: '',
+          directRecipient: '',
+          directAddress: '',
+          directGroup: ''
+        });
+        newReturnOrders.push({
+          id: uidOrder(),
+          orderType: 'return',
+          createdAt: todayStr(),
+          sourceOrderId: order.id,
+          sourceCustomerName: order.customerName || '',
+          customerName: '', phone: '', lineId: '', twRecipient: '', twPhone: '', twAddress: '',
+          paymentsReceived: 0,
+          items: [returnItem]
+        });
+      }else{
+        keepItems.push(item);
+      }
+    });
+    order.items = keepItems;
+  });
+
+  if(changed){
+    // 移除已經沒有任何商品的原訂單，避免留下空訂單。
+    orders = orders.filter(o => o.orderType !== 'customer' || (Array.isArray(o.items) && o.items.length > 0));
+    orders.unshift(...newReturnOrders);
+    if(preferredDetailId && !findOrder(preferredDetailId) && newReturnOrders.length){
+      detailSelectedId = newReturnOrders[0].id;
+    }
+  }
+  return changed;
+}
+
+async function convertItemToReturn(itemId){
+  const found = findItem(itemId);
+  if(!found){ alert('找不到這個商品'); return; }
+  const item = found.item;
+  const sourceOrder = found.order;
+  if(item.isReturn || sourceOrder.orderType === 'return'){
+    alert('這個商品已經在退貨流程中');
+    return;
+  }
+  const shippedQty = usShippedQty(item);
+  if(shippedQty > 0){
+    alert('這個商品已有 ' + shippedQty + ' 件從美國出貨，不能直接轉為退貨。請先確認實際貨況後再處理。');
+    return;
+  }
+  const totalQty = itemTotalQty(item);
+  const qtyText = prompt(`這個商品共有 ${totalQty} 件，請輸入要退貨的數量`, String(totalQty));
+  if(qtyText === null) return;
+  const returnQty = parseInt(qtyText, 10);
+  if(!Number.isFinite(returnQty) || returnQty < 1 || returnQty > totalQty){
+    alert(`退貨數量必須介於 1 到 ${totalQty} 件`);
+    return;
+  }
+  const receivedQty = usReceivedQty(item);
+  const stageText = receivedQty > 0
+    ? `Jen 已收到 ${receivedQty}/${totalQty} 件。退貨商品會依實際已收到數量進入退貨頁。`
+    : `商品已購買但尚未收到；退貨部分仍會先留在「美國收貨」，收到後才進入「退貨」頁。`;
+  if(!confirm(`確定要把「${itemDisplayName(item)}」中的 ${returnQty} 件轉為退貨嗎？\n\n${stageText}\n原本的購買與美國收貨紀錄都會保留。`)) return;
+
+  const sourceOrderId = sourceOrder.id;
+  const sourceCustomerName = sourceOrder.customerName || '';
+  const userEmail = currentUser && currentUser.email ? currentUser.email : '未知使用者';
+
+  let returnItem;
+  if(returnQty === totalQty){
+    returnItem = item;
+    returnItem.isReturn = true;
+  }else{
+    returnItem = JSON.parse(JSON.stringify(item));
+    returnItem.id = uidItem();
+    returnItem.qty = String(returnQty);
+    returnItem.isReturn = true;
+    returnItem.returnQty = returnQty;
+
+    // 原訂單保留未退貨數量。
+    item.qty = String(totalQty - returnQty);
+    item.returnQty = 0;
+
+    // 依照已收到數量，把相對應數量分配到退貨商品；其餘保留在原商品。
+    const returnReceivedQty = Math.min(returnQty, receivedQty);
+    const remainReceivedQty = Math.max(0, receivedQty - returnReceivedQty);
+    const split = splitStageHistoryForQty(item.usReceipts || [], returnReceivedQty);
+    returnItem.usReceipts = split.taken;
+    item.usReceipts = split.remaining;
+    returnItem.usReceivedQty = returnReceivedQty;
+    item.usReceivedQty = remainReceivedQty;
+    returnItem.usReceivedDate = returnItem.usReceipts.length ? returnItem.usReceipts[returnItem.usReceipts.length-1].date : (returnReceivedQty ? item.usReceivedDate : '');
+    item.usReceivedDate = item.usReceipts.length ? item.usReceipts[item.usReceipts.length-1].date : (remainReceivedQty ? item.usReceivedDate : '');
+
+    // 退貨商品尚未出貨回台灣；原商品的未來流程保持不變。
+    returnItem.usShippedQty = 0;
+    returnItem.usShippedDate = '';
+    returnItem.usShipments = [];
+    returnItem.twReceivedQty = 0;
+    returnItem.twReceivedDate = '';
+    returnItem.twReceipts = [];
+    returnItem.customerShippedQty = 0;
+    returnItem.customerShippedDate = '';
+    returnItem.customerShipments = [];
+
+    sourceOrder.items.push(returnItem);
+  }
+
+  returnItem.purchasedDate = returnItem.purchasedDate || sourceOrder.createdAt || todayStr();
+  returnItem.convertedToReturnAt = localDateTimeStr();
+  returnItem.convertedToReturnBy = userEmail;
+  returnItem.returnSourceOrderId = sourceOrderId;
+  returnItem.returnSourceCustomerName = sourceCustomerName;
+  returnItem.returnQty = returnQty;
+  returnItem.flow = '';
+  returnItem.priceTWD = '';
+  returnItem.priceUSD = '';
+  returnItem.twReceivedDate = '';
+  returnItem.customerShippedDate = '';
+  returnItem.twReceipts = [];
+  returnItem.customerShipments = [];
+  returnItem.directRecipient = '';
+  returnItem.directAddress = '';
+  returnItem.directGroup = '';
+
+  splitReturnItemsIntoSeparateOrders(sourceOrderId);
+  const returnOrder = orders.find(o => o.orderType === 'return' && (o.items||[]).some(i => i.id === returnItem.id));
+  if(returnOrder) detailSelectedId = returnOrder.id;
+  logActivity('商品轉為退貨', `${itemDisplayName(returnItem)}（${returnItem.id}）退貨 ${returnQty} 件，從訂單 ${sourceOrderId}${sourceCustomerName ? '／客人 '+sourceCustomerName : ''} 拆出並進入退貨流程`);
+  await saveOrders();
+  detailEditing = false;
+  show('detail');
+  alert(`已將 ${returnQty} 件轉為退貨。原本的購買日期與美國收貨紀錄已保留。`);
+}
+
+function splitStageHistoryForQty(history, takeQty){
+  const source = Array.isArray(history) ? history.map(x=>({date:String(x.date||''), qty:Number(x.qty)||0, user:String(x.user||'')})).filter(x=>x.qty>0) : [];
+  const taken = [];
+  const remaining = [];
+  let need = Math.max(0, Number(takeQty)||0);
+  for(const row of source){
+    if(need <= 0){ remaining.push({...row}); continue; }
+    const use = Math.min(row.qty, need);
+    if(use > 0) taken.push({date:row.date, qty:use, user:row.user||''});
+    if(row.qty > use) remaining.push({date:row.date, qty:row.qty-use, user:row.user||''});
+    need -= use;
+  }
+  return {taken, remaining};
+}
+
+function itemTotalQty(item){
+  const n = parseInt(item && item.qty, 10);
+  return Number.isFinite(n) && n > 0 ? n : 1;
+}
+function itemStageQty(item, key, legacyDateKey){
+  const explicit = Number(item && item[key]);
+  if(Number.isFinite(explicit) && explicit >= 0) return Math.min(explicit, itemTotalQty(item));
+  return item && item[legacyDateKey] ? itemTotalQty(item) : 0;
+}
+function purchasedQty(item){ return item && item.purchasedDate ? itemTotalQty(item) : 0; }
+function usReceivedQty(item){ return itemStageQty(item, 'usReceivedQty', 'usReceivedDate'); }
+function usShippedQty(item){ return itemStageQty(item, 'usShippedQty', 'usShippedDate'); }
+function twReceivedQty(item){ return itemStageQty(item, 'twReceivedQty', 'twReceivedDate'); }
+function customerShippedQty(item){ return itemStageQty(item, 'customerShippedQty', 'customerShippedDate'); }
+
+function stageHistory(item, arrayKey, legacyDateKey, qtyGetter){
+  if(!Array.isArray(item[arrayKey])) item[arrayKey]=[];
+  item[arrayKey] = item[arrayKey]
+    .filter(x=>x && Number(x.qty)>0)
+    .map(x=>({date:String(x.date||''), qty:Number(x.qty)||0, user:String(x.user||'')}));
+  const totalQty = qtyGetter(item);
+  const recordedQty = item[arrayKey].reduce((sum,x)=>sum + (Number(x.qty)||0), 0);
+  // 舊資料沒有逐批紀錄時只能用舊的總日期補一筆；之後可直接按「修改」校正日期。
+  if(totalQty > recordedQty){
+    item[arrayKey].push({date:item[legacyDateKey]||'', qty:totalQty-recordedQty, user:''});
+  }
+  return item[arrayKey];
+}
+function appendStageEvent(item, arrayKey, legacyDateKey, qtyGetter, date, qty){
+  if(!Array.isArray(item[arrayKey])) item[arrayKey]=[];
+  if(item[arrayKey].length===0){
+    const previousQty=qtyGetter(item);
+    const previousDate=item[legacyDateKey]||'';
+    if(previousQty>0) item[arrayKey].push({date:previousDate,qty:previousQty,user:''});
+  }
+  // 每次操作都以當下輸入的日期新增獨立紀錄，不覆蓋前一筆。
+  item[arrayKey].push({date:String(date||todayStr()),qty:Number(qty)||0,user:(currentUser&&currentUser.email)||'unknown'});
+}
+function usReceiptHistory(item){ return stageHistory(item,'usReceipts','usReceivedDate',usReceivedQty); }
+function usShipmentHistory(item){ return stageHistory(item,'usShipments','usShippedDate',usShippedQty); }
+function twReceiptHistory(item){ return stageHistory(item,'twReceipts','twReceivedDate',twReceivedQty); }
+function customerShipmentHistory(item){ return stageHistory(item,'customerShipments','customerShippedDate',customerShippedQty); }
+function stageHistoryHTML(history, title, itemId, arrayKey){
+  if(!history.length) return '';
+  return `<div class="shipment-history"><b>${esc(title)}</b>${history.map((h,i)=>`<div class="shipment-history-row" style="display:block"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><span>第 ${i+1} 次</span><span style="flex:1">${esc(h.date)||'日期待確認'}${h.user?`<br><span class="shipment-history-user">👤 ${esc(h.user)}</span>`:''}</span><b>${h.qty} 件</b></div><div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end"><button class="btn secondary small" onclick="editStageHistory('${escAttr(itemId)}','${escAttr(arrayKey)}',${i},event)">修改這筆</button><button class="btn red small" onclick="deleteStageHistory('${escAttr(itemId)}','${escAttr(arrayKey)}',${i},event)">撤銷這筆</button></div></div>`).join('')}</div>`;
+}
+function shipmentHistoryHTML(item){ return stageHistoryHTML(customerShipmentHistory(item),'已出貨紀錄',item.id,'customerShipments'); }
+async function editStageHistory(itemId,arrayKey,index,event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  const found=findItem(itemId); if(!found) return;
+  const map={
+    usReceipts:{dateKey:'usReceivedDate',qtyKey:'usReceivedQty'},
+    usShipments:{dateKey:'usShippedDate',qtyKey:'usShippedQty'},
+    twReceipts:{dateKey:'twReceivedDate',qtyKey:'twReceivedQty'},
+    customerShipments:{dateKey:'customerShippedDate',qtyKey:'customerShippedQty'}
+  };
+  const cfg=map[arrayKey]; if(!cfg) return;
+  if(!Array.isArray(found.item[arrayKey]) || !found.item[arrayKey][index]) return;
+  const row=found.item[arrayKey][index];
+  const date=prompt('請輸入正確日期（YYYY-MM-DD）',row.date||todayStr());
+  if(date===null) return;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){alert('日期格式請使用 YYYY-MM-DD');return;}
+  const qtyText=prompt('請輸入這一次的件數',String(row.qty||1));
+  if(qtyText===null) return;
+  const qty=parseInt(qtyText,10);
+  if(!Number.isFinite(qty)||qty<1){alert('件數必須大於 0');return;}
+  const otherTotal=found.item[arrayKey].reduce((sum,x,j)=>sum+(j===index?0:(Number(x.qty)||0)),0);
+  if(otherTotal+qty>itemTotalQty(found.item)){alert('歷史紀錄總件數不能超過商品總數量');return;}
+  found.item[arrayKey][index]={date,qty,user:row.user||((currentUser&&currentUser.email)||'unknown')};
+  const total=found.item[arrayKey].reduce((sum,x)=>sum+(Number(x.qty)||0),0);
+  found.item[cfg.qtyKey]=total;
+  const latest=found.item[arrayKey].filter(x=>x.date).slice().sort((a,b)=>a.date.localeCompare(b.date)).pop();
+  found.item[cfg.dateKey]=latest?latest.date:'';
+  logActivity(`修改${arrayKey}歷史：第 ${index+1} 次 ${date} ${qty} 件`,found.order.id);
+  await saveOrders();
+  renderSection(currentSection); hydrateImages();
+}
+
+
+async function deleteStageHistory(itemId,arrayKey,index,event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  const found=findItem(itemId); if(!found) return;
+  const map={
+    usReceipts:{dateKey:'usReceivedDate',qtyKey:'usReceivedQty',label:'美國收貨',downstream:()=>usShippedQty(found.item)},
+    usShipments:{dateKey:'usShippedDate',qtyKey:'usShippedQty',label:'美國出貨',downstream:()=>twReceivedQty(found.item)},
+    twReceipts:{dateKey:'twReceivedDate',qtyKey:'twReceivedQty',label:'台灣收貨',downstream:()=>customerShippedQty(found.item)},
+    customerShipments:{dateKey:'customerShippedDate',qtyKey:'customerShippedQty',label:'寄給客人',downstream:()=>0}
+  };
+  const cfg=map[arrayKey]; if(!cfg) return;
+  if(!Array.isArray(found.item[arrayKey]) || !found.item[arrayKey][index]) return;
+  const row=found.item[arrayKey][index];
+  const newTotal=found.item[arrayKey].reduce((sum,x,j)=>sum+(j===index?0:(Number(x.qty)||0)),0);
+  const downstream=Number(cfg.downstream())||0;
+  if(newTotal < downstream){
+    alert(`不能撤銷這筆${cfg.label}紀錄，因為後續流程已有 ${downstream} 件。請先撤銷後續的物流紀錄。`);
+    return;
+  }
+  if(!confirm(`確定要撤銷這筆${cfg.label}紀錄嗎？\n日期：${row.date||'未填'}\n數量：${row.qty||0} 件`)) return;
+  found.item[arrayKey].splice(index,1);
+  const total=found.item[arrayKey].reduce((sum,x)=>sum+(Number(x.qty)||0),0);
+  found.item[cfg.qtyKey]=total;
+  const latest=found.item[arrayKey].filter(x=>x.date).slice().sort((a,b)=>a.date.localeCompare(b.date)).pop();
+  found.item[cfg.dateKey]=latest?latest.date:'';
+  logActivity(`撤銷${cfg.label}紀錄：${row.date||'未填日期'} ${row.qty||0} 件`,found.order.id,found.item.id);
+  await saveOrders();
+  renderSection(currentSection); hydrateImages();
+}
+
+async function clearReturnDate(itemId,event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  const found=findItem(itemId); if(!found || !found.item.returnDate) return;
+  const oldDate=found.item.returnDate;
+  if(!confirm(`確定要撤銷退貨完成日期 ${oldDate} 嗎？`)) return;
+  found.item.returnDate='';
+  logActivity(`撤銷退貨完成日期：${oldDate}`,found.order.id,found.item.id);
+  await saveOrders();
+  renderSection(currentSection); hydrateImages();
+}
+
+async function editSimpleDate(itemId,key,label,event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  const found=findItem(itemId); if(!found) return;
+  const oldDate=found.item[key]||'';
+  const date=prompt(`請輸入正確的${label}（YYYY-MM-DD）`,oldDate||todayStr());
+  if(date===null) return;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){alert('日期格式請使用 YYYY-MM-DD');return;}
+  found.item[key]=date;
+  logActivity(`修改${label}：${oldDate||'未填'} → ${date}`,found.order.id,found.item.id);
+  await saveOrders();
+  renderSection(currentSection); hydrateImages();
+}
+async function clearSimpleDate(itemId,key,label,event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  const found=findItem(itemId); if(!found || !found.item[key]) return;
+  const downstreamMap={
+    purchasedDate:()=>usReceivedQty(found.item),
+    returnDate:()=>0
+  };
+  const downstream=downstreamMap[key]?Number(downstreamMap[key]())||0:0;
+  if(downstream>0){alert(`不能撤銷${label}，因為後續流程已有 ${downstream} 件。請先撤銷後續物流紀錄。`);return;}
+  const oldDate=found.item[key];
+  if(!confirm(`確定要撤銷${label} ${oldDate} 嗎？`)) return;
+  found.item[key]='';
+  logActivity(`撤銷${label}：${oldDate}`,found.order.id,found.item.id);
+  await saveOrders();
+  renderSection(currentSection); hydrateImages();
+}
+function simpleDateActionsHTML(item,key,label){
+  const value=item[key]||'';
+  if(!value) return '';
+  return `<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn secondary small" onclick="editSimpleDate('${escAttr(item.id)}','${escAttr(key)}','${escAttr(label)}',event)">修改</button><button class="btn red small" onclick="clearSimpleDate('${escAttr(item.id)}','${escAttr(key)}','${escAttr(label)}',event)">撤銷</button></div>`;
+}
+
+function qtyProgress(done,total){ return `${done}/${total} 件`; }
+function clampActionQty(value, max){
+  const n=parseInt(value,10);
+  if(!Number.isFinite(n) || n<1) return 0;
+  return Math.min(n,max);
+}
+function itemIsWorkflowComplete(item, order){
+  const total=itemTotalQty(item);
+  if(item.isReturn) return !!item.returnDate;
+  if(endsAfterUSShip(item, order)) return usShippedQty(item) >= total;
+  if(needsTwFlow(item, order)) return customerShippedQty(item) >= total;
+  return usShippedQty(item) >= total;
+}
+function orderIsCompleted(order){
+  return order && order.items && order.items.length > 0 && order.items.every(it => itemIsWorkflowComplete(it, order));
+}
+async function deleteOrder(orderId){
+  const order = findOrder(orderId);
+  if(!order) return;
+  if(!confirm('確定要把這張訂單移到回收桶嗎？之後可以還原。')) return;
+  orders = orders.filter(o => o.id !== orderId);
+  order.deletedAt = new Date().toLocaleString('zh-TW', { hour12:false });
+  order.deletedBy = currentUser && currentUser.email ? currentUser.email : 'unknown';
+  deletedOrders.unshift(order);
+  logActivity('移到回收桶', orderId);
+  await saveOrders(false);
+  renderAll();
+}
+
+
+function logActivity(action, detail){
+  try{
+    activityLog.unshift({
+      id: 'LOG-' + Date.now() + '-' + Math.random().toString(36).slice(2,6),
+      at: new Date().toLocaleString('zh-TW', { hour12:false }),
+      user: currentUser && currentUser.email ? currentUser.email : 'unknown',
+      action,
+      detail: detail || ''
+    });
+    if(activityLog.length > 500) activityLog = activityLog.slice(0,500);
+  }catch(e){}
+}
+function appSnapshot(){
+  return { exportedAt: new Date().toISOString(), version:'v46', orders, deletedOrders, activityLog };
+}
+function downloadTextFile(filename, text, mime){
+  const blob = new Blob([text], {type: mime || 'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 300);
+}
+function csvCell(v){
+  const s = String(v==null?'':v);
+  return '"' + s.replace(/"/g,'""') + '"';
+}
+function exportAllCSV(){
+  const rows = [["訂單ID","訂單類型","客人姓名","電話","LINE","收件人","商品ID","商品名稱","品牌","網站","Size","顏色","數量","流向","退貨","購買日期","美國收貨日期","美國收貨數量","美國出貨日期","美國出貨數量","台灣收貨日期","台灣收貨數量","台灣出貨給客人日期","台灣出貨給客人數量","退貨日期","台幣金額","美金金額"]];
+  orders.forEach(o=> (o.items||[]).forEach(it=> rows.push([o.id,o.orderType,o.customerName,o.phone,o.lineId,o.twRecipient,it.id,itemDisplayName(it),it.brand,it.site,it.size,it.color,it.qty,it.flow,it.isReturn?'是':'否',it.purchasedDate,it.usReceivedDate,usReceivedQty(it),it.usShippedDate,usShippedQty(it),it.twReceivedDate,twReceivedQty(it),it.customerShippedDate,customerShippedQty(it),it.returnDate,it.priceTWD,it.priceUSD])));
+  const csv = rows.map(r=>r.map(csvCell).join(',')).join('\n');
+  downloadTextFile('buyflow-orders-' + todayStr() + '.csv', '\ufeff' + csv, 'text/csv;charset=utf-8');
+  logActivity('匯出 CSV', '匯出所有訂單資料');
+  saveOrders(false);
+}
+function exportBackupJSON(){
+  downloadTextFile('buyflow-backup-' + todayStr() + '.json', JSON.stringify(appSnapshot(), null, 2), 'application/json;charset=utf-8');
+  logActivity('匯出 JSON 備份', '完整備份 orders/deletedOrders/activityLog');
+  saveOrders(false);
+}
+function triggerImportBackup(){
+  const inp = document.getElementById('backupImportInput');
+  if(inp) inp.click();
+}
+function importBackupFile(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  if(!confirm('確定要用這個備份檔覆蓋目前資料嗎？建議先匯出目前備份。')) return;
+  const reader = new FileReader();
+  reader.onload = async e=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      orders = Array.isArray(data.orders) ? data.orders : [];
+      deletedOrders = Array.isArray(data.deletedOrders) ? data.deletedOrders : [];
+      activityLog = Array.isArray(data.activityLog) ? data.activityLog : [];
+      logActivity('匯入備份', file.name);
+      await saveOrders(false);
+      renderAll(); alert('備份已匯入');
+    }catch(err){ alert('備份檔格式不正確'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+async function restoreDeletedOrder(orderId){
+  const idx = deletedOrders.findIndex(o=>o.id===orderId);
+  if(idx<0) return;
+  const restored = deletedOrders.splice(idx,1)[0];
+  if(restored){ restored.deletedAt=''; restored.deletedBy=''; orders.unshift(restored); }
+  logActivity('還原訂單', orderId);
+  await saveOrders(false); renderBackup();
+}
+async function permanentlyDeleteOrder(orderId){
+  if(!confirm('確定永久刪除？這個動作無法從回收桶還原。')) return;
+  deletedOrders = deletedOrders.filter(o=>o.id!==orderId);
+  logActivity('永久刪除訂單', orderId);
+  await saveOrders(false); renderBackup();
+}
+
+// ====== Firestore 讀寫（改用 REST API，不需要載入額外的 JS 程式庫） ======
+let pollTimer = null;
+async function pollOrders(){
+  if(!dbReady) return;
+  try{
+    const fields = await fsGetDoc('app-data', 'main');
+    const json = (fields && fields.ordersJson && fields.ordersJson.stringValue) || '[]';
+    const deletedJson = (fields && fields.deletedOrdersJson && fields.deletedOrdersJson.stringValue) || '[]';
+    const logJson = (fields && fields.activityLogJson && fields.activityLogJson.stringValue) || '[]';
+    const combinedJson = json + '|' + deletedJson + '|' + logJson;
+    if(combinedJson !== lastOrdersJson){
+      lastOrdersJson = combinedJson;
+      orders = JSON.parse(json || '[]');
+      deletedOrders = JSON.parse(deletedJson || '[]');
+      activityLog = JSON.parse(logJson || '[]');
+      renderAll();
+    }
+    if(connectionError){ connectionError = ''; renderAll(); }
+  }catch(e){
+    console.error('讀取資料失敗', e);
+    connectionError = e && e.message ? e.message : '無法連線到資料庫';
+    renderAll();
+  }
+}
+function startListening(){
+  if(!dbReady){ loaded = true; renderAll(); return; }
+  pollOrders().finally(()=>{ loaded = true; renderAll(); });
+  pollTimer = setInterval(pollOrders, 4000);
+}
+async function saveOrders(addGenericLog=true){
+  if(addGenericLog) logActivity('更新資料', currentSection || '');
+  if(!dbReady) return;
+  try{
+    const json = JSON.stringify(orders);
+    const deletedJson = JSON.stringify(deletedOrders);
+    const logJson = JSON.stringify(activityLog);
+    // 一次寫入三個欄位，避免 Firestore PATCH 互相覆蓋，造成新訂單消失。
+    await fsSetFieldsDoc('app-data', 'main', {
+      ordersJson: json,
+      deletedOrdersJson: deletedJson,
+      activityLogJson: logJson
+    });
+    lastOrdersJson = json + '|' + deletedJson + '|' + logJson;
+    connectionError = '';
+  }catch(e){
+    console.error('儲存發生錯誤', e);
+    connectionError = e && e.message ? e.message : String(e);
+    renderAll();
+  }
+}
+
+// ====== 圖片 ======
+function readFileAsDataURL(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = () => reject(new Error('讀取檔案失敗'));
+    reader.readAsDataURL(file);
+  });
+}
+function loadImageEl(src){
+  return new Promise((resolve, reject)=>{
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => reject(new Error('無法解析這張圖片的格式'));
+    img.src = src;
+  });
+}
+function drawToDataURL(srcW, srcH, drawFn){
+  const maxDim = 900;
+  let w = srcW, h = srcH;
+  if(w > h && w > maxDim){ h = Math.round(h * maxDim / w); w = maxDim; }
+  else if(h >= w && h > maxDim){ w = Math.round(w * maxDim / h); h = maxDim; }
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext('2d');
+  drawFn(ctx, w, h);
+  return canvas.toDataURL('image/jpeg', 0.7);
+}
+async function compressImage(file){
+  try{
+    const bitmap = await createImageBitmap(file);
+    const dataUrl = drawToDataURL(bitmap.width, bitmap.height, (ctx,w,h)=>ctx.drawImage(bitmap,0,0,w,h));
+    bitmap.close && bitmap.close();
+    return dataUrl;
+  }catch(e1){
+    try{
+      const rawDataUrl = await readFileAsDataURL(file);
+      const img = await loadImageEl(rawDataUrl);
+      return drawToDataURL(img.naturalWidth, img.naturalHeight, (ctx,w,h)=>ctx.drawImage(img,0,0,w,h));
+    }catch(e2){
+      const rawDataUrl = await readFileAsDataURL(file).catch(()=>null);
+      if(rawDataUrl && rawDataUrl.length < 4000000) return rawDataUrl;
+      throw new Error('這張圖片的格式或大小無法處理，建議改用 JPG / PNG 格式，或先縮小照片再上傳');
+    }
+  }
+}
+async function makeThumbnailDataURL(source, maxSize=180){
+  const img = typeof source === 'string' ? await loadImageEl(source) : source;
+  const sw = img.naturalWidth || img.width;
+  const sh = img.naturalHeight || img.height;
+  if(!sw || !sh) throw new Error('無法建立縮圖');
+  const scale = Math.min(1, maxSize / Math.max(sw, sh));
+  const w = Math.max(1, Math.round(sw * scale));
+  const h = Math.max(1, Math.round(sh * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = w; canvas.height = h;
+  canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+  return canvas.toDataURL('image/jpeg', 0.62);
+}
+async function uploadImageForItem(itemId, file){
+  if(!dbReady) return;
+  try{
+    const dataUrl = await compressImage(file);
+    const thumbDataUrl = await makeThumbnailDataURL(dataUrl, 180);
+    await fsSetFieldsDoc('item-images', itemId, { dataUrl, thumbDataUrl });
+    imageCache[itemId] = dataUrl;
+    thumbnailCache[itemId] = thumbDataUrl;
+  }catch(e){
+    console.error('圖片上傳失敗', e);
+    alert('商品「'+itemId+'」的圖片上傳失敗：' + (e && e.message ? e.message : '未知錯誤'));
+  }
+}
+async function handleImageDelete(itemId){
+  if(!dbReady) return;
+  try{ await fsDeleteDoc('item-images', itemId); }catch(e){}
+  delete imageCache[itemId];
+  delete thumbnailCache[itemId];
+  const found = findItem(itemId);
+  if(found){ found.item.hasImage = false; await saveOrders(); }
+  renderAll();
+}
+function hydrateImages(root){
+  (root||document).querySelectorAll('[data-hasimage="1"]').forEach(async(el2)=>{
+    const id = el2.dataset.id;
+    if(!id) return;
+    const useThumb = el2.dataset.thumbnail === '1';
+    const cached = useThumb ? thumbnailCache[id] : imageCache[id];
+    if(cached){
+      el2.innerHTML = `<img src="${cached}" alt="商品圖片" loading="lazy">`;
+      return;
+    }
+    // 先顯示固定的圖片圖示，不再卡在「載入中」。
+    el2.innerHTML = '<span class="image-loading-text">🖼️</span>';
+    if(!dbReady) return;
+    try{
+      const fields = await fsGetDoc('item-images', id);
+      const full = fields && fields.dataUrl && fields.dataUrl.stringValue;
+      let thumb = fields && fields.thumbDataUrl && fields.thumbDataUrl.stringValue;
+      if(!full && !thumb){
+        el2.classList.remove('has-photo');
+        el2.removeAttribute('onclick');
+        el2.innerHTML = '圖片';
+        return;
+      }
+      if(full) imageCache[id] = full;
+      if(!thumb && full){
+        try{
+          thumb = await makeThumbnailDataURL(full, 180);
+          thumbnailCache[id] = thumb;
+          fsSetFieldsDoc('item-images', id, { dataUrl: full, thumbDataUrl: thumb }).catch(()=>{});
+        }catch(e){ thumb = full; }
+      }
+      if(thumb) thumbnailCache[id] = thumb;
+      const src = useThumb ? (thumb || full) : (full || thumb);
+      if(src) el2.innerHTML = `<img src="${src}" alt="商品圖片" loading="lazy">`;
+      const found=findItem(id);
+      if(found && !found.item.hasImage){
+        found.item.hasImage=true;
+        saveOrders().catch(()=>{});
+      }
+    }catch(e){
+      // 網路或權限暫時失敗時保留圖片圖示，不顯示無限載入。
+      el2.innerHTML = '<span class="image-loading-text">🖼️</span>';
+    }
+  });
+}
+// ====== 導覽 ======
+let currentSection = 'dashboard';
+const SECTION_TITLES = {
+  dashboard:'Jenna 美國代購', neworder:'新增訂單', customerOrders:'訂單管理', jenna:'待訂購商品',
+  jen:'美國收貨', usShip:'美國出貨', stock:'囤貨', returns:'退貨', taiwanReceive:'台灣收貨', jessica:'台灣出貨給客人',
+  completedOrders:'完成訂單', payments:'收款管理', backup:'備份/回收桶', detail:'訂單明細'
+};
+function show(id, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  else { const idx=Object.keys(SECTION_TITLES).indexOf(id); const b=document.querySelectorAll('.nav button')[idx]; if(b) b.classList.add('active'); }
+  document.getElementById('title').textContent = SECTION_TITLES[id] || id;
+  currentSection = id;
+  renderSection(id);
+}
+
+function renderAll(){
+  const userPill = document.getElementById('userPill');
+  if(userPill) userPill.textContent = currentUser && currentUser.email ? ('Hi, ' + currentUser.email) : '未登入';
+  const pill = document.getElementById('connPill');
+  if(pill){
+    if(CONFIG_IS_PLACEHOLDER){ pill.textContent = '⚠️ 尚未設定資料庫'; }
+    else if(connectionError){ pill.textContent = '⚠️ 連線異常'; }
+    else if(!loaded){ pill.textContent = '載入中…'; }
+    else { pill.textContent = '● 已連線同步'; }
+  }
+  const warnWrap = document.getElementById('warnBannerWrap');
+  if(warnWrap){
+    if(CONFIG_IS_PLACEHOLDER){
+      warnWrap.innerHTML = `<div class="warnbanner">⚠️ 尚未設定資料庫，請在檔案最上方 firebaseConfig 填入你的 Firebase 專案設定。</div>`;
+    }else if(connectionError){
+      warnWrap.innerHTML = `<div class="warnbanner">⚠️ 資料庫連線發生問題：${esc(connectionError)}</div>`;
+    }else{
+      warnWrap.innerHTML = '';
+    }
+  }
+  if(!loaded) return;
+  renderSection(currentSection);
+}
+
+function renderSection(id){
+  if(id==='dashboard') renderDashboard();
+  else if(id==='neworder') renderNewOrder();
+  else if(id==='customerOrders') renderCustomerOrders();
+  else if(id==='jenna') renderJenna();
+  else if(id==='jen') renderJen();
+  else if(id==='usShip') renderUSShip();
+  else if(id==='stock') renderStock();
+  else if(id==='returns') renderReturns();
+  else if(id==='taiwanReceive') renderTaiwanReceive();
+  else if(id==='jessica') renderJessica();
+  else if(id==='completedOrders') renderCompletedOrders();
+  else if(id==='payments') renderPayments();
+  else if(id==='backup') renderBackup();
+  else if(id==='detail') renderDetail();
+}
+
+// 讓搜尋框在輸入法組字（注音/拼音）時不被打斷
+function bindSearch(inputId, onChange, rerenderFn){
+  const el = document.getElementById(inputId);
+  if(!el) return;
+  el.addEventListener('compositionstart', ()=>{ isComposingSearch = true; });
+  el.addEventListener('compositionend', (e)=>{ isComposingSearch = false; onChange(e.target.value); rerenderFn(); });
+  el.addEventListener('input', (e)=>{
+    onChange(e.target.value);
+    if(isComposingSearch) return;
+    const pos = e.target.selectionStart;
+    rerenderFn();
+    const again = document.getElementById(inputId);
+    if(again){ again.focus(); again.setSelectionRange(pos,pos); }
+  });
+}
+
+function thumbHTML(item, size, forceLookup, useThumbnail=false){
+  const cls = size==='lg' ? 'thumb thumb-lg' : 'thumb';
+  const shouldLookup = !!(item && (item.hasImage || forceLookup));
+  if(shouldLookup){
+    const cached = useThumbnail ? thumbnailCache[item.id] : imageCache[item.id];
+    const inside = cached ? `<img src="${cached}" alt="商品圖片" loading="lazy">` : '<span class="image-loading-text">🖼️</span>';
+    return `<div class="${cls} has-photo" data-id="${escAttr(item.id)}" data-hasimage="1" data-thumbnail="${useThumbnail?'1':'0'}" data-force-lookup="${forceLookup?'1':'0'}" onclick="openImageModalById('${escAttr(item.id)}', event)" title="點一下放大圖片">${inside}</div>`;
+  }
+  return `<div class="${cls}">圖片</div>`;
+}
+
+function orderThumbHTML(order, item, idx){
+  const cached = thumbnailCache[item.id] || imageCache[item.id];
+  const inside = cached ? `<img src="${cached}" alt="商品圖片" loading="lazy">` : '<span class="image-loading-text">🖼️</span>';
+  return `<div class="thumb has-photo" data-id="${escAttr(item.id)}" data-hasimage="1" data-thumbnail="1" data-force-lookup="1" onclick="openOrderImageGallery('${escAttr(order.id)}',${idx},event)" title="點一下放大圖片">${inside}</div>`;
+}
+function orderImagesHTML(order){
+  const items=(order && Array.isArray(order.items)) ? order.items : [];
+  if(!items.length) return `<span class="order-image-empty">沒有商品圖片</span>`;
+  const firstFour = items.slice(0,4);
+  let shown = firstFour.map((item,idx)=>{
+    if(idx===3 && items.length>4) return `<button type="button" class="order-image-more" onclick="openOrderImageGallery('${escAttr(order.id)}',3,event)">+${items.length-3}</button>`;
+    return orderThumbHTML(order,item,idx);
+  }).join('');
+  return `<div class="order-image-strip">${shown}</div>`;
+}
+
+function itemDisplayName(item){
+  const parts = [];
+  if(item.itemName) parts.push(item.itemName);
+  if(!item.itemName && item.brand) parts.push(item.brand);
+  if(!item.itemName && item.site && item.site !== item.brand) parts.push(item.site);
+  if(!item.itemName && item.color) parts.push(item.color);
+  if(!item.itemName && item.size) parts.push('Size ' + item.size);
+  if(parts.length) return parts.join(' · ');
+  return item.hasImage ? '📷 商品圖片' : '未命名商品';
+}
+function itemNoteHTML(item){
+  const note = item && item.note ? String(item.note).trim() : '';
+  return note ? `<div class="item-note"><b>Note：</b>${esc(note)}</div>` : '';
+}
+
+function itemHasEnoughInfo(card, itemId){
+  const get = f => (card.querySelector(`[data-field="${f}"]`)||{}).value || '';
+  const hasText = ['itemName','brand','brandOther','site','siteOther','itemUrl','size','color','note','priceTWD','priceUSD'].some(f => String(get(f)).trim());
+  const hasPendingImage = !!pendingImageFiles[itemId];
+  const hasExistingImage = !!card.querySelector('[data-hasimage="1"]');
+  return hasText || hasPendingImage || hasExistingImage;
+}
+
+
+function itemStatusInfo(item, order){
+  const total=itemTotalQty(item), r=usReceivedQty(item), us=usShippedQty(item), tw=twReceivedQty(item), cs=customerShippedQty(item);
+  if(!item.purchasedDate) return { text:`等待 Jenna 訂購（共 ${total} 件）`, cls:'s-wait', detail:`這個商品共 ${total} 件，還沒有標記購買日期。`, current:'Jenna 待採購' };
+  if(item.isReturn){
+    if(r===0) return { text:`已下單 ${total} 件，等待 Jen 收到`, cls:'s-buy', detail:'這是退貨商品；Jen 收到至少一件後才會出現在退貨頁。', current:'Jen 美國收貨' };
+    if(!item.returnDate) return { text:`Jen 已收到 ${r}/${total} 件，等待退貨`, cls:'s-return', detail:`目前已收到 ${r} 件；尚有 ${total-r} 件未收到。`, current:'退貨處理' };
+    return { text:'已退貨完成', cls:'s-done', detail:'這個商品已完成退貨流程。', current:'完成' };
+  }
+  if(r < total) return { text:`已下單，Jen 已收到 ${r}/${total} 件`, cls:'s-buy', detail:`共訂購 ${total} 件，目前 Jen 收到 ${r} 件，仍有 ${total-r} 件等待到貨。已收到的部分可以進入美國出貨。`, current:'Jen 美國收貨 / 美國出貨' };
+  if(us < total){
+    const msg=item.flow==='直郵'?'等待直郵出貨':item.flow==='婷婷'?'等待美國出貨': '等待美國出貨回台灣';
+    return { text:`Jen 已收齊，已出貨 ${us}/${total} 件`, cls:'s-usa', detail:`已收到全部 ${total} 件；目前從美國寄出 ${us} 件，尚有 ${total-us} 件等待出貨。`, current:msg };
+  }
+  if(endsAfterUSShip(item, order)) return { text:`美國已出貨 ${us}/${total} 件，流程完成`, cls:'s-done', detail:'直郵 / 婷婷商品完成美國端流程。', current:'完成' };
+  if(tw < total) return { text:`美國已出貨，台灣收到 ${tw}/${total} 件`, cls:'s-ship', detail:`共 ${total} 件，台灣目前收到 ${tw} 件，尚有 ${total-tw} 件等待收貨。`, current:'台灣收貨' };
+  if(cs < total) return { text:`台灣已收齊，已寄客人 ${cs}/${total} 件`, cls:'s-tw', detail:`台灣已收到全部 ${total} 件，目前已寄給客人 ${cs} 件，尚有 ${total-cs} 件可寄。`, current:'台灣出貨給客人' };
+  return { text:`已寄給客人 ${cs}/${total} 件，完成`, cls:'s-done', detail:'這個商品的全部數量已完成流程。', current:'完成' };
+}
+function itemStatusSteps(item, order){
+  const total=itemTotalQty(item);
+  const base = [
+    {label:`Jenna 購買（${total} 件）`, date:item.purchasedDate, done:!!item.purchasedDate},
+    {label:`Jen 美國收貨（${usReceivedQty(item)}/${total} 件）`, date:item.usReceivedDate, done:usReceivedQty(item)>=total}
+  ];
+  if(item.isReturn){
+    base.push({label:'退貨日期', date:item.returnDate, done:!!item.returnDate});
+    return base;
+  }
+  base.push({label:`${item.flow==='直郵'?'直郵 / 美國出貨':'美國出貨'}（${usShippedQty(item)}/${total} 件）`, date:item.usShippedDate, done:usShippedQty(item)>=total});
+  if(needsTwFlow(item, order)){
+    base.push({label:`台灣收貨（${twReceivedQty(item)}/${total} 件）`, date:item.twReceivedDate, done:twReceivedQty(item)>=total});
+    base.push({label:`台灣出貨給客人（${customerShippedQty(item)}/${total} 件）`, date:item.customerShippedDate, done:customerShippedQty(item)>=total});
+  }
+  return base;
+}
+function openItemStatusModal(itemId, event){
+  if(event){ event.stopPropagation(); event.preventDefault(); }
+  const found = findItem(itemId);
+  if(!found) return;
+  const item = found.item, order = found.order;
+  const info = itemStatusInfo(item, order);
+  const title = itemDisplayName(item);
+  const sub = `${order.orderType==='return'?'退貨商品':('客人：' + (order.customerName || '—'))}｜${item.brand || item.site || '—'}｜${item.flow || (item.isReturn?'退貨':'—')}`;
+  const steps = itemStatusSteps(item, order).map(s=>`
+    <div class="status-step-row">
+      <div class="status-dot ${s.done?'done':''}">${s.done?'✓':'○'}</div>
+      <div class="status-step-box"><b>${esc(s.label)}</b><span>${s.done ? esc(s.date) : '尚未完成'}</span></div>
+    </div>`).join('');
+  document.getElementById('itemStatusTitle').textContent = title;
+  document.getElementById('itemStatusSubtitle').textContent = sub;
+  document.getElementById('itemStatusBadge').innerHTML = `<span class="status-big status ${info.cls}">${esc(info.text)}</span>`;
+  document.getElementById('itemStatusBody').innerHTML = `
+    <div class="note">${esc(info.detail)}</div>
+    ${itemNoteHTML(item)}
+    <div class="formgrid" style="margin-top:12px">
+      <div class="field"><label>目前所在流程</label><input class="input" readonly disabled value="${escAttr(info.current)}"></div>
+      <div class="field"><label>商品 ID</label><input class="input" readonly disabled value="${escAttr(item.id)}"></div>
+      <div class="field"><label>網站 / 品牌</label><input class="input" readonly disabled value="${escAttr((item.site||'') + (item.brand?(' / '+item.brand):''))}"></div>
+    </div>
+    <h3 style="margin-top:16px">商品流程</h3>
+    <div class="status-timeline">${steps}</div>
+    <div class="toolbar" style="margin-top:16px">
+      <button type="button" class="btn" onclick="editOrderFromItemStatus('${escAttr(item.id)}', event)">修改訂單</button>
+      <button type="button" class="btn secondary" onclick="closeItemStatusModal(event)">關閉</button>
+    </div>
+  `;
+  document.getElementById('itemStatusModal').classList.add('open');
+}
+function editOrderFromItemStatus(itemId, event){
+  if(event){ event.stopPropagation(); event.preventDefault(); }
+  const found = findItem(itemId);
+  if(!found) return;
+  closeItemStatusModal();
+  detailSelectedId = found.order.id;
+  detailEditing = true;
+  show('detail');
+}
+function closeItemStatusModal(event){
+  if(event){ event.stopPropagation(); }
+  const modal = document.getElementById('itemStatusModal');
+  if(modal) modal.classList.remove('open');
+}
+
+let modalGalleryItems = [];
+let modalGalleryIndex = -1;
+function updateImageModalNavigation(){
+  const hasMany = modalGalleryItems.length > 1;
+  ['imageModalPrev','imageModalNext'].forEach(id=>{ const el=document.getElementById(id); if(el) el.classList.toggle('show',hasMany); });
+  const counter=document.getElementById('imageModalCounter');
+  if(counter){ counter.classList.toggle('show',hasMany); counter.textContent=hasMany ? `${modalGalleryIndex+1} / ${modalGalleryItems.length}` : ''; }
+}
+async function openOrderImageGallery(orderId, startIndex, event){
+  if(event){ event.stopPropagation(); event.preventDefault(); }
+  const order=orders.find(o=>o.id===orderId);
+  if(!order || !Array.isArray(order.items) || !order.items.length) return;
+  modalGalleryItems=order.items.slice();
+  modalGalleryIndex=Math.max(0,Math.min(Number(startIndex)||0,modalGalleryItems.length-1));
+  await showModalGalleryImage();
+}
+async function showModalGalleryImage(){
+  const item=modalGalleryItems[modalGalleryIndex];
+  if(!item) return;
+  let src=imageCache[item.id] || thumbnailCache[item.id] || '';
+  if(!src && dbReady){
+    try{ const fields=await fsGetDoc('item-images',item.id); if(fields){ src=(fields.dataUrl&&fields.dataUrl.stringValue)||(fields.thumbnailDataUrl&&fields.thumbnailDataUrl.stringValue)||''; if(src) imageCache[item.id]=src; } }catch(e){ console.error(e); }
+  }
+  if(!src) return;
+  openImageModal(src,itemDisplayName(item));
+  updateImageModalNavigation();
+}
+async function showPreviousModalImage(event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  if(modalGalleryItems.length<2)return;
+  modalGalleryIndex=(modalGalleryIndex-1+modalGalleryItems.length)%modalGalleryItems.length;
+  await showModalGalleryImage();
+}
+async function showNextModalImage(event){
+  if(event){event.stopPropagation();event.preventDefault();}
+  if(modalGalleryItems.length<2)return;
+  modalGalleryIndex=(modalGalleryIndex+1)%modalGalleryItems.length;
+  await showModalGalleryImage();
+}
+function openImageModal(src, title){
+  if(!src) return;
+  const modal = document.getElementById('imageModal');
+  const img = document.getElementById('imageModalImg');
+  const titleEl = document.getElementById('imageModalTitle');
+  if(!modal || !img) return;
+  img.src = src;
+  if(titleEl) titleEl.textContent = title || '商品圖片';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+async function openImageModalById(itemId, event){
+  if(event){ event.stopPropagation(); event.preventDefault(); }
+  modalGalleryItems=[]; modalGalleryIndex=-1; updateImageModalNavigation();
+  const found = findItem(itemId);
+  const title = found ? `${itemDisplayName(found.item)}${found.item.brand && found.item.itemName ? '｜' + found.item.brand : ''}` : '商品圖片';
+  if(imageCache[itemId]){ openImageModal(imageCache[itemId], title); return; }
+  if(!dbReady) return;
+  try{
+    const fields = await fsGetDoc('item-images', itemId);
+    if(fields && fields.dataUrl && fields.dataUrl.stringValue){
+      imageCache[itemId] = fields.dataUrl.stringValue;
+      openImageModal(imageCache[itemId], title);
+    }
+  }catch(e){ console.error('讀取圖片失敗', e); }
+}
+function closeImageModal(event){
+  if(event){ event.stopPropagation(); }
+  const modal = document.getElementById('imageModal');
+  const img = document.getElementById('imageModalImg');
+  if(modal) modal.classList.remove('open');
+  if(img) img.src = '';
+  modalGalleryItems=[]; modalGalleryIndex=-1; updateImageModalNavigation();
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeImageModal(); closeItemStatusModal(); } if(e.key==='ArrowRight' && modalGalleryItems.length>1){showNextModalImage();} if(e.key==='ArrowLeft' && modalGalleryItems.length>1){showPreviousModalImage();} });
+
+// ====== 儀表板 ======
+function renderDashboard(){
+  const pairs = allPairs();
+  const waitJenna = pairs.filter(p=>!p.item.purchasedDate && !p.item.isReturn && !p.item.isStock && !['return','stock'].includes(p.order.orderType)).length;
+  const jenWaitReceive = pairs.filter(p=>p.item.purchasedDate && !p.item.usReceivedDate).length;
+  const inTransitToTw = pairs.filter(p=>p.item.usShippedDate && needsTwFlow(p.item,p.order) && !p.item.twReceivedDate).length;
+  const readyForCustomer = pairs.filter(p=>needsTwFlow(p.item,p.order) && p.item.twReceivedDate && !p.item.customerShippedDate).length;
+
+  document.getElementById('dashboardContent').innerHTML = `
+  <div class="grid">
+   <div class="card dashboard-link" role="button" tabindex="0" onclick="show('jenna')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();show('jenna')}"><div class="label">待 Jenna 採購</div><div class="metric">${waitJenna}</div></div>
+   <div class="card dashboard-link" role="button" tabindex="0" onclick="show('jen')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();show('jen')}"><div class="label">已買，Jen 待收貨</div><div class="metric">${jenWaitReceive}</div></div>
+   <div class="card dashboard-link" role="button" tabindex="0" onclick="show('taiwanReceive')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();show('taiwanReceive')}"><div class="label">已從美國寄出台灣</div><div class="metric">${inTransitToTw}</div></div>
+   <div class="card dashboard-link" role="button" tabindex="0" onclick="show('jessica')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();show('jessica')}"><div class="label">台灣已到，可寄客人</div><div class="metric">${readyForCustomer}</div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h2>流程重點</h2>
+   <div class="note">一般訂單：先輸入客人資料，再新增多個商品。退貨與囤貨都會直接進入美國收貨。囤貨可在左側「囤貨」頁追蹤存放位置、售出買家與退貨。任何商品如果改成退貨，系統會自動把它從原本訂單拆出來，建立成獨立退貨訂單。</div>
+   <table class="table"><tr><th>角色</th><th>看到什麼</th><th>主要動作</th></tr>
+    <tr><td>Jenna</td><td>待採購商品，可依訂購網站 filter</td><td>同網站商品一起購買，回來標記購買日期</td></tr>
+    <tr><td>Jen</td><td>Jenna 已訂好的商品，並可看到流向</td><td>標記美國收貨日期、美國出貨日期；要退貨的商品到「退貨」頁處理</td></tr>
+    <tr><td>Jessica</td><td>台灣收貨頁：只顯示小沈 / 恬恬 / JLS 需要到台灣的商品；可搜尋商品或品牌</td><td>先標記台灣收貨日期，再到「台灣出貨給客人」依客人合併或分批寄出</td></tr>
+   </table>
+  </div>`;
+}
+// ====== 新增訂單 ======
+let newOrderItemCount = 0;
+
+function renderNewOrder(){
+  document.getElementById('neworderContent').innerHTML = `
+  <div class="card">
+   <h2>新增訂單</h2>
+   <div class="note">先選「客人訂單」、「退貨商品」或「囤貨」。退貨與囤貨都不會進入待訂購，儲存後直接進入美國收貨。囤貨需選存放流向：小沈／JLS 運回台灣，Jen 留在美國。</div>
+   <div class="toolbar">
+    <label class="badge"><input type="radio" name="orderType" value="customer" checked onchange="toggleOrderType()"> 客人訂單</label>
+    <label class="badge"><input type="radio" name="orderType" value="return" onchange="toggleOrderType()"> 退貨商品</label>
+    <label class="badge"><input type="radio" name="orderType" value="stock" onchange="toggleOrderType()"> 囤貨</label>
+   </div>
+  </div>
+
+  <div id="customerInfoCard" class="card" style="margin-top:16px"><h2>客人資料</h2>
+   <div class="formgrid">
+    <div class="field"><label>客人姓名</label><input class="input" id="noCustomerName" placeholder="Amy Chen"></div>
+    <div class="field"><label>電話</label><input class="input" id="noPhone" placeholder="09xx / US phone"></div>
+    <div class="field"><label>LINE ID</label><input class="input" id="noLineId" placeholder="LINE"></div>
+    <div class="field"><label>台灣收件人</label><input class="input" id="noTwRecipient" placeholder="收件人"></div>
+    <div class="field"><label>台灣電話</label><input class="input" id="noTwPhone" placeholder="手機"></div>
+    <div class="field"><label>台灣地址</label><input class="input" id="noTwAddress" placeholder="地址"></div>
+   </div>
+  </div>
+
+  <div class="card" style="margin-top:16px"><h2>商品品項</h2>
+   <div class="note">一張客人訂單可以新增多個商品。商品名稱可空白，只上傳圖片也可以儲存；退貨商品會自動隱藏客訂金額、買貨金額與流向欄位，並直接進入美國收貨。</div>
+   <div id="itemsWrap"></div>
+   <button class="btn" onclick="addNewOrderItem()">＋ 新增商品</button>
+   <button class="btn green" onclick="saveNewOrder()">儲存</button>
+  </div>`;
+  newOrderItemCount = 0;
+  document.getElementById('itemsWrap').innerHTML = '';
+  addNewOrderItem();
+}
+
+function selectedOrderType(){ const el=document.querySelector('input[name="orderType"]:checked'); return el?el.value:'customer'; }
+function isReturnOnlyMode(){ return selectedOrderType()==='return'; }
+function isStockMode(){ return selectedOrderType()==='stock'; }
+
+function toggleOrderType(){
+  const specialMode = isReturnOnlyMode() || isStockMode();
+  document.getElementById('customerInfoCard').style.display = specialMode ? 'none' : 'block';
+  document.getElementById('itemsWrap').innerHTML = '';
+  newOrderItemCount = 0;
+  addNewOrderItem();
+}
+
+function toggleBrandOther(sel, id){
+  const el = document.getElementById(id);
+  if(el) el.style.display = sel.value === '__other__' ? 'block' : 'none';
+}
+function toggleFlowDirect(sel){
+  const card = sel.closest('.itemcard');
+  const box = card ? card.querySelector('.directbox') : null;
+  if(box) box.style.display = sel.value === '直郵' ? 'block' : 'none';
+}
+function previewNewItemImage(input, itemId){
+  const box = input.closest('.field').querySelector('.thumb');
+  if(!box || !input.files || !input.files[0]) return;
+  pendingImageFiles[itemId] = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => { box.classList.add("has-photo"); box.onclick = () => openImageModal(e.target.result, "圖片預覽"); box.innerHTML = `<img src="${e.target.result}" alt="圖片預覽">`; };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function addNewOrderItem(){
+  newOrderItemCount++;
+  const itemId = uidItem();
+  const returnMode = isReturnOnlyMode();
+  const stockMode = isStockMode();
+  const div = document.createElement('div');
+  div.className = 'itemcard';
+  div.dataset.itemid = itemId;
+  div.innerHTML = `
+  <div class="itemhead"><div><h3>商品 #${newOrderItemCount}</h3><span class="badge">${esc(itemId)}</span></div><button class="btn secondary small" onclick="this.closest('.itemcard').remove()">移除</button></div>
+  <div class="formgrid">
+   <div class="field"><label>商品圖片</label><input type="file" accept="image/*" class="input" onchange="previewNewItemImage(this,'${itemId}')"><div class="thumb">圖片預覽</div></div>
+   <div class="field"><label>商品名稱（選填）</label><input class="input" data-field="itemName" placeholder="可以空白，有圖片也可以"></div>
+   <div class="field"><label>品牌（可打字搜尋）</label>${brandSearchField('', 'brandOptions_'+itemId)}</div>
+   <div class="field"><label>訂購網站（可打字搜尋）</label>${siteSearchField('', 'siteOptions_'+itemId)}</div>
+   <div class="field"><label>商品網址</label><input class="input" data-field="itemUrl" placeholder="URL"></div>
+   <div class="field"><label>Size</label><input class="input" data-field="size" placeholder="S / M / 7 / 40oz"></div>
+   <div class="field"><label>顏色</label><input class="input" data-field="color" placeholder="Black / Pink"></div>
+   <div class="field"><label>數量</label><input class="input" data-field="qty" type="number" value="1"></div>
+   <div class="field" style="grid-column:1/-1"><label>商品 Note（選填）</label><textarea class="input" data-field="note" rows="3" placeholder="例如：仔細檢查、不要拆標、確認顏色是否正確"></textarea></div>
+   <div class="field normalOnly"><label>流向</label><select data-field="flow" onchange="toggleFlowDirect(this)"><option value="">（請選擇）</option>${opts(FLOWS)}</select></div>
+   <div class="field stockOnly"><label>囤貨流向</label><select data-field="stockFlow"><option value="">（請選擇）</option>${opts(STOCK_FLOWS)}</select><div class="muted">小沈／JLS：運回台灣囤貨；Jen：留在美國</div></div>
+   <div class="field normalOnly"><label>台幣：客訂金額</label><input class="input" data-field="priceTWD" placeholder="NT$"></div>
+   <div class="field normalOnly"><label>美金：買貨金額</label><input class="input" data-field="priceUSD" placeholder="US$"></div>
+  </div>
+  <div class="directbox"><b>直郵資訊</b><div class="formgrid" style="margin-top:10px">
+   <div class="field"><label>直郵收件人</label><input class="input" data-field="directRecipient" placeholder="收件人姓名"></div>
+   <div class="field"><label>直郵地址</label><input class="input" data-field="directAddress" placeholder="地址"></div>
+   <div class="field"><label>直郵分組</label><input class="input" data-field="directGroup" placeholder="例如 直郵組 A：這些商品一起寄"></div>
+  </div></div>
+  <div class="note" style="margin-top:12px">${returnMode?'退貨商品會直接進入「美國收貨」，收到後進入「退貨」頁。':stockMode?'囤貨會直接進入「美國收貨」，並可在左側「囤貨」頁追蹤存放位置、進度、售出客人或改為退貨。':'這個商品的日期之後會在 Jenna / Jen / Jessica 各自頁面更新，不在這裡統一填。'}</div>`;
+  document.getElementById('itemsWrap').appendChild(div);
+  div.querySelectorAll('.stockOnly').forEach(e=>e.style.display=stockMode?'flex':'none');
+  if(returnMode || stockMode){ div.querySelectorAll('.normalOnly').forEach(e=>e.style.display='none'); }
+}
+
+async function saveNewOrder(){
+  const returnMode = isReturnOnlyMode();
+  const stockMode = isStockMode();
+  const orderType = returnMode ? 'return' : (stockMode ? 'stock' : 'customer');
+  let customerName='', phone='', lineId='', twRecipient='', twPhone='', twAddress='';
+  if(!returnMode && !stockMode){
+    customerName = (document.getElementById('noCustomerName')||{}).value || '';
+    if(!customerName.trim()){ alert('請填寫客人姓名'); return; }
+    phone = (document.getElementById('noPhone')||{}).value || '';
+    lineId = (document.getElementById('noLineId')||{}).value || '';
+    twRecipient = (document.getElementById('noTwRecipient')||{}).value || '';
+    twPhone = (document.getElementById('noTwPhone')||{}).value || '';
+    twAddress = (document.getElementById('noTwAddress')||{}).value || '';
+  }
+
+  const cards = document.querySelectorAll('#itemsWrap .itemcard');
+  const items = [];
+  const uploadJobs = [];
+  let autocompleteError = false;
+  cards.forEach(card=>{
+    const get = f => (card.querySelector(`[data-field="${f}"]`)||{}).value || '';
+    const itemName = get('itemName').trim();
+    const itemId = card.dataset.itemid;
+    if(!itemHasEnoughInfo(card, itemId)) return;
+    let brand = get('brand'); if(brand==='__other__') brand = get('brandOther');
+    let site = get('site'); if(site==='__other__') site = get('siteOther');
+    const brandResult=resolveAutocompleteValue(brand, BRANDS);
+    const siteResult=resolveAutocompleteValue(site, SITES);
+    if(brandResult.needsChoice || siteResult.needsChoice){
+      autocompleteError=true;
+      const input=card.querySelector(`[data-field="${brandResult.needsChoice?'brand':'site'}"]`);
+      if(input) normalizeAutocompleteInput(input, true);
+      return;
+    }
+    brand=brandResult.value;
+    site=siteResult.value;
+    const flow = returnMode ? '' : (stockMode ? get('stockFlow') : get('flow'));
+    if(stockMode && !flow){ alert('囤貨商品請選擇流向：小沈、JLS 或 Jen'); return; }
+    const item = {
+      id: itemId, itemName, brand, site, itemUrl: get('itemUrl'), size: get('size'), color: get('color'),
+      qty: get('qty') || '1', note: get('note'),
+      flow, priceTWD:(returnMode||stockMode)?'':get('priceTWD'), priceUSD:returnMode?'':get('priceUSD'),
+      isStock:stockMode, stockBuyer:'', stockSoldDate:'', stockOriginalFlow:stockMode?flow:'',
+      directRecipient: flow==='直郵'?get('directRecipient'):'', directAddress: flow==='直郵'?get('directAddress'):'', directGroup: flow==='直郵'?get('directGroup'):'',
+      isReturn: returnMode, hasImage: false,
+      purchasedDate:(returnMode||stockMode)?todayStr():'', usReceivedDate:'', usShippedDate:'', twReceivedDate:'', customerShippedDate:'', returnDate:'', usReceipts:[], usShipments:[], twReceipts:[], customerShipments:[]
+    };
+    items.push(item);
+    if(pendingImageFiles[itemId]) uploadJobs.push({itemId, file: pendingImageFiles[itemId]});
+  });
+
+  if(autocompleteError) return;
+  if(items.length===0){ alert('請至少加入一個商品：可以只上傳圖片，商品名稱可空白'); return; }
+
+  const newOrder = {
+    id: uidOrder(), orderType, createdAt: todayStr(),
+    customerName, phone, lineId, twRecipient, twPhone, twAddress,
+    paymentsReceived: 0, items
+  };
+  orders.unshift(newOrder);
+  await saveOrders();
+
+  for(const job of uploadJobs){
+    await uploadImageForItem(job.itemId, job.file);
+    const found = findItem(job.itemId);
+    if(found) found.item.hasImage = true;
+    delete pendingImageFiles[job.itemId];
+  }
+  if(uploadJobs.length) await saveOrders();
+
+  alert('訂單已建立！');
+  show((returnMode||stockMode) ? 'jen' : 'customerOrders');
+}
+// ====== Jenna：待訂購商品（依網站分組） ======
+let jennaState = { search:'', site:'all' };
+
+function renderJenna(){
+  let pairs = allPairs().filter(p=>!p.item.purchasedDate && !p.item.isReturn && !p.item.isStock && !['return','stock'].includes(p.order.orderType));
+  pairs = pairs.filter(p=>{
+    if(!jennaState.search) return true;
+    const t = jennaState.search.toLowerCase();
+    return (p.item.itemName||'').toLowerCase().includes(t)
+      || (p.item.brand||'').toLowerCase().includes(t)
+      || (p.item.site||'').toLowerCase().includes(t)
+      || (p.order.customerName||'').toLowerCase().includes(t);
+  });
+  const sites = Array.from(new Set(pairs.map(p=>p.item.site).filter(Boolean))).sort();
+  if(jennaState.site !== 'all') pairs = pairs.filter(p=>p.item.site === jennaState.site);
+  // 待訂購商品：依訂單建立日期由舊到新，讓最早下單的先處理
+  pairs.sort((a,b)=>(a.order.createdAt||'').localeCompare(b.order.createdAt||'') || (a.order.id||'').localeCompare(b.order.id||''));
+
+  const rows = pairs.map(p=>{
+    const custLabel = p.order.orderType==='return' ? '（退貨商品）' : esc(p.order.customerName)||'—';
+    const qty=itemTotalQty(p.item);
+    return `<tr>
+      <td>${thumbHTML(p.item)}</td>
+      <td><b>${esc(p.item.site)||'—'}</b></td>
+      <td>${esc(p.item.brand)&&p.item.itemName?esc(p.item.brand)+'<br>':''}<span class="item-click" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">${esc(itemDisplayName(p.item))}</span>${itemNoteHTML(p.item)}<br><button class="btn secondary small" style="margin-top:6px" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">查看狀態</button></td>
+      <td><span class="status s-return" style="font-size:15px">${qty} 件</span></td>
+      <td>${custLabel}</td>
+      <td>${esc(p.item.size)||'-'} / ${esc(p.item.color)||'-'}</td>
+      <td>${p.order.orderType==='return' ? '<span class="status s-return">退貨</span>' : (p.item.flow ? `<span class="badge">${esc(p.item.flow)}</span>` : '—')}</td>
+      <td><input type="date" class="input" id="pdate_${p.item.id}" style="max-width:150px;display:inline-block"><button class="btn small green" data-action="mark-purchased" data-id="${p.item.id}">標記已購買 ${qty} 件</button></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('jennaContent').innerHTML = `
+  <div class="card"><h2>Purchase Queue：Jenna 依訂購網站一起買</h2>
+   <div class="note">數量會用醒目標籤顯示。若同一商品要買 5 件，請務必依「數量」欄購買 5 件。</div>
+   <div class="toolbar">
+    <select id="jennaSiteSelect" style="max-width:260px"><option value="all">全部網站</option>${opts(sites, jennaState.site==='all'?null:jennaState.site)}</select>
+    <input class="input" id="jennaSearchInput" style="max-width:320px" placeholder="搜尋商品/品牌/客人" value="${escAttr(jennaState.search)}">
+   </div>
+   ${pairs.length===0? `<div class="empty-state">目前沒有待採購的商品 🎉</div>` :
+   `<table class="table mobile-card-table jenna-mobile-table"><tr><th>圖片</th><th>網站</th><th>品牌/商品</th><th>數量</th><th>客人</th><th>Size/顏色</th><th>流向</th><th>動作</th></tr>${rows}</table>`}
+  </div>`;
+
+  const siteSel = document.getElementById('jennaSiteSelect');
+  if(siteSel) siteSel.addEventListener('change', e=>{ jennaState.site = e.target.value; renderJenna(); hydrateImages(); });
+  bindSearch('jennaSearchInput', v=>jennaState.search=v, ()=>{ renderJenna(); hydrateImages(); });
+  document.querySelectorAll('[data-action="mark-purchased"]').forEach(btn=>{
+    btn.addEventListener('click', async e=>{
+      const id = e.currentTarget.dataset.id;
+      const dateInput = document.getElementById('pdate_'+id);
+      const found = findItem(id);
+      if(found){
+        const date = (dateInput && dateInput.value) ? dateInput.value : todayStr();
+        if(!confirmDateAction('標記已購買', date, `商品：${itemDisplayName(found.item)}
+數量：${itemTotalQty(found.item)} 件`)) return;
+        found.item.purchasedDate = date;
+        logActivity(`標記已購買 ${itemTotalQty(found.item)} 件`, found.order.id, found.item.id);
+        await saveOrders();
+        renderJenna(); hydrateImages();
+      }
+    });
+  });
+  hydrateImages();
+}
+
+// ====== Jen：美國收貨 / 美國出貨 ======
+let jenState = { search:'', flow:'all', site:'all', brand:'all' };
+let usShipState = { search:'', flow:'all' };
+
+function usReceiveActionCell(item){
+  const total=itemTotalQty(item), done=usReceivedQty(item), remaining=total-done;
+  return `<div class="qty-action"><span class="badge">已收 ${done}/${total} 件</span><input type="number" min="1" max="${remaining}" value="${remaining}" class="input" id="jrqty_${item.id}" style="max-width:90px"><input type="date" class="input" id="jrdate_${item.id}" value="${todayStr()}" style="max-width:150px"><button class="btn small green" data-action="jen-mark-received" data-id="${item.id}">確認收到數量</button></div>`;
+}
+function usShipActionCell(item){
+  if(item.isReturn) return `<span class="status s-return">退貨商品：已移到退貨頁</span>`;
+  const total=itemTotalQty(item), received=usReceivedQty(item), shipped=usShippedQty(item), available=received-shipped;
+  const label = item.flow === '直郵' ? '確認直郵出貨' : '確認美國出貨';
+  return `<div class="qty-action"><span class="badge">可出貨 ${available} 件（已出 ${shipped}/${total}）</span><input type="number" min="1" max="${available}" value="${available}" class="input" id="jsqty_${item.id}" style="max-width:90px"><input type="date" class="input" id="jsdate_${item.id}" value="${todayStr()}" style="max-width:150px"><button class="btn small orange" data-action="us-ship-mark-shipped" data-id="${item.id}">${label}</button></div>`;
+}
+function mobileVariantHTML(item){
+  const parts=[];
+  if(item.color) parts.push(`<span class="variant-pill">顏色：${esc(item.color)}</span>`);
+  if(item.size) parts.push(`<span class="variant-pill">Size：${esc(item.size)}</span>`);
+  return parts.length ? `<div class="mobile-variant-info">${parts.join('')}</div>` : '';
+}
+function renderJen(){
+  let pairs = allPairs().filter(p=>(p.item.purchasedDate || p.item.isReturn || p.order.orderType==='return') && usReceivedQty(p.item)<itemTotalQty(p.item));
+  const availableSites = [...new Set(pairs.map(p=>p.item.site).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}));
+  const availableBrands = [...new Set(pairs.map(p=>p.item.brand).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'en',{sensitivity:'base'}));
+  pairs = pairs.filter(p=>{
+    if(!jenState.search) return true;
+    const t = jenState.search.toLowerCase();
+    return (p.item.itemName||'').toLowerCase().includes(t) || (p.item.site||'').toLowerCase().includes(t)
+      || (p.item.brand||'').toLowerCase().includes(t) || (p.item.flow||'').toLowerCase().includes(t);
+  });
+  if(jenState.flow !== 'all') pairs = pairs.filter(p=>p.item.flow === jenState.flow);
+  if(jenState.site !== 'all') pairs = pairs.filter(p=>p.item.site === jenState.site);
+  if(jenState.brand !== 'all') pairs = pairs.filter(p=>p.item.brand === jenState.brand);
+  // 美國收貨：依訂單建立日期由舊到新，優先處理等待最久的商品
+  pairs.sort((a,b)=>(a.order.createdAt||'').localeCompare(b.order.createdAt||'') || (a.order.id||'').localeCompare(b.order.id||''));
+  const rows = pairs.map(p=>{
+    const flowBadge = p.item.isReturn ? `<span class="status s-return">退貨商品</span>` : (p.item.flow ? `<span class="badge">${esc(p.item.flow)}</span>` : '—');
+    return `<tr><td>${thumbHTML(p.item)}</td><td><b class="item-click" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">${esc(itemDisplayName(p.item))}</b>${mobileVariantHTML(p.item)}${itemNoteHTML(p.item)}<br><span class="badge">${esc(p.item.site)||'—'}</span></td><td><b>${itemTotalQty(p.item)} 件</b><br>${flowBadge}</td><td>${esc(p.item.purchasedDate)||(p.item.isReturn?'退貨商品':'-')}</td><td>${usReceiveActionCell(p.item)}</td></tr>`;
+  }).join('');
+  document.getElementById('jenContent').innerHTML = `<div class="card"><h2>美國收貨：可分批確認數量</h2><div class="note">例如訂購 5 件、今天只到 2 件，就把收到數量填 2。剩下 3 件會繼續留在美國收貨；已收到的 2 件會同時出現在美國出貨。</div><div class="toolbar"><input class="input" id="jenSearchInput" style="max-width:340px" placeholder="搜尋商品名稱、網站、品牌、流向" value="${escAttr(jenState.search)}"><select id="jenSiteSelect" style="max-width:220px"><option value="all">全部訂購網站</option>${opts(availableSites, jenState.site==='all'?null:jenState.site)}</select><select id="jenBrandSelect" style="max-width:220px"><option value="all">全部品牌</option>${opts(availableBrands, jenState.brand==='all'?null:jenState.brand)}</select><select id="jenFlowSelect" style="max-width:220px"><option value="all">全部流向</option>${opts(FLOWS, jenState.flow==='all'?null:jenState.flow)}</select><button class="btn small" id="jenClearFilters" type="button">清除篩選</button></div>${pairs.length===0?`<div class="empty-state">目前沒有符合條件的待美國收貨商品</div>`:`<table class="table mobile-card-table usreceive-mobile-table"><tr><th>圖片</th><th>商品</th><th>總數量 / 流向</th><th>購買日期</th><th>本次收貨</th></tr>${rows}</table>`}</div>`;
+  bindSearch('jenSearchInput', v=>jenState.search=v, ()=>{ renderJen(); hydrateImages(); });
+  const siteSel=document.getElementById('jenSiteSelect'); if(siteSel) siteSel.addEventListener('change',e=>{jenState.site=e.target.value;renderJen();hydrateImages();});
+  const brandSel=document.getElementById('jenBrandSelect'); if(brandSel) brandSel.addEventListener('change',e=>{jenState.brand=e.target.value;renderJen();hydrateImages();});
+  const flowSel=document.getElementById('jenFlowSelect'); if(flowSel) flowSel.addEventListener('change',e=>{jenState.flow=e.target.value;renderJen();hydrateImages();});
+  const clearFilters=document.getElementById('jenClearFilters'); if(clearFilters) clearFilters.addEventListener('click',()=>{jenState={search:'',flow:'all',site:'all',brand:'all'};renderJen();hydrateImages();});
+  document.querySelectorAll('[data-action="jen-mark-received"]').forEach(btn=>btn.addEventListener('click',async e=>{
+    const found=findItem(e.currentTarget.dataset.id); if(!found)return;
+    const remaining=itemTotalQty(found.item)-usReceivedQty(found.item); const q=clampActionQty((document.getElementById('jrqty_'+found.item.id)||{}).value,remaining); if(!q){alert('請輸入有效的收到數量');return;}
+    const date=(document.getElementById('jrdate_'+found.item.id)||{}).value||todayStr();
+    if(!confirmDateAction('確認美國收到貨', date, `商品：${itemDisplayName(found.item)}
+本次數量：${q} 件`)) return;
+    appendStageEvent(found.item,'usReceipts','usReceivedDate',usReceivedQty,date,q);
+    found.item.usReceivedQty=usReceivedQty(found.item)+q; found.item.usReceivedDate=date;
+    logActivity(`美國收到 ${q} 件（累計 ${found.item.usReceivedQty}/${itemTotalQty(found.item)}）`,found.order.id,found.item.id); await saveOrders(); renderJen(); hydrateImages();
+  })); hydrateImages();
+}
+function renderUSShip(){
+  let pairs=allPairs().filter(p=>p.item.purchasedDate && !p.item.isReturn && usReceivedQty(p.item)>usShippedQty(p.item) && !(isJenStock(p.item,p.order) && !p.item.stockBuyer));
+  pairs=pairs.filter(p=>{if(!usShipState.search)return true;const t=usShipState.search.toLowerCase();return (p.item.itemName||'').toLowerCase().includes(t)||(p.item.site||'').toLowerCase().includes(t)||(p.item.brand||'').toLowerCase().includes(t)||(p.item.flow||'').toLowerCase().includes(t);});
+  if(usShipState.flow!=='all')pairs=pairs.filter(p=>p.item.flow===usShipState.flow);
+  const totalAvailable=pairs.reduce((sum,p)=>sum+Math.max(0,usReceivedQty(p.item)-usShippedQty(p.item)),0);
+  const rows=pairs.map(p=>`<tr><td><input type="checkbox" class="us-ship-bulk-check" data-id="${escAttr(p.item.id)}" checked aria-label="選擇 ${escAttr(itemDisplayName(p.item))}"></td><td>${thumbHTML(p.item)}</td><td><b class="item-click" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">${esc(itemDisplayName(p.item))}</b>${mobileVariantHTML(p.item)}${itemNoteHTML(p.item)}<br><span class="badge">${esc(p.item.site)||'—'}</span></td><td>${esc(p.item.flow)||'—'}</td><td>${qtyProgress(usReceivedQty(p.item),itemTotalQty(p.item))}<br><span class="status s-ready">可出貨 ${usReceivedQty(p.item)-usShippedQty(p.item)} 件</span></td><td>${usShipActionCell(p.item)}</td></tr>`).join('');
+  document.getElementById('usShipContent').innerHTML=`<div class="card"><h2>美國出貨：可分批或一鍵出貨</h2><div class="note">可以逐件出貨，也可以勾選多件後一次全部標記。批次出貨會把每個勾選商品目前「可出貨」的數量全部寄出。</div><div class="toolbar"><input class="input" id="usShipSearchInput" style="max-width:340px" placeholder="搜尋商品名稱、網站、品牌、流向" value="${escAttr(usShipState.search)}"><select id="usShipFlowSelect" style="max-width:220px"><option value="all">全部流向</option>${opts(FLOWS,usShipState.flow==='all'?null:usShipState.flow)}</select></div>${pairs.length===0?`<div class="empty-state">目前沒有待美國出貨的商品</div>`:`<div class="shipmentgroup" style="margin-bottom:14px"><div class="toolbar" style="margin:0"><label class="badge"><input type="checkbox" id="usShipSelectAll" checked> 全選目前清單</label><input type="date" class="input" id="usShipBulkDate" value="${todayStr()}" style="max-width:170px"><button class="btn orange" id="usShipBulkButton">一鍵出貨勾選商品</button><span class="badge">目前 ${pairs.length} 項，共可出貨 ${totalAvailable} 件</span></div></div><table class="table mobile-card-table usship-mobile-table"><tr><th>選擇</th><th>圖片</th><th>商品</th><th>流向</th><th>美國已收</th><th>本次出貨</th></tr>${rows}</table>`}</div>`;
+  bindSearch('usShipSearchInput',v=>usShipState.search=v,()=>{renderUSShip();hydrateImages();});
+  const flowSel=document.getElementById('usShipFlowSelect');if(flowSel)flowSel.addEventListener('change',e=>{usShipState.flow=e.target.value;renderUSShip();hydrateImages();});
+  const selectAll=document.getElementById('usShipSelectAll');
+  if(selectAll) selectAll.addEventListener('change',e=>document.querySelectorAll('.us-ship-bulk-check').forEach(cb=>cb.checked=e.target.checked));
+  document.querySelectorAll('.us-ship-bulk-check').forEach(cb=>cb.addEventListener('change',()=>{const all=[...document.querySelectorAll('.us-ship-bulk-check')];if(selectAll)selectAll.checked=all.length>0&&all.every(x=>x.checked);}));
+  const bulkButton=document.getElementById('usShipBulkButton');
+  if(bulkButton) bulkButton.addEventListener('click',async()=>{
+    const ids=[...document.querySelectorAll('.us-ship-bulk-check:checked')].map(cb=>cb.dataset.id);
+    if(!ids.length){alert('請至少勾選一個商品');return;}
+    const selected=ids.map(id=>findItem(id)).filter(Boolean).map(found=>({found,qty:Math.max(0,usReceivedQty(found.item)-usShippedQty(found.item))})).filter(x=>x.qty>0);
+    const totalQty=selected.reduce((sum,x)=>sum+x.qty,0);
+    if(!selected.length){alert('勾選的商品目前沒有可出貨數量');return;}
+    const date=(document.getElementById('usShipBulkDate')||{}).value||todayStr();
+    if(!confirmDateAction('一鍵美國出貨', date, `商品項目：${selected.length} 項
+本次總數量：${totalQty} 件`))return;
+    bulkButton.disabled=true;bulkButton.textContent='處理中…';
+    selected.forEach(({found,qty})=>{
+      appendStageEvent(found.item,'usShipments','usShippedDate',usShippedQty,date,qty);
+      found.item.usShippedQty=usShippedQty(found.item)+qty;
+      found.item.usShippedDate=date;
+      logActivity(`美國批次出貨 ${qty} 件（累計 ${found.item.usShippedQty}/${itemTotalQty(found.item)}）`,found.order.id,found.item.id);
+    });
+    await saveOrders();
+    alert(`已完成：${selected.length} 項商品，共 ${totalQty} 件`);
+    renderUSShip();hydrateImages();
+  });
+  document.querySelectorAll('[data-action="us-ship-mark-shipped"]').forEach(btn=>btn.addEventListener('click',async e=>{const found=findItem(e.currentTarget.dataset.id);if(!found)return;const avail=usReceivedQty(found.item)-usShippedQty(found.item);const q=clampActionQty((document.getElementById('jsqty_'+found.item.id)||{}).value,avail);if(!q){alert('請輸入有效的出貨數量');return;}const date=(document.getElementById('jsdate_'+found.item.id)||{}).value||todayStr();if(!confirmDateAction(found.item.flow==='直郵'?'確認直郵出貨':'確認美國出貨',date,`商品：${itemDisplayName(found.item)}
+本次數量：${q} 件`))return;appendStageEvent(found.item,'usShipments','usShippedDate',usShippedQty,date,q);found.item.usShippedQty=usShippedQty(found.item)+q;found.item.usShippedDate=date;logActivity(`美國出貨 ${q} 件（累計 ${found.item.usShippedQty}/${itemTotalQty(found.item)}）`,found.order.id,found.item.id);await saveOrders();renderUSShip();hydrateImages();})); hydrateImages();
+}
+
+
+
+async function deleteStockItem(itemId){
+  const found=findItem(itemId);
+  if(!found) return;
+  const item=found.item, order=found.order;
+  if(!confirm('確定要刪除這件囤貨商品嗎？刪除後會移到回收桶，可再還原。')) return;
+
+  if((order.items||[]).length<=1){
+    orders=orders.filter(o=>o.id!==order.id);
+    order.deletedAt=new Date().toLocaleString('zh-TW',{hour12:false});
+    order.deletedBy=currentUser&&currentUser.email?currentUser.email:'unknown';
+    deletedOrders.unshift(order);
+  }else{
+    order.items=(order.items||[]).filter(it=>it.id!==itemId);
+    const deletedCopy={
+      ...order,
+      id: order.id+'-STOCK-'+Date.now(),
+      items:[item],
+      deletedAt:new Date().toLocaleString('zh-TW',{hour12:false}),
+      deletedBy:currentUser&&currentUser.email?currentUser.email:'unknown',
+      deletedFromOrderId:order.id
+    };
+    deletedOrders.unshift(deletedCopy);
+  }
+  logActivity('刪除囤貨商品並移到回收桶',order.id,itemId);
+  await saveOrders(false);
+  renderAll();
+  show('stock',document.querySelector('aside button[onclick*="stock"]'));
+}
+
+// ====== 囤貨 ======
+let stockState={search:'',location:'all',status:'all'};
+function stockProgressText(item){
+  const total=itemTotalQty(item), home=stockHomeFlow(item);
+  if(item.isReturn) return item.returnDate?'已完成退貨':'退貨處理中';
+  if(home==='Jen'){
+    if(usReceivedQty(item)<total) return '等待美國收貨';
+    if(!item.stockBuyer) return '美國囤貨中';
+    if(usShippedQty(item)<total) return '已售出，等待美國出貨';
+    if(twReceivedQty(item)<total) return '已售出，運往台灣途中';
+    if(customerShippedQty(item)<total) return '台灣已收到，等待交付買家';
+    return '已交付買家';
+  }
+  if(usReceivedQty(item)<total) return '等待美國收貨';
+  if(usShippedQty(item)<total) return '美國已收，等待美國出貨';
+  if(twReceivedQty(item)<total) return '運往台灣途中';
+  if(!item.stockBuyer) return '台灣囤貨中';
+  if(customerShippedQty(item)<total) return '已售出，等待交付買家';
+  return '已交付買家';
+}
+function stockProgressKey(item){
+  const text=stockProgressText(item);
+  if(item.isReturn) return 'return';
+  if(text==='等待美國收貨') return 'wait-us';
+  if(text==='美國囤貨中') return 'us-stock';
+  if(text.includes('等待美國出貨')) return 'wait-us-ship';
+  if(text.includes('運往台灣途中')) return 'transit';
+  if(text==='台灣囤貨中') return 'tw-stock';
+  if(item.stockBuyer) return 'sold';
+  return 'all';
+}
+function renderStock(){
+  let pairs=allPairs().filter(p=>p.order.orderType==='stock' || p.item.isStock);
+  pairs=pairs.filter(p=>{
+    const t=stockState.search.toLowerCase();
+    if(t&&![(p.item.itemName||''),(p.item.brand||''),(p.item.site||''),(p.item.stockBuyer||''),stockHomeFlow(p.item),stockProgressText(p.item)].join(' ').toLowerCase().includes(t))return false;
+    if(stockState.location!=='all'&&stockHomeFlow(p.item)!==stockState.location)return false;
+    if(stockState.status==='unsold'&&p.item.stockBuyer)return false;
+    if(stockState.status==='sold'&&!p.item.stockBuyer)return false;
+    if(stockState.status==='return'&&!p.item.isReturn)return false;
+    if(['wait-us','us-stock','wait-us-ship','transit','tw-stock'].includes(stockState.status)&&stockProgressKey(p.item)!==stockState.status)return false;
+    return true;
+  });
+  pairs.sort((a,b)=>(b.order.createdAt||'').localeCompare(a.order.createdAt||''));
+  const rows=pairs.map(p=>{
+    const it=p.item, home=stockHomeFlow(it), progress=stockProgressText(it);
+    const canReturn=!it.isReturn&&usShippedQty(it)===0&&customerShippedQty(it)===0;
+    const routeText=home==='Jen'
+      ? (it.stockBuyer&&it.flow!=='Jen'?`原留美國，售出後走 ${esc(it.flow)} 回台灣`:'留在美國囤貨')
+      : `${esc(home)}：運回台灣囤貨`;
+    return `<tr><td>${thumbHTML(it)}</td><td><b class="item-click" onclick="openItemStatusModal('${escAttr(it.id)}',event)">${esc(itemDisplayName(it))}</b>${mobileVariantHTML(it)}${itemNoteHTML(it)}<br><span class="badge">${esc(it.brand)||'—'}</span> <span class="badge">${esc(it.site)||'—'}</span></td><td><span class="badge">${esc(home)||'—'}</span><br><span class="muted">${routeText}</span></td><td><span class="status ${it.isReturn?'s-return':progress.includes('囤貨中')?'s-ready':it.stockBuyer?'s-done':'s-wait'}">${esc(progress)}</span><br><span class="muted">美國收貨 ${usReceivedQty(it)}/${itemTotalQty(it)}｜美國出貨 ${usShippedQty(it)}/${itemTotalQty(it)}｜台灣收貨 ${twReceivedQty(it)}/${itemTotalQty(it)}</span></td><td>${it.stockBuyer?`<b>${esc(it.stockBuyer)}</b><br><span class="muted">售出日 ${esc(it.stockSoldDate)||'—'}</span>`:'<span class="muted">尚未售出</span>'}</td><td>${it.isReturn?'<span class="status s-return">退貨流程中</span>':`<div class="qty-action"><input class="input" id="stockBuyer_${it.id}" value="${escAttr(it.stockBuyer||'')}" placeholder="買家姓名"><input type="date" class="input" id="stockSold_${it.id}" value="${escAttr(it.stockSoldDate||todayStr())}">${home==='Jen'&&!it.stockBuyer?`<select id="stockDest_${it.id}"><option value="小沈">售出後走小沈</option><option value="JLS">售出後走 JLS</option></select>`:''}<button class="btn small green" data-action="stock-sold" data-id="${it.id}">${it.stockBuyer?'更新買家':'標記已售出'}</button>${canReturn?`<button class="btn small red" data-action="stock-return" data-id="${it.id}">沒賣出，改退貨</button>`:''}<button class="btn small red" data-action="stock-delete" data-id="${it.id}">刪除</button></div>`}</td></tr>`;
+  }).join('');
+  document.getElementById('stockContent').innerHTML=`<div class="card"><h2>囤貨追蹤</h2><div class="note"><b>所有囤貨都會一直保留在這一頁，並同步顯示目前狀態。</b><br><b>Jen：</b>美國收貨 → 確認收貨 → 美國囤貨。售出後才選小沈或 JLS，接著進入美國出貨與台灣收貨。<br><b>小沈／JLS：</b>美國收貨 → 確認收貨 → 美國出貨 → 台灣收貨 → 台灣囤貨。</div><div class="toolbar"><input class="input" id="stockSearch" style="max-width:340px" placeholder="搜尋商品、品牌、網站、買家、狀態" value="${escAttr(stockState.search)}"><select id="stockLocation"><option value="all">全部囤貨流向</option>${opts(STOCK_FLOWS,stockState.location==='all'?null:stockState.location)}</select><select id="stockStatus"><option value="all">全部狀態</option><option value="wait-us" ${stockState.status==='wait-us'?'selected':''}>等待美國收貨</option><option value="us-stock" ${stockState.status==='us-stock'?'selected':''}>美國囤貨中</option><option value="wait-us-ship" ${stockState.status==='wait-us-ship'?'selected':''}>等待美國出貨</option><option value="transit" ${stockState.status==='transit'?'selected':''}>運往台灣途中</option><option value="tw-stock" ${stockState.status==='tw-stock'?'selected':''}>台灣囤貨中</option><option value="unsold" ${stockState.status==='unsold'?'selected':''}>尚未售出</option><option value="sold" ${stockState.status==='sold'?'selected':''}>已售出</option><option value="return" ${stockState.status==='return'?'selected':''}>退貨中</option></select></div>${pairs.length?`<table class="table mobile-card-table"><tr><th>圖片</th><th>商品</th><th>囤貨位置</th><th>目前狀態與物流進度</th><th>買家</th><th>動作</th></tr>${rows}</table>`:'<div class="empty-state">目前沒有符合條件的囤貨商品</div>'}</div>`;
+  bindSearch('stockSearch',v=>stockState.search=v,()=>{renderStock();hydrateImages();});
+  const l=document.getElementById('stockLocation');if(l)l.onchange=e=>{stockState.location=e.target.value;renderStock();hydrateImages();};
+  const st=document.getElementById('stockStatus');if(st)st.onchange=e=>{stockState.status=e.target.value;renderStock();hydrateImages();};
+  document.querySelectorAll('[data-action="stock-sold"]').forEach(b=>b.onclick=async e=>{const f=findItem(e.currentTarget.dataset.id);if(!f)return;const buyer=(document.getElementById('stockBuyer_'+f.item.id)||{}).value.trim();if(!buyer){alert('請填寫買家姓名');return;}f.item.stockBuyer=buyer;f.item.stockSoldDate=(document.getElementById('stockSold_'+f.item.id)||{}).value||todayStr();if(stockHomeFlow(f.item)==='Jen'&&f.item.flow==='Jen'){const d=document.getElementById('stockDest_'+f.item.id);f.item.flow=d?d.value:'小沈';}logActivity('囤貨標記售出：'+buyer,f.order.id,f.item.id);await saveOrders();renderStock();hydrateImages();});
+  document.querySelectorAll('[data-action="stock-return"]').forEach(b=>b.onclick=async e=>{const f=findItem(e.currentTarget.dataset.id);if(!f)return;if(!confirm('確定這件囤貨沒有賣出，要改成退貨嗎？'))return;f.item.isReturn=true;f.item.flow='';f.item.stockBuyer='';logActivity('囤貨改為退貨',f.order.id,f.item.id);await saveOrders();renderStock();hydrateImages();});document.querySelectorAll('[data-action="stock-delete"]').forEach(b=>b.onclick=e=>deleteStockItem(e.currentTarget.dataset.id));hydrateImages();
+}
+
+// ====== 退貨 ======
+let returnsState = { search:'', status:'all' };
+
+function renderReturns(){
+  let pairs = allPairs().filter(p=>p.item.isReturn && p.item.usReceivedDate);
+  pairs = pairs.filter(p=>{
+    if(!returnsState.search) return true;
+    const t = returnsState.search.toLowerCase();
+    return (p.item.itemName||'').toLowerCase().includes(t) || (p.item.site||'').toLowerCase().includes(t)
+      || (p.order.customerName||'').toLowerCase().includes(t);
+  });
+  if(returnsState.status==='received') pairs = pairs.filter(p=>p.item.usReceivedDate && !p.item.returnDate);
+  if(returnsState.status==='returned') pairs = pairs.filter(p=>p.item.returnDate);
+
+  const rows = pairs.map(p=>{
+    const source = p.order.orderType==='return' ? '退貨商品' : '客人訂單';
+    return `<tr>
+      <td>${thumbHTML(p.item)}</td>
+      <td><b class="item-click" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">${esc(itemDisplayName(p.item))}</b>${itemNoteHTML(p.item)}<br><span class="muted">${esc(p.item.color)||''}</span><br><button class="btn secondary small" style="margin-top:6px" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">查看狀態</button></td>
+      <td>${source}</td>
+      <td>${esc(p.item.site)||'-'}</td>
+      <td>${esc(p.item.purchasedDate)||'-'}</td>
+      <td><b>${esc(p.item.returnQty || p.item.qty || 1)} 件</b></td>
+      <td>${esc(p.item.usReceivedDate)||'-'}</td>
+      <td><input type="date" class="input" id="rdate_${p.item.id}" value="${escAttr(p.item.returnDate)}" style="max-width:150px;display:inline-block">${p.item.returnDate? `<span class="status s-return" style="margin-left:6px;">已退貨</span>` : `<button class="btn small red" data-action="mark-returned" data-id="${p.item.id}">已退貨</button>`}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('returnsContent').innerHTML = `
+  <div class="card"><h2>退貨</h2>
+   <div class="note">這一頁只放「要退貨」的商品。只需要更新退貨日期，不需要備註。</div>
+   <div class="toolbar">
+    <input class="input" id="returnsSearchInput" style="max-width:340px" placeholder="搜尋商品、客人、網站" value="${escAttr(returnsState.search)}">
+    <select id="returnsStatusSelect" style="max-width:220px">
+      <option value="all" ${returnsState.status==='all'?'selected':''}>全部退貨狀態</option>
+      <option value="received" ${returnsState.status==='received'?'selected':''}>已收到待退貨</option>
+      <option value="returned" ${returnsState.status==='returned'?'selected':''}>已退貨</option>
+    </select>
+   </div>
+   ${pairs.length===0? `<div class="empty-state">目前沒有退貨商品</div>` :
+   `<table class="table mobile-card-table returns-mobile-table"><tr><th>圖片</th><th>商品</th><th>來源</th><th>網站</th><th>購買日期</th><th>退貨數量</th><th>美國收貨日期</th><th>退貨日期</th></tr>${rows}</table>`}
+  </div>`;
+
+  bindSearch('returnsSearchInput', v=>returnsState.search=v, ()=>{ renderReturns(); hydrateImages(); });
+  const statSel = document.getElementById('returnsStatusSelect');
+  if(statSel) statSel.addEventListener('change', e=>{ returnsState.status = e.target.value; renderReturns(); hydrateImages(); });
+
+  document.querySelectorAll('[data-action="mark-returned"]').forEach(btn=>{
+    btn.addEventListener('click', async e=>{
+      const id = e.currentTarget.dataset.id;
+      const d = document.getElementById('rdate_'+id);
+      const found = findItem(id);
+      if(found){ const date=(d && d.value) ? d.value : todayStr(); if(!confirmDateAction('確認已退貨',date,`商品：${itemDisplayName(found.item)}
+數量：${itemTotalQty(found.item)} 件`)) return; found.item.returnDate = date; logActivity(`標記已退貨 ${itemTotalQty(found.item)} 件`,found.order.id,found.item.id); await saveOrders(); renderReturns(); hydrateImages(); }
+    });
+  });
+  hydrateImages();
+}
+// ====== 台灣收貨 ======
+let twState = { search:'', flow:'all', status:'all', usShipDate:'all' };
+
+function displayFilterDate(date){
+  if(!date) return '日期待確認';
+  const parts=String(date).split('-');
+  if(parts.length===3) return `${Number(parts[1])}/${Number(parts[2])}/${parts[0]}`;
+  return String(date);
+}
+function itemUsShipDates(item){
+  return Array.from(new Set(usShipmentHistory(item).map(h=>String(h.date||'').trim()).filter(Boolean)));
+}
+function itemUsShipDateHTML(item){
+  const history=usShipmentHistory(item).filter(h=>h.date);
+  if(!history.length) return `<span class="muted">日期待確認</span>`;
+  return history.map(h=>`<div><b>${esc(displayFilterDate(h.date))}</b>${Number(h.qty)>0?` <span class="badge">${Number(h.qty)} 件</span>`:''}</div>`).join('');
+}
+
+function renderTaiwanReceive(){
+  let pairs=allPairs().filter(p=>needsTwFlow(p.item,p.order) && usShippedQty(p.item)>twReceivedQty(p.item));
+  const availableUsShipDates=Array.from(new Set(pairs.flatMap(p=>itemUsShipDates(p.item)))).sort((a,b)=>a.localeCompare(b));
+  if(twState.usShipDate!=='all' && !availableUsShipDates.includes(twState.usShipDate)) twState.usShipDate='all';
+  pairs=pairs.filter(p=>{if(!twState.search)return true;const t=twState.search.toLowerCase();return (p.item.itemName||'').toLowerCase().includes(t)||(p.item.brand||'').toLowerCase().includes(t);});
+  if(twState.flow!=='all')pairs=pairs.filter(p=>p.item.flow===twState.flow);
+  if(twState.usShipDate!=='all')pairs=pairs.filter(p=>itemUsShipDates(p.item).includes(twState.usShipDate));
+  // 台灣收貨：依訂單建立日期由舊到新，優先處理等待最久的商品
+  pairs.sort((a,b)=>(a.order.createdAt||'').localeCompare(b.order.createdAt||'') || (a.order.id||'').localeCompare(b.order.id||''));
+  const rows=pairs.map(p=>{const avail=usShippedQty(p.item)-twReceivedQty(p.item);return `<tr><td>${thumbHTML(p.item)}</td><td><b class="item-click" onclick="openItemStatusModal('${escAttr(p.item.id)}', event)">${esc(itemDisplayName(p.item))}</b>${mobileVariantHTML(p.item)}${itemNoteHTML(p.item)}<br><span class="badge">${esc(p.item.brand)||esc(p.item.site)||'—'}</span></td><td>${esc(displayCustomerName(p.item,p.order))||'—'}</td><td>${esc(p.item.flow)}</td><td><span class="muted">美國出貨日期</span><br>${itemUsShipDateHTML(p.item)}</td><td>${qtyProgress(usShippedQty(p.item),itemTotalQty(p.item))}</td><td><div class="qty-action"><span class="badge">台灣待收 ${avail} 件</span><input type="number" min="1" max="${avail}" value="${avail}" class="input" id="twqty_${p.item.id}" style="max-width:90px"><input type="date" class="input" id="twdate_${p.item.id}" style="max-width:150px"><button class="btn small green" data-action="tw-mark-received" data-id="${p.item.id}">確認收貨數量</button></div></td></tr>`;}).join('');
+  const dateOptions=availableUsShipDates.map(d=>`<option value="${escAttr(d)}" ${twState.usShipDate===d?'selected':''}>${esc(displayFilterDate(d))}</option>`).join('');
+  document.getElementById('taiwanReceiveContent').innerHTML=`<div class="card"><h2>台灣流程 Step 1：確認收貨數量</h2><div class="note">只有已從美國出貨的數量可以確認台灣收貨。若美國先寄回 2 件，台灣就先確認收到 2 件。</div><div class="toolbar"><input class="input" id="twSearchInput" style="max-width:360px" placeholder="搜尋商品名稱或品牌" value="${escAttr(twState.search)}"><select id="twFlowSelect" style="max-width:220px"><option value="all">全部流向</option>${opts(TW_FLOWS,twState.flow==='all'?null:twState.flow)}</select><select id="twUsShipDateSelect" style="max-width:220px"><option value="all">全部美國出貨日期</option>${dateOptions}</select></div>${pairs.length===0?`<div class="empty-state">目前沒有符合條件的商品</div>`:`<table class="table mobile-card-table twreceive-mobile-table"><tr><th>圖片</th><th>品牌 / 商品</th><th>客人</th><th>流向</th><th>美國出貨日期</th><th>美國已出貨</th><th>本次台灣收貨</th></tr>${rows}</table>`}</div>`;
+  bindSearch('twSearchInput',v=>twState.search=v,()=>{renderTaiwanReceive();hydrateImages();});const flowSel=document.getElementById('twFlowSelect');if(flowSel)flowSel.addEventListener('change',e=>{twState.flow=e.target.value;renderTaiwanReceive();hydrateImages();});const dateSel=document.getElementById('twUsShipDateSelect');if(dateSel)dateSel.addEventListener('change',e=>{twState.usShipDate=e.target.value;renderTaiwanReceive();hydrateImages();});
+  document.querySelectorAll('[data-action="tw-mark-received"]').forEach(btn=>btn.addEventListener('click',async e=>{const found=findItem(e.currentTarget.dataset.id);if(!found)return;const avail=usShippedQty(found.item)-twReceivedQty(found.item);const q=clampActionQty((document.getElementById('twqty_'+found.item.id)||{}).value,avail);if(!q){alert('請輸入有效的台灣收貨數量');return;}const date=(document.getElementById('twdate_'+found.item.id)||{}).value||todayStr();if(!confirmDateAction('確認台灣收到貨',date,`商品：${itemDisplayName(found.item)}
+本次數量：${q} 件`))return;appendStageEvent(found.item,'twReceipts','twReceivedDate',twReceivedQty,date,q);found.item.twReceivedQty=twReceivedQty(found.item)+q;found.item.twReceivedDate=date;logActivity(`台灣收到 ${q} 件（累計 ${found.item.twReceivedQty}/${itemTotalQty(found.item)}）`,found.order.id,found.item.id);await saveOrders();renderTaiwanReceive();hydrateImages();}));hydrateImages();
+}
+
+// ====== 台灣出貨給客人 ======
+let jessicaState = { search:'', flow:'all', status:'all' };
+
+function renderJessica(){
+  let allCustomerPairs=allPairs().filter(p=>readyForCustomerFlow(p.item,p.order));
+  allCustomerPairs=allCustomerPairs.filter(p=>{if(!jessicaState.search)return true;const t=jessicaState.search.toLowerCase();return (p.item.itemName||'').toLowerCase().includes(t)||(p.item.brand||'').toLowerCase().includes(t)||(displayCustomerName(p.item,p.order)||'').toLowerCase().includes(t);});
+  if(jessicaState.flow!=='all')allCustomerPairs=allCustomerPairs.filter(p=>p.item.flow===jessicaState.flow);
+  const groups=new Map();allCustomerPairs.forEach(p=>{const name=displayCustomerName(p.item,p.order);if(!groups.has(name))groups.set(name,{orders:[],pairs:[]});const g=groups.get(name);if(!g.orders.some(o=>o.id===p.order.id))g.orders.push(p.order);g.pairs.push(p);});
+  let names=Array.from(groups.keys()).sort((a,b)=>a.localeCompare(b,'zh-Hant'));
+  names=names.filter(name=>{const ps=groups.get(name).pairs;const ready=ps.reduce((n,p)=>n+Math.max(0,twReceivedQty(p.item)-customerShippedQty(p.item)),0);const waiting=ps.reduce((n,p)=>n+Math.max(0,itemTotalQty(p.item)-twReceivedQty(p.item)),0);const remaining=ps.reduce((n,p)=>n+Math.max(0,itemTotalQty(p.item)-customerShippedQty(p.item)),0);if(remaining<=0)return false;if(jessicaState.status==='partial')return ready>0&&waiting>0;if(jessicaState.status==='all-ready')return ready>0&&waiting===0;if(jessicaState.status==='waiting')return ready===0&&waiting>0;return true;});
+  const body=names.map(name=>{const g=groups.get(name),primaryOrder=g.orders[0]||{};const readyUnits=g.pairs.reduce((n,p)=>n+Math.max(0,twReceivedQty(p.item)-customerShippedQty(p.item)),0);const waitingUnits=g.pairs.reduce((n,p)=>n+Math.max(0,itemTotalQty(p.item)-twReceivedQty(p.item)),0);const shippedUnits=g.pairs.reduce((n,p)=>n+customerShippedQty(p.item),0);const summaryText=readyUnits&&waitingUnits?`部分到貨：${readyUnits} 件可先寄，${waitingUnits} 件等待中`:readyUnits?`全部到貨：${readyUnits} 件可寄`:`尚未到貨：${waitingUnits} 件等待中`;const summaryClass=readyUnits&&waitingUnits?'s-ready':readyUnits?'s-done':'s-ship';
+    const activeRows=g.pairs.map(p=>{const item=p.item,total=itemTotalQty(item),ready=Math.max(0,twReceivedQty(item)-customerShippedQty(item)),waiting=Math.max(0,total-twReceivedQty(item)),remaining=Math.max(0,total-customerShippedQty(item));if(remaining<=0)return '';return `<div class="checkrow mobile-item-row">${thumbHTML(item)}<div class="mobile-item-info" style="flex:1"><b class="item-click" onclick="openItemStatusModal('${escAttr(item.id)}', event)">${esc(itemDisplayName(item))}</b>${itemNoteHTML(item)}<br><span class="muted">總數 ${total} 件｜台灣已收 ${twReceivedQty(item)}｜已寄客人 ${customerShippedQty(item)}｜仍未寄 ${remaining}｜仍等待到貨 ${waiting}</span>${shipmentHistoryHTML(item)}</div>${ready>0?`<div class="qty-action"><span class="status s-ready">可寄 ${ready} 件</span><input type="number" min="0" max="${ready}" value="${ready}" class="input jessica-qty" data-id="${item.id}" style="max-width:80px"></div>`:`<span class="status s-ship">無可寄數量</span>`}</div>`;}).join('');
+    const shippedRows=g.pairs.filter(p=>customerShippedQty(p.item)>0).map(p=>{const item=p.item;return `<div class="checkrow mobile-item-row shipped-record-row">${thumbHTML(item)}<div class="mobile-item-info" style="flex:1"><b class="item-click" onclick="openItemStatusModal('${escAttr(item.id)}', event)">${esc(itemDisplayName(item))}</b>${itemNoteHTML(item)}<br><span class="status s-done">已出貨 ${customerShippedQty(item)}/${itemTotalQty(item)} 件</span>${shipmentHistoryHTML(item)}</div></div>`;}).join('');
+    const custBox=(primaryOrder.twRecipient||primaryOrder.twPhone||primaryOrder.twAddress)?`<div class="customerbox"><b>台灣收件人：</b>${esc(primaryOrder.twRecipient)||'—'}　<b>電話：</b>${esc(primaryOrder.twPhone)||'—'}<br><b>地址：</b>${esc(primaryOrder.twAddress)||'—'}</div>`:'';const safeKey=btoa(unescape(encodeURIComponent(name))).replace(/=/g,'');return `<div class="shipmentgroup customer-shipment-card" data-customer="${escAttr(name)}"><div class="customer-shipment-head"><div><h3>${esc(name)}</h3><span class="status ${summaryClass}">${summaryText}</span>${shippedUnits>0?`<span class="status s-done" style="margin-left:6px">已出貨 ${shippedUnits} 件</span>`:''}</div></div>${custBox}<h4 class="shipment-section-title">待處理商品</h4>${activeRows||'<div class="empty-state">目前沒有待處理商品</div>'}${shippedRows?`<details class="shipped-history-box" open><summary>查看已出貨商品與日期（${shippedUnits} 件）</summary>${shippedRows}</details>`:''}<div class="shipping-choice"><div><b>本次出貨</b><div class="muted">每個商品可填本次要寄出的數量；已寄出的商品與日期會保留在上方紀錄。</div></div><div class="shipping-actions"><input type="date" class="input" id="jship_${safeKey}"><button class="btn green" data-action="jessica-ship-group" data-customer="${escAttr(name)}" data-key="${safeKey}" ${readyUnits===0?'disabled':''}>確認本次出貨</button></div></div></div>`;}).join('');
+  document.getElementById('jessicaContent').innerHTML=`<div class="card"><h2>台灣出貨給客人：依客人與數量管理</h2><div class="note">部分出貨後，已寄出的商品仍會保留並顯示每次出貨日期與數量；尚未寄出的商品繼續留在待處理區。</div><div class="toolbar"><select id="jessicaFlowSelect" style="max-width:220px"><option value="all">全部流向</option>${opts(TW_FLOWS,jessicaState.flow==='all'?null:jessicaState.flow)}</select><input class="input" id="jessicaSearchInput" style="max-width:340px" placeholder="搜尋客人 / 商品 / 品牌" value="${escAttr(jessicaState.search)}"><select id="jessicaStatusSelect" style="max-width:240px"><option value="all" ${jessicaState.status==='all'?'selected':''}>全部客人</option><option value="partial" ${jessicaState.status==='partial'?'selected':''}>部分到貨，可先寄</option><option value="all-ready" ${jessicaState.status==='all-ready'?'selected':''}>全部到貨</option><option value="waiting" ${jessicaState.status==='waiting'?'selected':''}>全部等待中</option></select></div>${names.length===0?`<div class="empty-state">目前沒有符合條件的客人</div>`:body}</div>`;
+  bindSearch('jessicaSearchInput',v=>jessicaState.search=v,()=>{renderJessica();hydrateImages();});const flowSel=document.getElementById('jessicaFlowSelect');if(flowSel)flowSel.addEventListener('change',e=>{jessicaState.flow=e.target.value;renderJessica();hydrateImages();});const statSel=document.getElementById('jessicaStatusSelect');if(statSel)statSel.addEventListener('change',e=>{jessicaState.status=e.target.value;renderJessica();hydrateImages();});
+  document.querySelectorAll('[data-action="jessica-ship-group"]').forEach(btn=>btn.addEventListener('click',async e=>{const group=e.currentTarget.closest('.shipmentgroup');const date=(document.getElementById('jship_'+e.currentTarget.dataset.key)||{}).value||todayStr();const pending=[];let moved=0;group.querySelectorAll('.jessica-qty').forEach(inp=>{const found=findItem(inp.dataset.id);if(!found)return;const avail=twReceivedQty(found.item)-customerShippedQty(found.item);const q=clampActionQty(inp.value,avail);if(q){pending.push({found,q});moved+=q;}});if(!moved){alert('請至少輸入一件要寄出的數量');return;}const customer=e.currentTarget.dataset.customer||'客人';if(!confirmDateAction('確認台灣出貨給客人',date,`客人：${customer}
+商品項目：${pending.length} 項
+本次總數量：${moved} 件`))return;pending.forEach(({found,q})=>{appendStageEvent(found.item,'customerShipments','customerShippedDate',customerShippedQty,date,q);found.item.customerShippedQty=customerShippedQty(found.item)+q;found.item.customerShippedDate=date;logActivity(`寄給客人 ${q} 件（累計 ${found.item.customerShippedQty}/${itemTotalQty(found.item)}）`,found.order.id,found.item.id);});await saveOrders();renderJessica();hydrateImages();}));hydrateImages();
+}
+
+// ====== 收款管理 ======
+function orderTWDTotal(order){
+  return order.items.filter(i=>!i.isReturn).reduce((sum,i)=>sum + (parseFloat(i.priceTWD)||0), 0);
+}
+function renderPayments(){
+  const custOrders = orders.filter(o=>o.orderType==='customer' && !orderIsCompleted(o));
+  const rows = custOrders.map(o=>{
+    const total = orderTWDTotal(o);
+    const received = o.paymentsReceived || 0;
+    let statusHtml;
+    if(total<=0) statusHtml = `<span class="status s-wait">尚無金額</span>`;
+    else if(received >= total) statusHtml = `<span class="status s-done">已收齊</span>`;
+    else if(received > 0) statusHtml = `<span class="status s-buy">部分收款</span>`;
+    else statusHtml = `<span class="status s-wait">等貨到台灣後收款</span>`;
+    return `<tr>
+      <td data-label="客人"><b>${esc(o.customerName)}</b></td>
+      <td data-label="台幣客訂金額">NT$${fmtMoney(total)}</td>
+      <td data-label="已收">NT$${fmtMoney(received)}</td>
+      <td data-label="新增收款"><div class="payment-entry"><input class="input" id="payinput_${o.id}" style="max-width:130px;display:inline-block" placeholder="收款金額" type="number"><button class="btn small green" data-action="add-payment" data-id="${o.id}">新增收款</button></div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('paymentsContent').innerHTML = `
+  <div class="card"><h2>收款管理</h2>
+  ${custOrders.length===0? `<div class="empty-state">目前沒有客人訂單</div>` :
+  `<table class="table mobile-summary-table"><tr><th>客人</th><th>台幣客訂金額</th><th>已收</th><th>動作</th></tr>${rows}</table>`}
+  </div>`;
+  document.querySelectorAll('[data-action="add-payment"]').forEach(btn=>{
+    btn.addEventListener('click', async e=>{
+      const id = e.currentTarget.dataset.id;
+      const input = document.getElementById('payinput_'+id);
+      const amount = parseFloat(input && input.value);
+      if(!amount || amount<=0){ alert('請輸入有效的收款金額'); return; }
+      const o = findOrder(id);
+      if(o){ o.paymentsReceived = (o.paymentsReceived||0) + amount; await saveOrders(); renderPayments(); }
+    });
+  });
+}
+
+
+
+// ====== 備份 / 回收桶 / 活動紀錄 ======
+let activityLogUserFilter = 'all';
+function activityLogTimestamp_(log){
+  const m = String(log && log.id || '').match(/^LOG-(\d+)/);
+  if(m) return Number(m[1]) || 0;
+  const t = Date.parse(log && log.at ? log.at : '');
+  return Number.isFinite(t) ? t : 0;
+}
+function setActivityLogUserFilter(value){
+  activityLogUserFilter = value || 'all';
+  renderBackup();
+}
+function renderBackup(){
+  const deletedRows = (deletedOrders||[]).map(o=>`<tr>
+    <td>${esc(o.id)}</td><td>${o.orderType==='return'?'退貨商品':esc(o.customerName)}</td><td>${(o.items||[]).length}</td><td>${esc(o.deletedAt)||'-'}</td><td>${esc(o.deletedBy)||'-'}</td>
+    <td><button class="btn small green" onclick="restoreDeletedOrder('${escAttr(o.id)}')">還原</button> <button class="btn small red" onclick="permanentlyDeleteOrder('${escAttr(o.id)}')">永久刪除</button></td>
+  </tr>`).join('');
+  const activityUsers = Array.from(new Set((activityLog||[]).map(l=>l.user||'unknown'))).sort((a,b)=>a.localeCompare(b));
+  let filteredLogs = (activityLog||[]).slice().sort((a,b)=>activityLogTimestamp_(b)-activityLogTimestamp_(a));
+  if(activityLogUserFilter !== 'all') filteredLogs = filteredLogs.filter(l=>(l.user||'unknown')===activityLogUserFilter);
+  const logRows = filteredLogs.slice(0,200).map(l=>`<tr><td>${esc(l.at)}</td><td>${esc(l.user)}</td><td>${esc(l.action)}</td><td>${esc(l.detail)}</td></tr>`).join('');
+  document.getElementById('backupContent').innerHTML = `
+  <div class="card"><h2>備份與資料安全</h2>
+    <div class="note">資料存在 Firebase，不在 HTML 裡；更新 HTML 不會刪掉資料。這裡可以一鍵匯出 CSV、完整 JSON 備份，也可以從回收桶還原誤刪訂單。</div>
+    <div class="toolbar">
+      <button class="btn green" onclick="exportAllCSV()">匯出 Excel/CSV</button>
+      <button class="btn" onclick="exportBackupJSON()">匯出完整 JSON 備份</button>
+      <button class="btn secondary" onclick="triggerImportBackup()">匯入 JSON 備份</button>
+      <input id="backupImportInput" type="file" accept="application/json,.json" style="display:none" onchange="importBackupFile(this)">
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px"><h2>回收桶</h2>
+    ${(deletedOrders||[]).length===0?'<div class="empty-state">目前沒有刪除的訂單</div>':`<table class="table"><tr><th>訂單</th><th>客人/類型</th><th>商品數</th><th>刪除時間</th><th>刪除者</th><th>動作</th></tr>${deletedRows}</table>`}
+  </div>
+  <div class="card" style="margin-top:16px"><h2>活動紀錄</h2>
+    <div class="toolbar">
+      <select style="max-width:260px" onchange="setActivityLogUserFilter(this.value)">
+        <option value="all" ${activityLogUserFilter==='all'?'selected':''}>全部使用者</option>
+        ${activityUsers.map(u=>`<option value="${escAttr(u)}" ${activityLogUserFilter===u?'selected':''}>${esc(u)}</option>`).join('')}
+      </select>
+      <span class="muted">依時間由新到舊排列</span>
+    </div>
+    ${filteredLogs.length===0?'<div class="empty-state">目前沒有符合條件的活動紀錄</div>':`<table class="table"><tr><th>時間</th><th>使用者</th><th>動作</th><th>內容</th></tr>${logRows}</table>`}
+  </div>`;
+}
+
+// ====== 完成訂單 ======
+function renderCompletedOrders(){
+  const lastCompletedDate = (order)=>{
+    const finishedDates = (order.items||[])
+      .flatMap(it=>[
+        it.customerShippedDate || '',
+        it.returnDate || '',
+        (!needsTwFlow(it, order) ? (it.usShippedDate || '') : '')
+      ])
+      .filter(Boolean)
+      .sort();
+    return finishedDates.length ? finishedDates[finishedDates.length-1] : '';
+  };
+  const doneOrders = orders
+    .filter(o=>orderIsCompleted(o))
+    .slice()
+    .sort((a,b)=>
+      lastCompletedDate(b).localeCompare(lastCompletedDate(a)) ||
+      (b.createdAt||'').localeCompare(a.createdAt||'') ||
+      (b.id||'').localeCompare(a.id||'')
+    );
+  const rows = doneOrders.map(o=>{
+    const completedItems = o.items.length;
+    const lastDate = lastCompletedDate(o) || '-';
+    return `<tr>
+      <td>${esc(o.id)}</td>
+      <td>${o.orderType==='return'?'退貨商品':esc(o.customerName)}</td>
+      <td>${completedItems}</td>
+      <td>${esc(lastDate)}</td>
+      <td><span class="status s-done">已完成</span></td>
+      <td>
+        <button type="button" class="btn small secondary" onclick="openOrderDetail('${escAttr(o.id)}', false)">查看</button>
+        <button type="button" class="btn small" onclick="openOrderDetail('${escAttr(o.id)}', true)">修改</button>
+        <button type="button" class="btn small red" onclick="deleteOrder('${escAttr(o.id)}')">刪除</button>
+      </td>
+    </tr>`;
+  }).join('');
+  document.getElementById('completedOrdersContent').innerHTML = `
+  <div class="card"><h2>完成訂單</h2>
+   <div class="note">商品寄出給客人後會從「台灣出貨給客人」移除；當整張訂單所有商品都完成，就會出現在這裡。完成訂單可以查看、修改或刪除。</div>
+   ${doneOrders.length===0? `<div class="empty-state">目前沒有完成訂單</div>` :
+   `<table class="table"><tr><th>訂單</th><th>客人 / 類型</th><th>商品數</th><th>最後完成日期</th><th>狀態</th><th>動作</th></tr>${rows}</table>`}
+  </div>`;
+}
+
+// ====== 訂單管理 ======
+let customerOrdersState = { search:'', type:'all' };
+function openOrderDetail(orderId, editMode){
+  detailSelectedId = orderId;
+  detailEditing = !!editMode;
+  show('detail');
+}
+function managementTypeLabel(order){
+  if(order.orderType==='stock') return '囤貨';
+  if(order.orderType==='return') return '退貨';
+  return '一般訂單';
+}
+function managementOwnerText(order){
+  if(order.orderType==='stock'){
+    const buyers=[...new Set((order.items||[]).map(it=>it.stockBuyer).filter(Boolean))];
+    const homes=[...new Set((order.items||[]).map(it=>stockHomeFlow(it)).filter(Boolean))];
+    return buyers.length ? buyers.join('、') : (homes.length ? homes.join('、')+' 囤貨' : '囤貨未售');
+  }
+  if(order.orderType==='return') return order.sourceCustomerName || order.customerName || '退貨商品';
+  return order.customerName || '（未填客人姓名）';
+}
+function managementStatusHTML(order){
+  const items=order.items||[];
+  if(order.orderType==='return'){
+    const done=items.filter(it=>!!it.returnDate).length;
+    return done===items.length && items.length
+      ? `<span class="status s-done">退貨完成</span><br><span class="muted">${done}/${items.length} 件</span>`
+      : `<span class="status s-return">退貨處理中</span><br><span class="muted">${done}/${items.length} 件完成</span>`;
+  }
+  if(order.orderType==='stock'){
+    const texts=[...new Set(items.map(stockProgressText))];
+    const sold=items.filter(it=>it.stockBuyer).length;
+    return `<span class="status ${sold===items.length&&items.length?'s-done':'s-ready'}">${esc(texts.slice(0,2).join('、') || '囤貨追蹤中')}</span><br><span class="muted">${sold}/${items.length} 件已售出</span>`;
+  }
+  const total=items.length;
+  const doneCount=items.filter(it=>{
+    if(it.isReturn) return true;
+    if(needsTwFlow(it,order)) return !!it.customerShippedDate;
+    return !!it.usShippedDate;
+  }).length;
+  const readyToShip=items.some(it=>needsTwFlow(it,order)&&it.twReceivedDate&&!it.customerShippedDate);
+  const normalTw=items.filter(it=>needsTwFlow(it,order));
+  const allDone=normalTw.length>0&&normalTw.every(it=>it.customerShippedDate);
+  let pill=allDone?`<span class="status s-done">已完成</span>`:readyToShip?`<span class="status s-ready">可先寄已到商品</span>`:`<span class="status s-wait">等待到齊</span>`;
+  return `${pill}<br><span class="muted">${doneCount}/${total} 已完成流程</span>`;
+}
+function renderCustomerOrders(){
+  const q=(customerOrdersState.search||'').trim().toLowerCase();
+  const type=customerOrdersState.type||'all';
+  const managedOrders=orders.filter(o=>{
+    if(type!=='all'&&o.orderType!==type) return false;
+    if(!q) return true;
+    const orderText=[
+      o.id, managementTypeLabel(o), managementOwnerText(o), o.customerName, o.phone, o.lineId,
+      o.twRecipient, o.twPhone, o.twAddress, o.sourceOrderId, o.sourceCustomerName,
+      ...(o.items||[]).flatMap(it=>[
+        it.itemName,it.productName,it.brand,it.site,it.color,it.size,it.flow,it.stockOriginalFlow,
+        it.stockBuyer,it.note,it.purchasedDate,it.usReceivedDate,it.usShippedDate,it.twReceivedDate,
+        it.customerShippedDate,it.returnDate,stockProgressText(it)
+      ])
+    ].filter(Boolean).join(' ').toLowerCase();
+    return orderText.includes(q);
+  }).slice().sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||'')||(b.id||'').localeCompare(a.id||''));
+
+  const rows=managedOrders.map(o=>{
+    const flows=[...new Set((o.items||[]).map(it=>o.orderType==='stock'?stockHomeFlow(it):it.flow).filter(Boolean))];
+    const flowText=flows.length?flows.join('、'):'—';
+    const typeClass=o.orderType==='return'?'s-return':o.orderType==='stock'?'s-ready':'s-wait';
+    return `<tr>
+      <td data-label="訂單圖片">${orderImagesHTML(o)}</td>
+      <td data-label="類型"><span class="status ${typeClass}">${managementTypeLabel(o)}</span><br><span class="muted">${esc(o.id)}</span></td>
+      <td data-label="客人 / 買家"><b>${esc(managementOwnerText(o))}</b></td>
+      <td data-label="商品數">${(o.items||[]).length}</td>
+      <td data-label="流向 / 囤貨位置"><b>${esc(flowText)}</b></td>
+      <td data-label="處理狀態">${managementStatusHTML(o)}</td>
+      <td data-label="操作"><div class="mobile-actions">
+        <button type="button" class="btn small secondary" onclick="openOrderDetail('${escAttr(o.id)}', false)">查看詳細紀錄</button>
+        <button type="button" class="btn small" onclick="openOrderDetail('${escAttr(o.id)}', true)">修改訂單</button>
+        <button type="button" class="btn small red" onclick="deleteOrder('${escAttr(o.id)}')">刪除訂單</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('customerOrdersContent').innerHTML=`
+  <div class="card"><h2>訂單管理</h2>
+   <div class="note">這裡整合顯示一般訂單、退貨與囤貨。可用類型篩選、搜尋、查看、修改或刪除；原本的「退貨」與「囤貨」頁面仍會保留各自的專用操作。</div>
+   <div class="toolbar">
+     <input class="input" id="customerOrdersSearchInput" style="max-width:420px" placeholder="搜尋客人、買家、訂單編號、商品、品牌、網站、流向、日期" value="${escAttr(customerOrdersState.search)}">
+     <select id="customerOrdersTypeFilter">
+       <option value="all" ${type==='all'?'selected':''}>全部類型</option>
+       <option value="customer" ${type==='customer'?'selected':''}>一般訂單</option>
+       <option value="return" ${type==='return'?'selected':''}>退貨</option>
+       <option value="stock" ${type==='stock'?'selected':''}>囤貨</option>
+     </select>
+     ${(customerOrdersState.search||type!=='all')?`<button class="btn small" id="customerOrdersClearSearch" type="button">清除篩選</button>`:''}
+     <span class="badge">目前 ${managedOrders.length} 張訂單</span>
+   </div>
+   ${managedOrders.length===0?`<div class="empty-state">找不到符合條件的訂單</div>`:
+   `<table class="table mobile-summary-table"><tr><th>訂單圖片</th><th>類型 / 編號</th><th>客人 / 買家</th><th>商品數</th><th>流向 / 囤貨位置</th><th>處理狀態</th><th>動作</th></tr>${rows}</table>`}
+  </div>`;
+  bindSearch('customerOrdersSearchInput',v=>customerOrdersState.search=v,()=>{renderCustomerOrders();hydrateImages();});
+  const typeFilter=document.getElementById('customerOrdersTypeFilter');
+  if(typeFilter) typeFilter.addEventListener('change',e=>{customerOrdersState.type=e.target.value;renderCustomerOrders();hydrateImages();});
+  const clearBtn=document.getElementById('customerOrdersClearSearch');
+  if(clearBtn) clearBtn.addEventListener('click',()=>{customerOrdersState.search='';customerOrdersState.type='all';renderCustomerOrders();hydrateImages();});
+  hydrateImages(document.getElementById('customerOrdersContent'));
+}
+
+
+function openImageModalFromItem(itemId){
+  if(imageCache[itemId]){ openImageModal(imageCache[itemId]); return; }
+  const el = document.querySelector(`[data-id="${CSS.escape(itemId)}"][data-hasimage="1"] img`);
+  if(el && el.src) openImageModal(el.src);
+}
+
+// ====== 訂單明細 ======
+let detailSelectedId = '';
+let detailEditing = false;
+
+function flowStepsHTML(item, order){
+  const isReturn = item.isReturn;
+  const toTw = needsTwFlow(item, order);
+  const usReceiveHistory=stageHistoryHTML(usReceiptHistory(item),'美國收貨明細',item.id,'usReceipts');
+  const usShipHistory=stageHistoryHTML(usShipmentHistory(item),'美國出貨明細',item.id,'usShipments');
+  const twReceiveHistory=toTw ? stageHistoryHTML(twReceiptHistory(item),'台灣收貨明細',item.id,'twReceipts') : '';
+  const customerShipHistory=toTw ? stageHistoryHTML(customerShipmentHistory(item),'寄給客人明細',item.id,'customerShipments') : '';
+  return `<div class="flow">
+   <div class="step"><b>購買</b><span>${esc(item.purchasedDate)||'待填'}</span>${simpleDateActionsHTML(item,'purchasedDate','購買日期')}</div>
+   <div class="step"><b>美國收貨</b><span>累計 ${usReceivedQty(item)}/${itemTotalQty(item)} 件</span>${usReceiveHistory}</div>
+   <div class="step"><b>美國出貨</b><span>累計 ${usShippedQty(item)}/${itemTotalQty(item)} 件</span>${usShipHistory}</div>
+   <div class="step"><b>台灣收貨</b><span>${toTw ? `累計 ${twReceivedQty(item)}/${itemTotalQty(item)} 件` : '不需要'}</span>${twReceiveHistory}</div>
+   <div class="step"><b>寄給客人</b><span>${toTw ? `累計 ${customerShippedQty(item)}/${itemTotalQty(item)} 件` : '不需要'}</span>${customerShipHistory}</div>
+   <div class="step"><b>退貨</b><span>${isReturn ? (esc(item.returnDate)||'待退貨') : '-'}</span>${isReturn?simpleDateActionsHTML(item,'returnDate','退貨日期'):''}</div>
+  </div>`;
+}
+
+function editOptions(arr, selected){
+  const exists = arr.includes(selected);
+  const base = arr.map(x=>`<option value="${escAttr(x)}" ${selected===x?'selected':''}>${esc(x)}</option>`).join('');
+  const custom = selected && !exists ? `<option value="${escAttr(selected)}" selected>${esc(selected)}</option>` : '';
+  return `<option value="">（不指定）</option>${custom}${base}`;
+}
+
+function renderDetail(){
+  if(!detailSelectedId && orders.length) detailSelectedId = orders[0].id;
+  const order = findOrder(detailSelectedId);
+  const options = orders.map(o=>`<option value="${escAttr(o.id)}" ${o.id===detailSelectedId?'selected':''}>${esc(o.id)} － ${o.orderType==='return'?'退貨商品':o.orderType==='stock'?'囤貨：'+managementOwnerText(o):esc(o.customerName)}</option>`).join('');
+  if(detailEditing && order){
+    renderEditOrder(order, options);
+    return;
+  }
+  let body = '';
+  if(order){
+    const readonly = 'readonly disabled';
+    const custBox = order.orderType==='customer' ? `
+    <div class="card" style="margin-top:16px">
+      <div class="itemhead"><div><h2>客人資料</h2><div class="muted">像新增訂單一樣分區顯示，按「修改這張訂單」即可編輯</div></div></div>
+      <div class="formgrid">
+        <div class="field"><label>客人姓名</label><input class="input" ${readonly} value="${escAttr(order.customerName)}"></div>
+        <div class="field"><label>電話</label><input class="input" ${readonly} value="${escAttr(order.phone)}"></div>
+        <div class="field"><label>LINE ID</label><input class="input" ${readonly} value="${escAttr(order.lineId)}"></div>
+        <div class="field"><label>台灣收件人</label><input class="input" ${readonly} value="${escAttr(order.twRecipient)}"></div>
+        <div class="field"><label>台灣電話</label><input class="input" ${readonly} value="${escAttr(order.twPhone)}"></div>
+        <div class="field"><label>台灣地址</label><input class="input" ${readonly} value="${escAttr(order.twAddress)}"></div>
+      </div>
+    </div>` : order.orderType==='stock' ? `
+    <div class="card" style="margin-top:16px">
+      <h2>囤貨資料</h2>
+      <div class="note">這是囤貨訂單。囤貨位置／流向：${esc([...new Set((order.items||[]).map(it=>stockHomeFlow(it)).filter(Boolean))].join('、'))||'—'}｜買家：${esc([...new Set((order.items||[]).map(it=>it.stockBuyer).filter(Boolean))].join('、'))||'尚未售出'}</div>
+    </div>` : `
+    <div class="card" style="margin-top:16px">
+      <h2>退貨商品資料</h2>
+      <div class="note">這是獨立退貨訂單，不需要客人資料。退貨數量：${esc(order.items && order.items[0] ? (order.items[0].returnQty || order.items[0].qty || 1) : 1)} 件｜來源訂單：${esc(order.sourceOrderId)||'—'} ${order.sourceCustomerName ? '｜原客人：'+esc(order.sourceCustomerName) : ''}${order.items && order.items[0] && order.items[0].convertedToReturnAt ? '<br>轉為退貨：'+esc(order.items[0].convertedToReturnAt)+(order.items[0].convertedToReturnBy ? '｜操作人：'+esc(order.items[0].convertedToReturnBy) : '') : ''}</div>
+    </div>`;
+
+    const cards = order.items.map((item, idx)=>{
+      const toTw = needsTwFlow(item, order);
+      const isDirectOrTing = endsAfterUSShip(item, order);
+      const flowText = item.isReturn ? '退貨' : (item.flow || '—');
+      const itemTypeNote = item.isReturn
+        ? '此商品為退貨，只需要美國收貨與退貨日期。'
+        : isDirectOrTing
+          ? '此商品為直郵 / 婷婷，只需要記錄到美國出貨日期。'
+          : '此商品需要台灣收貨與台灣出貨給客人。';
+      return `<div class="card" style="margin-top:16px">
+        <div class="itemhead">
+          <div>
+            <h2>商品 #${idx+1}</h2>
+            <span class="badge">${esc(item.id)}</span>
+            ${item.isReturn ? '<span class="status s-return" style="margin-left:6px">退貨</span>' : ''}<span class="status ${itemStatusInfo(item, order).cls}" style="margin-left:6px">${esc(itemStatusInfo(item, order).text)}</span>
+          </div>
+          <div onclick="openImageModalFromItem('${escAttr(item.id)}')" style="cursor:pointer">${thumbHTML(item,'lg')}<div class="muted" style="text-align:center;margin-top:6px;font-size:12px">點圖片放大</div></div>
+        </div>
+        <div class="formgrid">
+          <div class="field"><label>商品名稱（選填）</label><input class="input" ${readonly} value="${escAttr(item.itemName)}"></div>
+          <div class="field"><label>品牌</label><input class="input" ${readonly} value="${escAttr(item.brand)}"></div>
+          <div class="field"><label>訂購網站</label><input class="input" ${readonly} value="${escAttr(item.site)}"></div>
+          <div class="field"><label>商品網址</label><input class="input" ${readonly} value="${escAttr(item.itemUrl)}"></div>
+          <div class="field"><label>Size</label><input class="input" ${readonly} value="${escAttr(item.size)}"></div>
+          <div class="field"><label>顏色</label><input class="input" ${readonly} value="${escAttr(item.color)}"></div>
+          <div class="field"><label>數量</label><input class="input" ${readonly} value="${escAttr(item.qty||1)}"></div>
+          ${item.isReturn ? `<div class="field"><label>退貨數量</label><input class="input" ${readonly} value="${escAttr(item.returnQty || item.qty || 1)} 件"></div>` : ''}
+          <div class="field" style="grid-column:1/-1"><label>商品 Note</label><textarea class="input" ${readonly} rows="3">${esc(item.note||'')}</textarea></div>
+          <div class="field"><label>流向</label><input class="input" ${readonly} value="${escAttr(flowText)}"></div>
+          ${item.isReturn ? '' : `<div class="field"><label>台幣：客訂金額</label><input class="input" ${readonly} value="${escAttr(item.priceTWD)}"></div>
+          <div class="field"><label>美金：買貨金額</label><input class="input" ${readonly} value="${escAttr(item.priceUSD)}"></div>`}
+        </div>
+        ${item.flow==='直郵' && !item.isReturn ? `<div class="customerbox" style="margin-top:12px"><b>直郵資訊</b><br>收件人：${esc(item.directRecipient)||'—'}｜地址：${esc(item.directAddress)||'—'}｜分組：${esc(item.directGroup)||'—'}</div>` : ''}
+        <div class="note" style="margin-top:12px"><b>目前狀態：</b>${esc(itemStatusInfo(item, order).text)}<br>${itemTypeNote}</div>
+        <div class="toolbar" style="margin-top:10px">
+          <button class="btn secondary small" onclick="openItemStatusModal('${escAttr(item.id)}', event)">查看這個商品目前在哪裡</button>
+          ${order.orderType==='customer' && !item.isReturn ? `<button class="btn red small" onclick="convertItemToReturn('${escAttr(item.id)}')" ${usShippedQty(item)>0?'disabled title="已有商品從美國出貨，無法直接轉退貨"':''}>轉為退貨</button>` : ''}
+        </div>
+        <h3 style="margin-top:18px">日期 / 物流流程</h3>
+        <div class="formgrid">
+          <div class="field"><label>購買日期</label><input class="input" ${readonly} value="${escAttr(item.purchasedDate)}"></div>
+          <div class="field"><label>美國收貨日期</label><input class="input" ${readonly} value="${escAttr(item.usReceivedDate)}"></div>
+          <div class="field"><label>美國出貨日期</label><input class="input" ${readonly} value="${escAttr(item.usShippedDate)}"></div>
+          ${toTw ? `<div class="field"><label>台灣收貨日期</label><input class="input" ${readonly} value="${escAttr(item.twReceivedDate)}"></div>
+          <div class="field"><label>台灣出貨給客人日期</label><input class="input" ${readonly} value="${escAttr(item.customerShippedDate)}"></div>` : ''}
+          ${item.isReturn ? `<div class="field"><label>退貨日期</label><input class="input" ${readonly} value="${escAttr(item.returnDate)}"></div>` : ''}
+        </div>
+        <div class="note" style="margin-top:12px">每一筆收貨／出貨紀錄下方都有「修改這筆」與「撤銷這筆」。若要撤銷較早階段，請先撤銷後續流程紀錄。</div>${flowStepsHTML(item, order)}
+      </div>`;
+    }).join('');
+    body = custBox + cards;
+  }else{
+    body = `<div class="empty-state">目前還沒有任何訂單</div>`;
+  }
+  document.getElementById('detailContent').innerHTML = `
+  <div class="card">
+   <h2>訂單明細</h2>
+   <div class="toolbar">
+    <select id="detailOrderSelect" style="max-width:420px">${options}</select>
+    ${order? `<button class="btn" id="editCurrentOrderBtn">修改這張訂單</button>` : ''}
+   </div>
+  </div>
+  ${body}`;
+  const sel = document.getElementById('detailOrderSelect');
+  if(sel) sel.addEventListener('change', e=>{ detailSelectedId = e.target.value; detailEditing=false; renderDetail(); hydrateImages(); });
+  const editBtn = document.getElementById('editCurrentOrderBtn');
+  if(editBtn) editBtn.addEventListener('click', ()=>{ detailEditing=true; renderDetail(); hydrateImages(); });
+  document.querySelectorAll('[data-action="detail-toggle-return"]').forEach(btn=>{
+    btn.addEventListener('click', async e=>{
+      const id = e.currentTarget.dataset.id;
+      const found = findItem(id);
+      if(found){ found.item.isReturn = !found.item.isReturn; splitReturnItemsIntoSeparateOrders(found.order.id); await saveOrders(); renderDetail(); hydrateImages(); }
+    });
+  });
+  hydrateImages();
+}
+
+function editItemCardHTML(item, order){
+  const isNew = !item;
+  const id = item && item.id ? item.id : uidItem();
+  const orderIsReturn = !!(order && order.orderType === 'return');
+  const it = Object.assign({
+    id, itemName:'', brand:'', site:'', itemUrl:'', size:'', color:'', qty:'1', note:'', flow:'', priceTWD:'', priceUSD:'',
+    directRecipient:'', directAddress:'', directGroup:'', isReturn:orderIsReturn, hasImage:false,
+    purchasedDate:orderIsReturn ? todayStr() : '', usReceivedDate:'', usShippedDate:'', twReceivedDate:'', customerShippedDate:'', returnDate:'', usReceipts:[], usShipments:[], twReceipts:[], customerShipments:[]
+  }, item || {});
+  const returnMode = orderIsReturn || !!it.isReturn;
+  return `<div class="itemcard edit-item" data-itemid="${escAttr(id)}">
+    <div class="itemhead">
+      <div><h3>商品 ${esc(it.id)}</h3><span class="badge">${isNew?'新增商品':'可修改'}</span></div>
+      <button class="btn red small" data-action="remove-edit-item" type="button">刪除商品</button>
+    </div>
+    <div class="formgrid">
+      <div class="field"><label>商品圖片</label>${thumbHTML(it)}<label class="upload-btn" style="margin-top:8px">更換圖片<input type="file" accept="image/*" style="display:none" onchange="previewNewItemImage(this,'${escAttr(id)}')"></label></div>
+      <div class="field"><label>商品名稱（選填）</label><input class="input" data-field="itemName" value="${escAttr(it.itemName)}" placeholder="可以空白，有圖片也可以"></div>
+      <div class="field"><label>品牌（可打字搜尋）</label>${brandSearchField(it.brand, 'editBrandOptions_'+id)}</div>
+      <div class="field"><label>訂購網站（可打字搜尋）</label>${siteSearchField(it.site, 'editSiteOptions_'+id)}</div>
+      <div class="field"><label>商品網址</label><input class="input" data-field="itemUrl" value="${escAttr(it.itemUrl)}"></div>
+      <div class="field"><label>Size</label><input class="input" data-field="size" value="${escAttr(it.size)}"></div>
+      <div class="field"><label>顏色</label><input class="input" data-field="color" value="${escAttr(it.color)}"></div>
+      <div class="field"><label>數量</label><input class="input" data-field="qty" type="number" value="${escAttr(it.qty||1)}"></div>
+      <div class="field" style="grid-column:1/-1"><label>商品 Note（選填）</label><textarea class="input" data-field="note" rows="3" placeholder="例如：仔細檢查、不要拆標、確認顏色是否正確">${esc(it.note||'')}</textarea></div>
+      <div class="field normalOnly"><label>${order&&order.orderType==='stock'?'囤貨流向':'流向'}</label><select data-field="flow" onchange="toggleFlowDirect(this)"><option value="">（請選擇）</option>${opts(order&&order.orderType==='stock'?STOCK_FLOWS:FLOWS,it.flow)}</select></div>
+      ${order&&order.orderType==='stock'?`<div class="field normalOnly"><label>買家姓名</label><input class="input" data-field="stockBuyer" value="${escAttr(it.stockBuyer||'')}"></div><div class="field normalOnly"><label>售出日期</label><input class="input" data-field="stockSoldDate" type="date" value="${escAttr(it.stockSoldDate||'')}"></div>`:''}
+      <div class="field normalOnly"><label>台幣：客訂金額</label><input class="input" data-field="priceTWD" value="${escAttr(it.priceTWD)}"></div>
+      <div class="field normalOnly"><label>美金：買貨金額</label><input class="input" data-field="priceUSD" value="${escAttr(it.priceUSD)}"></div>
+      <div class="field normalOnly"><label>是否退貨</label><select data-field="isReturn" onchange="toggleEditReturnFields(this)"><option value="false" ${!it.isReturn?'selected':''}>否</option><option value="true" ${it.isReturn?'selected':''}>是</option></select></div>
+    </div>
+    <div class="directbox" style="display:${it.flow==='直郵'?'block':'none'}"><b>直郵資訊</b><div class="formgrid" style="margin-top:10px">
+      <div class="field"><label>直郵收件人</label><input class="input" data-field="directRecipient" value="${escAttr(it.directRecipient)}"></div>
+      <div class="field"><label>直郵地址</label><input class="input" data-field="directAddress" value="${escAttr(it.directAddress)}"></div>
+      <div class="field"><label>直郵分組</label><input class="input" data-field="directGroup" value="${escAttr(it.directGroup)}"></div>
+    </div></div>
+    <div class="formgrid" style="margin-top:12px">
+      <div class="field"><label>購買日期</label><input class="input" data-field="purchasedDate" type="date" value="${escAttr(it.purchasedDate)}"></div>
+      <div class="field"><label>美國收貨日期</label><input class="input" data-field="usReceivedDate" type="date" value="${escAttr(it.usReceivedDate)}"></div>
+      <div class="field"><label>美國出貨日期</label><input class="input" data-field="usShippedDate" type="date" value="${escAttr(it.usShippedDate)}"></div>
+      <div class="field twOnly"><label>台灣收貨日期</label><input class="input" data-field="twReceivedDate" type="date" value="${escAttr(it.twReceivedDate)}"></div>
+      <div class="field twOnly"><label>台灣出貨給客人日期</label><input class="input" data-field="customerShippedDate" type="date" value="${escAttr(it.customerShippedDate)}"></div>
+      <div class="field returnOnly"><label>退貨日期</label><input class="input" data-field="returnDate" type="date" value="${escAttr(it.returnDate)}"></div>
+    </div>
+  </div>`;
+}
+
+function toggleEditReturnFields(sel){
+  const card = sel.closest('.edit-item');
+  if(!card) return;
+  const isRet = sel.value === 'true';
+  card.querySelectorAll('.normalOnly').forEach(el=>{ if(el.querySelector('[data-field="isReturn"]')) return; el.style.display = isRet ? 'none' : ''; });
+  card.querySelectorAll('.twOnly').forEach(el=>el.style.display = isRet ? 'none' : '');
+  card.querySelectorAll('.returnOnly').forEach(el=>el.style.display = isRet ? '' : 'none');
+}
+
+function renderEditOrder(order, options){
+  const isReturnOrder = order.orderType === 'return';
+  const isStockOrder = order.orderType === 'stock';
+  const custBox = (isReturnOrder || isStockOrder) ? '' : `<div class="card" style="margin-top:16px"><h2>客人資料</h2>
+    <div class="formgrid">
+      <div class="field"><label>客人姓名</label><input class="input" id="editCustomerName" value="${escAttr(order.customerName)}"></div>
+      <div class="field"><label>電話</label><input class="input" id="editPhone" value="${escAttr(order.phone)}"></div>
+      <div class="field"><label>LINE ID</label><input class="input" id="editLineId" value="${escAttr(order.lineId)}"></div>
+      <div class="field"><label>台灣收件人</label><input class="input" id="editTwRecipient" value="${escAttr(order.twRecipient)}"></div>
+      <div class="field"><label>台灣電話</label><input class="input" id="editTwPhone" value="${escAttr(order.twPhone)}"></div>
+      <div class="field"><label>台灣地址</label><input class="input" id="editTwAddress" value="${escAttr(order.twAddress)}"></div>
+    </div></div>`;
+  document.getElementById('detailContent').innerHTML = `
+  <div class="card">
+    <h2>修改訂單</h2>
+    <div class="note">客人改資料或改商品時，在這裡修改後按「儲存修改」。商品若改成退貨，會自動從原本訂單拆出來，建立成獨立退貨訂單。</div>
+    <div class="toolbar">
+      <select id="detailOrderSelect" style="max-width:420px">${options}</select>
+      <button class="btn secondary" id="cancelEditOrderBtn">取消修改</button>
+      <button class="btn green" id="saveEditOrderBtn">儲存修改</button>
+    </div>
+  </div>
+  ${custBox}
+  <div class="card" style="margin-top:16px">
+    <h2>商品品項</h2>
+    <div id="editItemsWrap">${order.items.map(it=>editItemCardHTML(it,order)).join('')}</div>
+    <button class="btn" id="addEditItemBtn">＋ 新增商品</button>
+  </div>`;
+  const sel = document.getElementById('detailOrderSelect');
+  if(sel) sel.addEventListener('change', e=>{ detailSelectedId = e.target.value; detailEditing=false; renderDetail(); hydrateImages(); });
+  document.getElementById('cancelEditOrderBtn').addEventListener('click', ()=>{ detailEditing=false; renderDetail(); hydrateImages(); });
+  document.getElementById('saveEditOrderBtn').addEventListener('click', saveEditOrder);
+  document.getElementById('addEditItemBtn').addEventListener('click', ()=>{
+    const wrap = document.getElementById('editItemsWrap');
+    wrap.insertAdjacentHTML('beforeend', editItemCardHTML(null, order));
+    hydrateImages(wrap.lastElementChild);
+  });
+  document.querySelectorAll('[data-action="remove-edit-item"]').forEach(btn=>{
+    btn.addEventListener('click', e=>{
+      const card = e.currentTarget.closest('.edit-item');
+      const remaining = document.querySelectorAll('#editItemsWrap .edit-item').length;
+      if(remaining <= 1){ alert('至少要保留一個商品'); return; }
+      if(confirm('確定要刪除這個商品嗎？')) card.remove();
+    });
+  });
+  document.querySelectorAll('.edit-item [data-field="isReturn"]').forEach(sel=>toggleEditReturnFields(sel));
+  hydrateImages();
+}
+
+async function saveEditOrder(){
+  const order = findOrder(detailSelectedId);
+  if(!order) return;
+  if(order.orderType === 'customer'){
+    const name = (document.getElementById('editCustomerName')||{}).value || '';
+    if(!name.trim()){ alert('請填寫客人姓名'); return; }
+    order.customerName = name.trim();
+    order.phone = (document.getElementById('editPhone')||{}).value || '';
+    order.lineId = (document.getElementById('editLineId')||{}).value || '';
+    order.twRecipient = (document.getElementById('editTwRecipient')||{}).value || '';
+    order.twPhone = (document.getElementById('editTwPhone')||{}).value || '';
+    order.twAddress = (document.getElementById('editTwAddress')||{}).value || '';
+  }
+  const cards = document.querySelectorAll('#editItemsWrap .edit-item');
+  const newItems = [];
+  const uploadJobs = [];
+  let autocompleteError = false;
+  cards.forEach(card=>{
+    const get = f => (card.querySelector(`[data-field="${f}"]`)||{}).value || '';
+    const itemName = get('itemName').trim();
+    const id = card.dataset.itemid || uidItem();
+    if(!itemHasEnoughInfo(card, id)) return;
+    const isRet = order.orderType === 'return' || get('isReturn') === 'true';
+    const flow = isRet ? '' : get('flow');
+    const old = (order.items||[]).find(i=>i.id===id) || {};
+    const brandResult=resolveAutocompleteValue(get('brand'), BRANDS);
+    const siteResult=resolveAutocompleteValue(get('site'), SITES);
+    if(brandResult.needsChoice || siteResult.needsChoice){
+      autocompleteError=true;
+      const input=card.querySelector(`[data-field="${brandResult.needsChoice?'brand':'site'}"]`);
+      if(input) normalizeAutocompleteInput(input, true);
+      return;
+    }
+    const item = Object.assign({}, old, {
+      id,
+      itemName,
+      brand: brandResult.value,
+      site: siteResult.value,
+      itemUrl: get('itemUrl'),
+      size: get('size'),
+      color: get('color'),
+      qty: get('qty') || '1',
+      note: get('note'),
+      flow,
+      stockBuyer: order.orderType==='stock' ? get('stockBuyer') : (old.stockBuyer||''),
+      stockSoldDate: order.orderType==='stock' ? get('stockSoldDate') : (old.stockSoldDate||''),
+      priceTWD: isRet ? '' : get('priceTWD'),
+      priceUSD: isRet ? '' : get('priceUSD'),
+      directRecipient: flow==='直郵'?get('directRecipient'):'',
+      directAddress: flow==='直郵'?get('directAddress'):'',
+      directGroup: flow==='直郵'?get('directGroup'):'',
+      isReturn: isRet,
+      purchasedDate: get('purchasedDate'),
+      usReceivedDate: get('usReceivedDate'),
+      usShippedDate: get('usShippedDate'),
+      twReceivedDate: isRet || !TW_FLOWS.includes(flow) ? '' : get('twReceivedDate'),
+      customerShippedDate: isRet || !TW_FLOWS.includes(flow) ? '' : get('customerShippedDate'),
+      returnDate: isRet ? get('returnDate') : ''
+    });
+    if(pendingImageFiles[id]){
+      item.hasImage = true;
+      uploadJobs.push({itemId:id, file:pendingImageFiles[id]});
+    }
+    newItems.push(item);
+  });
+  if(autocompleteError) return;
+  if(newItems.length===0){ alert('至少要有一個商品：可以只上傳圖片，商品名稱可空白'); return; }
+  order.items = newItems;
+  splitReturnItemsIntoSeparateOrders(order.id);
+  await saveOrders();
+  for(const job of uploadJobs){
+    await uploadImageForItem(job.itemId, job.file);
+    delete pendingImageFiles[job.itemId];
+  }
+  if(uploadJobs.length) await saveOrders();
+  alert('訂單已更新');
+  detailEditing = false;
+  renderDetail();
+  hydrateImages();
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && document.getElementById('loginScreen') && document.getElementById('loginScreen').style.display !== 'none') loginWithEmail();
+});
+initAuth();
+</script>
+</body>
+</html>
